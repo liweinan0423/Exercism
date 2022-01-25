@@ -73,7 +73,7 @@ process_line() {
             line=$(list_start)$line
         }
     else
-        line=$(parse_heading_or_paragraph)
+        line=$(parse_heading_or_paragraph "$line")
         inside_list && {
             line=$(list_end)$line
             end_list
