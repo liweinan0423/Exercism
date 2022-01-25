@@ -1,0 +1,24 @@
+{
+  "blurb": "Make sure the brackets and braces all match.",
+  "authors": [
+    "glennj"
+  ],
+  "contributors": [
+    "bkhl",
+    "guygastineau",
+    "IsaacG",
+    "kotp"
+  ],
+  "files": {
+    "solution": [
+      "matching_brackets.sh"
+    ],
+    "test": [
+      "matching_brackets.bats"
+    ],
+    "example": [
+      ".meta/example.sh"
+    ]
+  },
+  "source": "Ginna Baker"
+}

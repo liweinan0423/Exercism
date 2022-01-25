@@ -1,0 +1,28 @@
+{
+  "blurb": "Given a word, compute the Scrabble score for that word.",
+  "authors": [
+    "edwin0258"
+  ],
+  "contributors": [
+    "bkhl",
+    "budmc29",
+    "glennj",
+    "guygastineau",
+    "IsaacG",
+    "kotp",
+    "ZapAnton"
+  ],
+  "files": {
+    "solution": [
+      "scrabble_score.sh"
+    ],
+    "test": [
+      "scrabble_score.bats"
+    ],
+    "example": [
+      ".meta/example.sh"
+    ]
+  },
+  "source": "Inspired by the Extreme Startup game",
+  "source_url": "https://github.com/rchatley/extreme_startup"
+}

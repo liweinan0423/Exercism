@@ -1,0 +1,21 @@
+{
+  "blurb": "Tally the results of a small football competition.",
+  "authors": [
+    "glennj"
+  ],
+  "contributors": [
+    "guygastineau",
+    "IsaacG"
+  ],
+  "files": {
+    "solution": [
+      "tournament.sh"
+    ],
+    "test": [
+      "tournament.bats"
+    ],
+    "example": [
+      ".meta/example.sh"
+    ]
+  }
+}

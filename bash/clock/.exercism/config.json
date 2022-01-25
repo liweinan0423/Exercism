@@ -1,0 +1,23 @@
+{
+  "blurb": "Implement a clock that handles times without dates.",
+  "authors": [
+    "glennj"
+  ],
+  "contributors": [
+    "guygastineau",
+    "IsaacG"
+  ],
+  "files": {
+    "solution": [
+      "clock.sh"
+    ],
+    "test": [
+      "clock.bats"
+    ],
+    "example": [
+      ".meta/example.sh"
+    ]
+  },
+  "source": "Pairing session with Erin Drummond",
+  "source_url": "https://twitter.com/ebdrummond"
+}

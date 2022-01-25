@@ -1,0 +1,30 @@
+{
+  "blurb": "Determine if a sentence is a pangram.",
+  "authors": [
+    "jaggededgedjustice"
+  ],
+  "contributors": [
+    "bkhl",
+    "budmc29",
+    "glennj",
+    "guygastineau",
+    "IsaacG",
+    "kotp",
+    "sjwarner-bp",
+    "Smarticles101",
+    "ZapAnton"
+  ],
+  "files": {
+    "solution": [
+      "pangram.sh"
+    ],
+    "test": [
+      "pangram.bats"
+    ],
+    "example": [
+      ".meta/example.sh"
+    ]
+  },
+  "source": "Wikipedia",
+  "source_url": "https://en.wikipedia.org/wiki/Pangram"
+}
