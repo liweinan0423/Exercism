@@ -66,7 +66,6 @@ transform_line() {
 }
 
 process_line() {
-    declare -g LINE
     transform_line
     if is_list_item; then
         LINE=$(list_append "$LINE")
