@@ -66,6 +66,9 @@ process_styles() {
 prepend_list_start() {
     printf -v LINE "%s" "$(list_start)$LINE"
 }
+append_list_end() {
+    printf -v LINE "%s" "$(list_end)$LINE"
+}
 process_line() {
     if is_list_item; then
         to_listitem
@@ -76,7 +79,7 @@ process_line() {
     else
         parse_heading_or_paragraph
         inside_list && {
-            printf -v LINE "%s" "$(list_end)$LINE"
+            append_list_end
             end_list
         }
     fi
