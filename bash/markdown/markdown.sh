@@ -38,6 +38,7 @@ list_start() {
 }
 
 list_append() {
+    local line=$1
     echo "<li>${line#??}</li>"
 }
 
@@ -70,7 +71,7 @@ process_line() {
             start_list
             h+=$(list_start)
         }
-        line=$(list_append)
+        line=$(list_append "$line")
     else
         inside_list && {
             h+=$(list_end)
