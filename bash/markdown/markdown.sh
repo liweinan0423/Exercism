@@ -67,11 +67,11 @@ transform_line() {
 process_line() {
     transform_line
     if is_list_item; then
+        line=$(list_append "$line")
         inside_list || {
             start_list
             h+=$(list_start)
         }
-        line=$(list_append "$line")
     else
         inside_list && {
             h+=$(list_end)
