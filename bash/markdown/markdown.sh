@@ -63,7 +63,7 @@ transform_line() {
     parse_italics
 }
 
-transform_list() {
+process_line() {
     transform_line
     if is_list_item; then
         inside_list || {
@@ -82,7 +82,7 @@ transform_list() {
 
 declare h
 while IFS= read -r line; do
-    transform_list
+    process_line
     h+=$line
 done <"$1"
 
