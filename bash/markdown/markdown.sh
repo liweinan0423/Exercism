@@ -13,7 +13,7 @@ main() {
     while IFS= read -r LINE; do
         process_line
     done <"$1"
-    process_eof
+    process_line # process one more time in case there is empty line before EOF
     echo "$OUTPUT"
 }
 
@@ -35,15 +35,12 @@ process_line() {
     list)
         parse_list
         ;;
-    empty) ;;
+    empty) : ;;
     *)
         determine_state
         process_line
         ;;
     esac
-}
-process_eof() {
-    process_line
 }
 
 determine_state() {
