@@ -83,6 +83,7 @@ process_line() {
 }
 
 declare h
+declare LINE # this global variable holds the content of current line
 while IFS= read -r LINE; do
     process_line
     h+=$LINE
