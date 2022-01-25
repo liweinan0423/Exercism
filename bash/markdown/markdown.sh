@@ -82,16 +82,16 @@ process_line() {
     fi
 }
 
-declare h
 declare LINE # this global variable holds the content of current line
+declare OUTPUT # buffer for HTML outputs
 while IFS= read -r LINE; do
     process_line
-    h+=$LINE
+    OUTPUT+=$LINE
 done <"$1"
 
 inside_list && {
-    h+=$(list_end)
+    OUTPUT+=$(list_end)
     end_list
 }
 
-echo "$h"
+echo "$OUTPUT"
