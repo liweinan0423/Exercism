@@ -64,7 +64,7 @@ process_styles() {
 }
 
 prepend_list_start() {
-    printf -v LINE "%s" "$(list_start)$LINE"
+    printf -v LINE "<ul>%s" "$LINE"
 }
 append_list_end() {
     printf -v LINE "%s" "$(list_end)$LINE"
