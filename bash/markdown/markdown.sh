@@ -15,9 +15,10 @@ declare STATE PREV_STATE
 declare LIST_STATE=closed
 
 main() {
+    exec <"$1"
     while IFS= read -r LINE; do
         process_line
-    done <"$1"
+    done
     process_line # process one more time in case there is empty line before EOF
     echo "$OUTPUT"
 }
