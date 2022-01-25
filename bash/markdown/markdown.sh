@@ -41,10 +41,6 @@ end_list() {
     inside_a_list=no
 }
 
-list_end() {
-    echo "</ul>"
-}
-
 parse_heading_or_paragraph() {
     if [[ $LINE =~ ^(#{1,6})\ +(.*) ]]; then
         HEAD=${BASH_REMATCH[2]}
