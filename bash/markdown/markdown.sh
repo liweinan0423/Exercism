@@ -51,7 +51,7 @@ parse_heading_or_paragraph() {
     fi
 }
 
-process_inner_styles() {
+process_inline_styles() {
     parse_bold
     parse_italics
 }
@@ -81,21 +81,26 @@ prepend_list_end() {
 }
 
 process_line() {
-    process_inner_styles
+    process_inline_styles
     process_block_styles
 }
 
-declare LINE   # this global variable holds the content of current line
-declare OUTPUT # buffer for HTML outputs
+main() {
 
-while IFS= read -r LINE; do
-    process_line
-    OUTPUT+=$LINE
-done <"$1"
+    declare LINE   # this global variable holds the content of current line
+    declare OUTPUT # buffer for HTML outputs
 
-inside_list && {
-    OUTPUT+="</ul>"
-    end_list
+    while IFS= read -r LINE; do
+        process_line
+        OUTPUT+=$LINE
+    done <"$1"
+
+    inside_list && {
+        OUTPUT+="</ul>"
+        end_list
+    }
+
+    echo "$OUTPUT"
 }
 
-echo "$OUTPUT"
+main "$@"
