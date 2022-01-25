@@ -63,6 +63,9 @@ process_styles() {
     parse_italics
 }
 
+prepend_list_start() {
+    printf -v LINE "%s" "$(list_start)$LINE"
+}
 process_line() {
     if is_list_item; then
         to_listitem
