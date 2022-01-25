@@ -10,7 +10,6 @@ declare STATE PREV_STATE
 declare LIST_STATE=closed
 
 main() {
-
     while read -r LINE; do
         process_line
     done <"$1"
@@ -46,11 +45,6 @@ process_eof() {
     fi
 }
 
-process_inline_styles() {
-    parse_bold
-    parse_italics
-}
-
 determine_state() {
     PREV_STATE=$STATE
     case $LINE in
@@ -80,9 +74,10 @@ close_list() {
 }
 
 parse_header() {
+    local level content
     if [[ $LINE =~ ^(\#+)\ +(.*) ]]; then
-        local level=$((${#BASH_REMATCH[1]}))
-        local content=${BASH_REMATCH[2]}
+        level=$((${#BASH_REMATCH[1]}))
+        content=${BASH_REMATCH[2]}
         OUTPUT+="<h$level>$content</h$level>"
     fi
 }
@@ -103,6 +98,11 @@ parse_list() {
         OUTPUT+=$LINE
         ;;
     esac
+}
+
+process_inline_styles() {
+    parse_bold
+    parse_italics
 }
 
 parse_bold() {
