@@ -56,16 +56,7 @@ process_inner_styles() {
     parse_italics
 }
 
-prepend_list_start() {
-    printf -v LINE "<ul>%s" "$LINE"
-}
-
-prepend_list_end() {
-    printf -v LINE "</ul>%s" "$LINE"
-}
-
-process_line() {
-    process_inner_styles
+process_block_styles() {
     if is_list_item; then
         to_listitem
         inside_list || {
@@ -79,6 +70,19 @@ process_line() {
             end_list
         }
     fi
+}
+
+prepend_list_start() {
+    printf -v LINE "<ul>%s" "$LINE"
+}
+
+prepend_list_end() {
+    printf -v LINE "</ul>%s" "$LINE"
+}
+
+process_line() {
+    process_inner_styles
+    process_block_styles
 }
 
 declare LINE   # this global variable holds the content of current line
