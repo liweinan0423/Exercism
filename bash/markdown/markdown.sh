@@ -70,7 +70,7 @@ process_line() {
         line=$(list_append "$line")
         inside_list || {
             start_list
-            h+=$(list_start)
+            line=$(list_start)$line
         }
     else
         inside_list && {
