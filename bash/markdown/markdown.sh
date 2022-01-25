@@ -43,9 +43,7 @@ process_line() {
     esac
 }
 process_eof() {
-    if [[ $LIST_STATE == open ]]; then
-        close_list
-    fi
+    process_line
 }
 
 determine_state() {
