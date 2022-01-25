@@ -18,7 +18,7 @@ parse_italics() {
         one=${LINE#*_}
         two=${one#*_}
         if [[ ${#two} -lt ${#one} && ${#one} -lt ${#LINE} ]]; then
-            LINE="${LINE%%_"$one"}<em>${one%%_"$two"}</em>$two"
+            printf -v LINE "%s" "${LINE%%_"$one"}<em>${one%%_"$two"}</em>$two"
         fi
     done
 }
