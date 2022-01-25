@@ -10,7 +10,7 @@ declare STATE PREV_STATE
 declare LIST_STATE=closed
 
 main() {
-    while read -r LINE; do
+    while IFS= read -r LINE; do
         process_line
     done <"$1"
     process_eof
