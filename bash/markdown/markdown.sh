@@ -1,4 +1,48 @@
 #!/usr/bin/env bash
+declare LINE   # this global variable holds the content of current line
+declare OUTPUT # buffer for HTML outputs
+
+main() {
+
+    while IFS= read -r LINE; do
+        process_line
+        OUTPUT+=$LINE
+    done <"$1"
+
+    inside_list && {
+        OUTPUT+="</ul>"
+        end_list
+    }
+
+    echo "$OUTPUT"
+}
+
+process_line() {
+    process_inline_styles
+    process_block_styles
+}
+
+process_inline_styles() {
+    parse_bold
+    parse_italics
+}
+
+process_block_styles() {
+    if is_list_item; then
+        to_listitem
+        inside_list || {
+            start_list
+            prepend_list_start
+        }
+    else
+        parse_heading_or_paragraph
+        inside_list && {
+            prepend_list_end
+            end_list
+        }
+    fi
+}
+
 parse_bold() {
     while true; do
         orig=$LINE
@@ -26,19 +70,25 @@ parse_italics() {
 is_list_item() {
     grep '^\* ' <<<"$LINE" >/dev/null 2>&1
 }
-inside_list() {
-    [[ "$inside_a_list" == yes ]]
-}
-start_list() {
-    inside_a_list=yes
-}
 
 to_listitem() {
     printf -v LINE "<li>%s</li>" "${LINE#??}"
 }
 
-end_list() {
-    inside_a_list=no
+inside_list() {
+    [[ "$inside_a_list" == yes ]]
+}
+
+start_list() {
+    inside_a_list=yes
+}
+
+prepend_list_start() {
+    printf -v LINE "<ul>%s" "$LINE"
+}
+
+prepend_list_end() {
+    printf -v LINE "</ul>%s" "$LINE"
 }
 
 parse_heading_or_paragraph() {
@@ -51,56 +101,8 @@ parse_heading_or_paragraph() {
     fi
 }
 
-process_inline_styles() {
-    parse_bold
-    parse_italics
-}
-
-process_block_styles() {
-    if is_list_item; then
-        to_listitem
-        inside_list || {
-            start_list
-            prepend_list_start
-        }
-    else
-        parse_heading_or_paragraph
-        inside_list && {
-            prepend_list_end
-            end_list
-        }
-    fi
-}
-
-prepend_list_start() {
-    printf -v LINE "<ul>%s" "$LINE"
-}
-
-prepend_list_end() {
-    printf -v LINE "</ul>%s" "$LINE"
-}
-
-process_line() {
-    process_inline_styles
-    process_block_styles
-}
-
-main() {
-
-    declare LINE   # this global variable holds the content of current line
-    declare OUTPUT # buffer for HTML outputs
-
-    while IFS= read -r LINE; do
-        process_line
-        OUTPUT+=$LINE
-    done <"$1"
-
-    inside_list && {
-        OUTPUT+="</ul>"
-        end_list
-    }
-
-    echo "$OUTPUT"
+end_list() {
+    inside_a_list=no
 }
 
 main "$@"
