@@ -64,6 +64,7 @@ transform_line() {
 }
 
 transform_list() {
+    transform_line
     if is_list_item; then
         inside_list || {
             start_list
@@ -81,7 +82,6 @@ transform_list() {
 
 declare h
 while IFS= read -r line; do
-    transform_line
     transform_list
     h+=$line
 done <"$1"
