@@ -38,7 +38,7 @@ list_start() {
 }
 
 list_append() {
-    h="$h<li>${line#??}</li>"
+    echo "<li>${line#??}</li>"
 }
 
 end_list() {
@@ -64,13 +64,12 @@ transform_line() {
 }
 
 transform_list() {
-
     if is_list_item; then
         inside_list || {
             start_list
             h+=$(list_start)
         }
-        list_append
+        h+=$(list_append)
     else
         inside_list && {
             h+=$(list_end)
