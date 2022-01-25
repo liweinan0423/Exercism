@@ -38,7 +38,7 @@ list_start() {
 }
 
 to_listitem() {
-    printf -v LINE "%s" "<li>${LINE#??}</li>"
+    printf -v LINE "<li>%s</li>" "${LINE#??}"
 }
 
 end_list() {
