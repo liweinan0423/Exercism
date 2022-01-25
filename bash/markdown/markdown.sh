@@ -74,7 +74,7 @@ process_line() {
     else
         parse_heading_or_paragraph
         inside_list && {
-            LINE=$(list_end)$LINE
+            printf -v LINE "%s" "$(list_end)$LINE"
             end_list
         }
     fi
