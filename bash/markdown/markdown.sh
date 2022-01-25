@@ -29,7 +29,7 @@ is_list_item() {
 inside_list() {
     [[ "$inside_a_list" == yes ]]
 }
-list_start() {
+start_list() {
     h="$h<ul>"
     inside_a_list=yes
 }
@@ -64,7 +64,7 @@ declare h
 while IFS= read -r line; do
     transform_line
     if is_list_item; then
-        inside_list || list_start
+        inside_list || start_list
         list_append
     else
         inside_list && {
