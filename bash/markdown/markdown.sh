@@ -72,6 +72,8 @@ determine_state() {
     fi
 }
 
+## below are actions for different states
+
 close_list() {
     if [[ $LIST_STATE == open ]]; then
         OUTPUT+="</ul>"
@@ -110,6 +112,10 @@ parse_list() {
     esac
 }
 
+to_listitem() {
+    printf -v LINE "<li>%s</li>" "${LINE#??}"
+}
+
 process_inline_styles() {
     parse_bold
     parse_italics
@@ -137,10 +143,6 @@ parse_italics() {
             printf -v LINE "%s" "${LINE%%_"$one"}<em>${one%%_"$two"}</em>$two"
         fi
     done
-}
-
-to_listitem() {
-    printf -v LINE "<li>%s</li>" "${LINE#??}"
 }
 
 main "$@"
