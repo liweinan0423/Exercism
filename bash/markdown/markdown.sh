@@ -51,6 +51,7 @@ list_end() {
 }
 
 parse_heading_or_paragraph() {
+    local line=$1
     if [[ $line =~ ^(#{1,6})\ +(.*) ]]; then
         HEAD=${BASH_REMATCH[2]}
         LEVEL=${BASH_REMATCH[1]}
