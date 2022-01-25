@@ -71,7 +71,7 @@ process_line() {
         to_listitem
         inside_list || {
             start_list
-            printf -v LINE "%s" "$(list_start)$LINE"
+            prepend_list_start
         }
     else
         parse_heading_or_paragraph
