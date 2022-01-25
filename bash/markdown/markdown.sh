@@ -30,8 +30,11 @@ inside_list() {
     [[ "$inside_a_list" == yes ]]
 }
 start_list() {
-    h="$h<ul>"
     inside_a_list=yes
+}
+
+list_start() {
+    echo "<ul>"
 }
 
 list_append() {
@@ -64,7 +67,10 @@ declare h
 while IFS= read -r line; do
     transform_line
     if is_list_item; then
-        inside_list || start_list
+        inside_list || {
+            start_list
+            h+=$(list_start)
+        }
         list_append
     else
         inside_list && {
