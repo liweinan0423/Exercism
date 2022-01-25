@@ -4,16 +4,12 @@ declare OUTPUT # buffer for HTML outputs
 
 main() {
 
-    while IFS= read -r LINE; do
-        process_line
-        OUTPUT+=$LINE
+    while read -r LINE; do
+        process_block_styles
     done <"$1"
-
-    inside_list && {
-        OUTPUT+="</ul>"
-        end_list
-    }
-
+    if [[ $list_state == open ]]; then
+        close_list
+    fi
     echo "$OUTPUT"
 }
 
@@ -27,20 +23,84 @@ process_inline_styles() {
     parse_italics
 }
 
-process_block_styles() {
-    if is_list_item; then
-        to_listitem
-        inside_list || {
-            start_list
-            prepend_list_start
-        }
-    else
-        parse_heading_or_paragraph
-        inside_list && {
-            prepend_list_end
-            end_list
-        }
+declare block_state prev_state
+declare list_state=closed
+shopt -s extglob
+determine_state() {
+    prev_state=$block_state
+    case $LINE in
+    \#\#\#\#\#\#\#*) # only h1-h6 are allowed, others are parsed as regular paragraph
+        block_state=paragraph
+        ;;
+    \#*)
+        block_state=header
+        ;;
+    [\*-]*)
+        block_state=list
+        ;;
+    *([[:space:]]))
+        block_state=empty
+        ;;
+    *)
+        block_state=paragraph
+        ;;
+    esac
+}
+
+close_list() {
+    if [[ $list_state == open ]]; then
+        OUTPUT+="</ul>"
+        list_state=closed
     fi
+}
+
+process_block_styles() {
+    determine_state
+    process_inline_styles
+    if [[ $prev_state == list && $block_state != list ]]; then
+        close_list
+    fi
+    case $block_state in
+    header)
+        parse_header
+        ;;
+    paragraph)
+        parse_paragraph
+        ;;
+    list)
+        parse_list
+        ;;
+    *)
+        determine_state
+        process_block_styles
+        ;;
+    esac
+}
+
+parse_header() {
+    if [[ $LINE =~ ^(\#+)\ +(.*) ]]; then
+        local level=$((${#BASH_REMATCH[1]}))
+        local content=${BASH_REMATCH[2]}
+        OUTPUT+="<h$level>$content</h$level>"
+    fi
+}
+
+parse_paragraph() {
+    OUTPUT+="<p>$LINE</p>"
+}
+
+parse_list() {
+    case $list_state in
+    closed)
+        OUTPUT+="<ul>"
+        list_state=open
+        parse_list
+        ;;
+    open)
+        to_listitem
+        OUTPUT+=$LINE
+        ;;
+    esac
 }
 
 parse_bold() {
