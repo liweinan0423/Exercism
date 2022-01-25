@@ -37,7 +37,7 @@ list_start() {
     echo "<ul>"
 }
 
-list_append() {
+to_listitem() {
     printf -v LINE "%s" "<li>${LINE#??}</li>"
 }
 
@@ -65,7 +65,7 @@ process_styles() {
 
 process_line() {
     if is_list_item; then
-        list_append
+        to_listitem
         inside_list || {
             start_list
             printf -v LINE "%s" "$(list_start)$LINE"
