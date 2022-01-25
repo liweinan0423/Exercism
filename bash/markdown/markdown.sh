@@ -38,8 +38,7 @@ list_start() {
 }
 
 list_append() {
-    local LINE=$1
-    echo "<li>${LINE#??}</li>"
+    printf -v LINE "%s" "<li>${LINE#??}</li>"
 }
 
 end_list() {
@@ -68,7 +67,7 @@ transform_line() {
 process_line() {
     transform_line
     if is_list_item; then
-        LINE=$(list_append "$LINE")
+        list_append
         inside_list || {
             start_list
             LINE=$(list_start)$LINE
