@@ -58,13 +58,13 @@ parse_heading_or_paragraph() {
         printf -v LINE "%s" "<p>$LINE</p>"
     fi
 }
-transform_line() {
+transform_inner() {
     parse_bold
     parse_italics
 }
 
 process_line() {
-    transform_line
+    transform_inner
     if is_list_item; then
         list_append
         inside_list || {
