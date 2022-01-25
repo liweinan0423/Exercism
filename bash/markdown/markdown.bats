@@ -174,7 +174,7 @@ END
 }
 
 @test "with markdown symbols in the paragraph text that should not be interpreted" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     cat <<END > "$MD_FILE"
 This is a paragraph with # and * in the text
 END
@@ -184,7 +184,7 @@ END
 }
 
 @test "unordered lists close properly with preceding and following lines" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     cat <<END >"$MD_FILE"
 # Start a list
 * Item 1
