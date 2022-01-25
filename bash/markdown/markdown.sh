@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# ================================================================================ #
+# FIXME: This implementation doesn't support multi-line paragraphes, every line is #
+# convered to a separate paragraph.                                                #
+# ================================================================================ #
+
 shopt -s extglob # enable extended pattern matching in case statements
 
 declare LINE   # this global variable holds the content of current line
