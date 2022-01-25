@@ -33,10 +33,6 @@ start_list() {
     inside_a_list=yes
 }
 
-list_start() {
-    echo "<ul>"
-}
-
 to_listitem() {
     printf -v LINE "<li>%s</li>" "${LINE#??}"
 }
