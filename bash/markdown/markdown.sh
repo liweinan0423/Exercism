@@ -69,13 +69,13 @@ transform_list() {
             start_list
             h+=$(list_start)
         }
-        h+=$(list_append)
+        line=$(list_append)
     else
         inside_list && {
             h+=$(list_end)
             end_list
         }
-        h+=$(parse_heading_or_paragraph)
+        line=$(parse_heading_or_paragraph)
     fi
 }
 
@@ -83,6 +83,7 @@ declare h
 while IFS= read -r line; do
     transform_line
     transform_list
+    h+=$line
 done <"$1"
 
 inside_list && {
