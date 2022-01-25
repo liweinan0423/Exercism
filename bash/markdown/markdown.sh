@@ -63,9 +63,8 @@ transform_line() {
     parse_italics
 }
 
-declare h
-while IFS= read -r line; do
-    transform_line
+transform_list() {
+
     if is_list_item; then
         inside_list || {
             start_list
@@ -79,6 +78,12 @@ while IFS= read -r line; do
         }
         h+=$(parse_heading_or_paragraph)
     fi
+}
+
+declare h
+while IFS= read -r line; do
+    transform_line
+    transform_list
 done <"$1"
 
 inside_list && {
