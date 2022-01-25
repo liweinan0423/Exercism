@@ -23,39 +23,51 @@ parse_italics() {
     done
 }
 
-while IFS= read -r line; do
+is_list_item() {
+    grep '^\* ' <<<"$line" >/dev/null 2>&1
+}
+inside_list() {
+    [[ "$inside_a_list" == yes ]]
+}
+list_start() {
+    h="$h<ul>"
+    inside_a_list=yes
+}
+
+list_append() {
+    h="$h<li>${line#??}</li>"
+}
+
+list_end() {
+    h="$h</ul>"
+    inside_a_list=no
+}
+
+parse_heading_or_paragraph() {
+    if [[ $line =~ ^(#{1,6})\ +(.*) ]]; then
+        HEAD=${BASH_REMATCH[2]}
+        LEVEL=${BASH_REMATCH[1]}
+        echo "<h${#LEVEL}>$HEAD</h${#LEVEL}>"
+    else
+        echo "<p>$line</p>"
+    fi
+}
+transform_line() {
     parse_bold
     parse_italics
+}
 
-    if echo "$line" | grep '^\*' >/dev/null 2>&1; then
-        if [[ "$inside_a_list" != yes ]]; then
-            h="$h<ul>"
-            inside_a_list=yes
-        fi
-        h="$h<li>${line#??}</li>"
-
+while IFS= read -r line; do
+    transform_line
+    if is_list_item; then
+        inside_list || list_start
+        list_append
     else
-        if [[ $inside_a_list == yes ]]; then
-            h="$h</ul>"
-            inside_a_list=no
-        fi
-
-        n=$(expr "$line" : "#\{1,\}")
-        if [[ $n -gt 0 ]] && [[ 7 -gt $n ]]; then
-            HEAD=${line:n}
-            while [[ $HEAD == " "* ]]; do HEAD=${HEAD# }; done
-            h="$h<h$n>$HEAD</h$n>"
-
-        else
-            grep '_..*_' <<<"$line" >/dev/null &&
-                line=$(echo "$line" | sed -E 's,_([^_]+)_,<em>\1</em>,g')
-            h="$h<p>$line</p>"
-        fi
+        inside_list && list_end
+        h+=$(parse_heading_or_paragraph)
     fi
 done <"$1"
 
-if [ X$inside_a_list = Xyes ]; then
-    h="$h</ul>"
-fi
+inside_list && list_end
 
 echo "$h"
