@@ -134,6 +134,7 @@ END
       cat <<END >"$MD_FILE"
 * Item 1
 * Item 2
+
 END
     run bash markdown.sh "$MD_FILE"
     assert_success
