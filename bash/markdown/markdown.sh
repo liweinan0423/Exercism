@@ -21,11 +21,6 @@ main() {
     echo "$OUTPUT"
 }
 
-process_line() {
-    process_inline_styles
-    process_block_styles
-}
-
 process_inline_styles() {
     parse_bold
     parse_italics
