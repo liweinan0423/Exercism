@@ -50,13 +50,12 @@ list_end() {
 }
 
 parse_heading_or_paragraph() {
-    local LINE=$1
     if [[ $LINE =~ ^(#{1,6})\ +(.*) ]]; then
         HEAD=${BASH_REMATCH[2]}
         LEVEL=${BASH_REMATCH[1]}
-        echo "<h${#LEVEL}>$HEAD</h${#LEVEL}>"
+        printf -v LINE "%s" "<h${#LEVEL}>$HEAD</h${#LEVEL}>"
     else
-        echo "<p>$LINE</p>"
+        printf -v LINE "%s" "<p>$LINE</p>"
     fi
 }
 transform_line() {
@@ -73,7 +72,7 @@ process_line() {
             LINE=$(list_start)$LINE
         }
     else
-        LINE=$(parse_heading_or_paragraph "$LINE")
+        parse_heading_or_paragraph
         inside_list && {
             LINE=$(list_end)$LINE
             end_list
