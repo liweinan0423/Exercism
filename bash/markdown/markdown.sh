@@ -64,7 +64,6 @@ process_styles() {
 }
 
 process_line() {
-    process_styles
     if is_list_item; then
         list_append
         inside_list || {
@@ -78,6 +77,7 @@ process_line() {
             end_list
         }
     fi
+    process_styles
 }
 
 declare LINE   # this global variable holds the content of current line
