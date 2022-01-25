@@ -12,13 +12,38 @@ declare LIST_STATE=closed
 main() {
 
     while read -r LINE; do
-        process_block_styles
+        process_line
     done <"$1"
+    process_eof
+    echo "$OUTPUT"
+}
 
+process_line() {
+    determine_state
+    process_inline_styles
+    if [[ $PREV_STATE == list && $STATE != list ]]; then
+        close_list
+    fi
+    case $STATE in
+    header)
+        parse_header
+        ;;
+    paragraph)
+        parse_paragraph
+        ;;
+    list)
+        parse_list
+        ;;
+    *)
+        determine_state
+        process_line
+        ;;
+    esac
+}
+process_eof() {
     if [[ $LIST_STATE == open ]]; then
         close_list
     fi
-    echo "$OUTPUT"
 }
 
 process_inline_styles() {
@@ -52,29 +77,6 @@ close_list() {
         OUTPUT+="</ul>"
         LIST_STATE=closed
     fi
-}
-
-process_block_styles() {
-    determine_state
-    process_inline_styles
-    if [[ $PREV_STATE == list && $STATE != list ]]; then
-        close_list
-    fi
-    case $STATE in
-    header)
-        parse_header
-        ;;
-    paragraph)
-        parse_paragraph
-        ;;
-    list)
-        parse_list
-        ;;
-    *)
-        determine_state
-        process_block_styles
-        ;;
-    esac
 }
 
 parse_header() {
@@ -126,7 +128,6 @@ parse_italics() {
         fi
     done
 }
-
 
 to_listitem() {
     printf -v LINE "<li>%s</li>" "${LINE#??}"
