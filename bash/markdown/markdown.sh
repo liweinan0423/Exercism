@@ -20,10 +20,12 @@ main() {
 process_line() {
     determine_state
     process_inline_styles
-    if [[ $PREV_STATE == list && $STATE != list ]]; then
-        close_list
-    fi
+
     case $STATE in
+    end-of-list)
+        close_list
+        process_line
+        ;;
     header)
         parse_header
         ;;
@@ -64,6 +66,9 @@ determine_state() {
         STATE=paragraph
         ;;
     esac
+    if [[ $PREV_STATE == list && $STATE != list ]]; then
+        STATE=end-of-list
+    fi
 }
 
 close_list() {
