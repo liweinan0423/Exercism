@@ -1,30 +1,30 @@
 #!/usr/bin/env bash
 parse_bold() {
     while true; do
-        orig=$line
-        if [[ $line =~ ^(.+)__(.*) ]]; then
+        orig=$LINE
+        if [[ $LINE =~ ^(.+)__(.*) ]]; then
             post=${BASH_REMATCH[2]}
             pre=${BASH_REMATCH[1]}
             if [[ $pre =~ ^(.*)__(.+) ]]; then
-                printf -v line "%s<strong>%s</strong>%s" "${BASH_REMATCH[1]}" "${BASH_REMATCH[2]}" "$post"
+                printf -v LINE "%s<strong>%s</strong>%s" "${BASH_REMATCH[1]}" "${BASH_REMATCH[2]}" "$post"
             fi
         fi
-        [ "$line" != "$orig" ] || break
+        [ "$LINE" != "$orig" ] || break
     done
 }
 
 parse_italics() {
-    while [[ $line == *_*?_* ]]; do
-        one=${line#*_}
+    while [[ $LINE == *_*?_* ]]; do
+        one=${LINE#*_}
         two=${one#*_}
-        if [[ ${#two} -lt ${#one} && ${#one} -lt ${#line} ]]; then
-            line="${line%%_"$one"}<em>${one%%_"$two"}</em>$two"
+        if [[ ${#two} -lt ${#one} && ${#one} -lt ${#LINE} ]]; then
+            LINE="${LINE%%_"$one"}<em>${one%%_"$two"}</em>$two"
         fi
     done
 }
 
 is_list_item() {
-    grep '^\* ' <<<"$line" >/dev/null 2>&1
+    grep '^\* ' <<<"$LINE" >/dev/null 2>&1
 }
 inside_list() {
     [[ "$inside_a_list" == yes ]]
@@ -38,8 +38,8 @@ list_start() {
 }
 
 list_append() {
-    local line=$1
-    echo "<li>${line#??}</li>"
+    local LINE=$1
+    echo "<li>${LINE#??}</li>"
 }
 
 end_list() {
@@ -51,13 +51,13 @@ list_end() {
 }
 
 parse_heading_or_paragraph() {
-    local line=$1
-    if [[ $line =~ ^(#{1,6})\ +(.*) ]]; then
+    local LINE=$1
+    if [[ $LINE =~ ^(#{1,6})\ +(.*) ]]; then
         HEAD=${BASH_REMATCH[2]}
         LEVEL=${BASH_REMATCH[1]}
         echo "<h${#LEVEL}>$HEAD</h${#LEVEL}>"
     else
-        echo "<p>$line</p>"
+        echo "<p>$LINE</p>"
     fi
 }
 transform_line() {
@@ -68,24 +68,24 @@ transform_line() {
 process_line() {
     transform_line
     if is_list_item; then
-        line=$(list_append "$line")
+        LINE=$(list_append "$LINE")
         inside_list || {
             start_list
-            line=$(list_start)$line
+            LINE=$(list_start)$LINE
         }
     else
-        line=$(parse_heading_or_paragraph "$line")
+        LINE=$(parse_heading_or_paragraph "$LINE")
         inside_list && {
-            line=$(list_end)$line
+            LINE=$(list_end)$LINE
             end_list
         }
     fi
 }
 
 declare h
-while IFS= read -r line; do
+while IFS= read -r LINE; do
     process_line
-    h+=$line
+    h+=$LINE
 done <"$1"
 
 inside_list && {
