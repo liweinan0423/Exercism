@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+
+shopt -s extglob # enable extended pattern matching in case statements
+
 declare LINE   # this global variable holds the content of current line
 declare OUTPUT # buffer for HTML outputs
 
@@ -26,7 +29,6 @@ process_inline_styles() {
     parse_italics
 }
 
-shopt -s extglob
 determine_state() {
     prev_state=$block_state
     case $LINE in
