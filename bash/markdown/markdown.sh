@@ -51,7 +51,7 @@ parse_heading_or_paragraph() {
     fi
 }
 
-process_styles() {
+process_inner_styles() {
     parse_bold
     parse_italics
 }
@@ -65,6 +65,7 @@ prepend_list_end() {
 }
 
 process_line() {
+    process_inner_styles
     if is_list_item; then
         to_listitem
         inside_list || {
@@ -78,7 +79,6 @@ process_line() {
             end_list
         }
     fi
-    process_styles
 }
 
 declare LINE   # this global variable holds the content of current line
