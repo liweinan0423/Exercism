@@ -66,6 +66,7 @@ transform_line() {
 }
 
 process_line() {
+    declare -g LINE
     transform_line
     if is_list_item; then
         LINE=$(list_append "$LINE")
@@ -84,6 +85,7 @@ process_line() {
 
 declare LINE # this global variable holds the content of current line
 declare OUTPUT # buffer for HTML outputs
+
 while IFS= read -r LINE; do
     process_line
     OUTPUT+=$LINE
