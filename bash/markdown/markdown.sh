@@ -35,7 +35,7 @@ process_line() {
     list)
         parse_list
         ;;
-    empty) : ;;
+    empty) ;;
     *)
         determine_state
         process_line
