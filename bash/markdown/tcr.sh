@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 
 test() {
-    bats *.bats
+    bats ./*.bats
 }
 commit() { 
     git add .
