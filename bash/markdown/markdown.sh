@@ -54,6 +54,7 @@ parse_heading_or_paragraph() {
         printf -v LINE "%s" "<p>$LINE</p>"
     fi
 }
+
 process_styles() {
     parse_bold
     parse_italics
@@ -63,7 +64,7 @@ prepend_list_start() {
     printf -v LINE "<ul>%s" "$LINE"
 }
 append_list_end() {
-    printf -v LINE "%s" "$(list_end)$LINE"
+    printf -v LINE "</ul>%s" "$LINE"
 }
 process_line() {
     if is_list_item; then
@@ -91,7 +92,7 @@ while IFS= read -r LINE; do
 done <"$1"
 
 inside_list && {
-    OUTPUT+=$(list_end)
+    OUTPUT+="</ul>"
     end_list
 }
 
