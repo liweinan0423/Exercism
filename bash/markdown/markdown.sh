@@ -69,7 +69,7 @@ process_line() {
         list_append
         inside_list || {
             start_list
-            LINE=$(list_start)$LINE
+            printf -v LINE "%s" "$(list_start)$LINE"
         }
     else
         parse_heading_or_paragraph
@@ -80,7 +80,7 @@ process_line() {
     fi
 }
 
-declare LINE # this global variable holds the content of current line
+declare LINE   # this global variable holds the content of current line
 declare OUTPUT # buffer for HTML outputs
 
 while IFS= read -r LINE; do
