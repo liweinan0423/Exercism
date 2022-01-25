@@ -5,15 +5,17 @@ shopt -s extglob # enable extended pattern matching in case statements
 declare LINE   # this global variable holds the content of current line
 declare OUTPUT # buffer for HTML outputs
 
-declare block_state prev_state
-declare list_state=closed
+# state matchine variables
+declare STATE PREV_STATE
+declare LIST_STATE=closed
 
 main() {
 
     while read -r LINE; do
         process_block_styles
     done <"$1"
-    if [[ $list_state == open ]]; then
+
+    if [[ $LIST_STATE == open ]]; then
         close_list
     fi
     echo "$OUTPUT"
@@ -30,40 +32,40 @@ process_inline_styles() {
 }
 
 determine_state() {
-    prev_state=$block_state
+    PREV_STATE=$STATE
     case $LINE in
     \#\#\#\#\#\#\#*) # only h1-h6 are allowed, others are parsed as regular paragraph
-        block_state=paragraph
+        STATE=paragraph
         ;;
     \#*)
-        block_state=header
+        STATE=header
         ;;
     [\*-]*)
-        block_state=list
+        STATE=list
         ;;
     *([[:space:]]))
-        block_state=empty
+        STATE=empty
         ;;
     *)
-        block_state=paragraph
+        STATE=paragraph
         ;;
     esac
 }
 
 close_list() {
-    if [[ $list_state == open ]]; then
+    if [[ $LIST_STATE == open ]]; then
         OUTPUT+="</ul>"
-        list_state=closed
+        LIST_STATE=closed
     fi
 }
 
 process_block_styles() {
     determine_state
     process_inline_styles
-    if [[ $prev_state == list && $block_state != list ]]; then
+    if [[ $PREV_STATE == list && $STATE != list ]]; then
         close_list
     fi
-    case $block_state in
+    case $STATE in
     header)
         parse_header
         ;;
@@ -93,10 +95,10 @@ parse_paragraph() {
 }
 
 parse_list() {
-    case $list_state in
+    case $LIST_STATE in
     closed)
         OUTPUT+="<ul>"
-        list_state=open
+        LIST_STATE=open
         parse_list
         ;;
     open)
