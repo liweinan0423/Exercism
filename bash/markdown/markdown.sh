@@ -2,6 +2,9 @@
 declare LINE   # this global variable holds the content of current line
 declare OUTPUT # buffer for HTML outputs
 
+declare block_state prev_state
+declare list_state=closed
+
 main() {
 
     while read -r LINE; do
@@ -23,8 +26,6 @@ process_inline_styles() {
     parse_italics
 }
 
-declare block_state prev_state
-declare list_state=closed
 shopt -s extglob
 determine_state() {
     prev_state=$block_state
@@ -127,42 +128,9 @@ parse_italics() {
     done
 }
 
-is_list_item() {
-    grep '^\* ' <<<"$LINE" >/dev/null 2>&1
-}
 
 to_listitem() {
     printf -v LINE "<li>%s</li>" "${LINE#??}"
-}
-
-inside_list() {
-    [[ "$inside_a_list" == yes ]]
-}
-
-start_list() {
-    inside_a_list=yes
-}
-
-prepend_list_start() {
-    printf -v LINE "<ul>%s" "$LINE"
-}
-
-prepend_list_end() {
-    printf -v LINE "</ul>%s" "$LINE"
-}
-
-parse_heading_or_paragraph() {
-    if [[ $LINE =~ ^(#{1,6})\ +(.*) ]]; then
-        HEAD=${BASH_REMATCH[2]}
-        LEVEL=${BASH_REMATCH[1]}
-        printf -v LINE "%s" "<h${#LEVEL}>$HEAD</h${#LEVEL}>"
-    else
-        printf -v LINE "%s" "<p>$LINE</p>"
-    fi
-}
-
-end_list() {
-    inside_a_list=no
 }
 
 main "$@"
