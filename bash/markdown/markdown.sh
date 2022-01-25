@@ -98,6 +98,10 @@ parse_list() {
         to_listitem
         OUTPUT+=$LINE
         ;;
+    *)
+        LIST_STATE=closed
+        parse_list
+        ;;
     esac
 }
 
