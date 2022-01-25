@@ -38,7 +38,7 @@ list_append() {
     h="$h<li>${line#??}</li>"
 }
 
-list_end() {
+end_list() {
     h="$h</ul>"
     inside_a_list=no
 }
@@ -64,11 +64,11 @@ while IFS= read -r line; do
         inside_list || list_start
         list_append
     else
-        inside_list && list_end
+        inside_list && end_list
         h+=$(parse_heading_or_paragraph)
     fi
 done <"$1"
 
-inside_list && list_end
+inside_list && end_list
 
 echo "$h"
