@@ -52,7 +52,7 @@ process_line() {
 determine_state() {
 	PREV_STATE=$STATE
 	case $LINE in
-	\#\#\#\#\#\#\#*) # only h1-h6 are allowed, others are parsed as regular paragraph
+	"#######"*) # only h1-h6 are allowed, others are parsed as regular paragraph
 		STATE=paragraph
 		;;
 	\#*)
@@ -82,10 +82,17 @@ close_list() {
 	fi
 }
 
+open_list() {
+	if [[ $LIST_STATE == closed ]]; then
+		OUTPUT+="<ul>"
+		LIST_STATE=open
+	fi
+}
+
 parse_header() {
 	local level content
 	if [[ $LINE =~ ^(\#+)\ +(.*) ]]; then
-		level=$((${#BASH_REMATCH[1]}))
+		level=${#BASH_REMATCH[1]}
 		content=${BASH_REMATCH[2]}
 		OUTPUT+="<h$level>$content</h$level>"
 	fi
@@ -98,8 +105,7 @@ parse_paragraph() {
 parse_list() {
 	case $LIST_STATE in
 	closed)
-		OUTPUT+="<ul>"
-		LIST_STATE=open
+		open_list
 		parse_list
 		;;
 	open)
@@ -118,31 +124,22 @@ to_listitem() {
 }
 
 process_inline_styles() {
-	parse_bold
-	parse_italics
+	parse_inline "__" "strong"
+	parse_inline "_" "em"
 }
 
-parse_bold() {
+parse_inline() {
+	local mark=$1 tag=$2
 	while true; do
 		orig=$LINE
-		if [[ $LINE =~ ^(.+)__(.*) ]]; then
+		if [[ $LINE =~ ^(.+)${mark}(.*) ]]; then
 			post=${BASH_REMATCH[2]}
 			pre=${BASH_REMATCH[1]}
-			if [[ $pre =~ ^(.*)__(.+) ]]; then
-				printf -v LINE "%s<strong>%s</strong>%s" "${BASH_REMATCH[1]}" "${BASH_REMATCH[2]}" "$post"
+			if [[ $pre =~ ^(.*)${mark}(.+) ]]; then
+				printf -v LINE "%s<%s>%s</%s>%s" "${BASH_REMATCH[1]}" "${tag}" "${BASH_REMATCH[2]}" "${tag}" "$post"
 			fi
 		fi
 		[ "$LINE" != "$orig" ] || break
-	done
-}
-
-parse_italics() {
-	while [[ $LINE == *_*?_* ]]; do
-		one=${LINE#*_}
-		two=${one#*_}
-		if [[ ${#two} -lt ${#one} && ${#one} -lt ${#LINE} ]]; then
-			printf -v LINE "%s" "${LINE%%_"$one"}<em>${one%%_"$two"}</em>$two"
-		fi
 	done
 }
 
