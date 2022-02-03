@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+
+ONE+=("   "); TWO+=(" _ "); THREE+=(" _ "); FOUR+=("   "); FIVE+=(" _ "); SIX+=(" _ "); SEVEN+=(" _ "); EIGHT+=(" _ "); NINE+=(" _ "); ZERO+=(" _ ");
+ONE+=("  |"); TWO+=(" _|"); THREE+=(" _|"); FOUR+=("|_|"); FIVE+=("|_ "); SIX+=("|_ "); SEVEN+=("  |"); EIGHT+=("|_|"); NINE+=("|_|"); ZERO+=("| |");
+ONE+=("  |"); TWO+=("|_ "); THREE+=(" _|"); FOUR+=("  |"); FIVE+=(" _|"); SIX+=("|_|"); SEVEN+=("  |"); EIGHT+=("|_|"); NINE+=(" _|"); ZERO+=("|_|");
+ONE+=("   "); TWO+=("   "); THREE+=("   "); FOUR+=("   "); FIVE+=("   "); SIX+=("   "); SEVEN+=("   "); EIGHT+=("   "); NINE+=("   "); ZERO+=("   ");
+
+NUMBERS=("ZERO" "ONE" "TWO" "THREE" "FOUR" "FIVE" "SIX" "SEVEN" "EIGHT" "NINE");
+
+die() {
+	echo "$1"
+	exit 1
+}
+
+run() {
+	local -i nCols
+	local -i nLines
+	local chars
+	
+	while IFS= read -r line; do
+		((nLines++))
+		nCols=${#line}
+		chars+="$line"
+	done
+	((nLines == 1)) && {
+		echo ""
+		exit 0
+	}
+	((nLines % 4 == 0 && nLines != 0)) || die "Number of input lines is not a multiple of four"
+	((nCols % 3 == 0)) || die "Number of input columns is not a multiple of three"
+
+	local -a blocks
+
+	echo "nCols: $nCols, nLines: $nLines"
+	for ((j = 0; j < nCols / 3; j++)); do
+		for ((i = 0; i < nLines; i++)); do
+			index=$((i * nCols / 3 + j))
+			blocks+=("${chars:$index:3}")
+		done
+	done
+	for ((i = 0; i < ${#blocks[@]}; i += 4)); do
+		ocr "${blocks[@]:i:4}"
+	done
+}
+
+ocr() {
+	local -a matches
+	for ((i=1; i<=4; i++)); do
+		for((n=0; n<=9; n++)); do
+			N=${NUMBERS[$n]} # N is an array for each single number
+			[[ ${!i} == "${N[$i]}" ]] && matches[$i]=true
+		done
+	done
+	echo "${matches[@]}"
+}
+
+main() {
+	if [[ -t 0 ]]; then
+		exec 0<<<"$@"
+	fi
+	run
+}
+
+main "$@"
