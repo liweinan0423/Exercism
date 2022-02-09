@@ -32,12 +32,16 @@ main() {
         calculate_score "$roll"
         handle_frame "$roll"
     done
-    assert "((${#bonus[@]} == 0 && frames==10))" "Score cannot be taken until the end of the game"
+    game_is_over || die "Score cannot be taken until the end of the game"
     echo "$score"
 }
 
 game_is_not_over() {
     ((frames < 10)) || ((${#bonus[@]} > 0))
+}
+
+game_is_over() {
+    ! game_is_not_over
 }
 
 roll_is_not_negative() {
