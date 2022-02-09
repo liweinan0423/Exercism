@@ -17,14 +17,14 @@ declare -i frames   # total frames
 declare -a bonus=() # pending bonus points
 
 main() {
-    local n
-    for n; do
+    local roll
+    for roll; do
         game_is_not_over || die "Cannot roll after game is over"
-        roll_is_not_negative "$n" || die "Negative roll is invalid"
-        roll_is_less_than_10 "$n" || die "Pin count exceeds pins on the lane"
-        valid_frame "$n" || die "Pin count exceeds pins on the lane"
-        calculate_score "$n"
-        handle_frame "$n"
+        roll_is_not_negative "$roll" || die "Negative roll is invalid"
+        roll_is_less_than_10 "$roll" || die "Pin count exceeds pins on the lane"
+        valid_frame "$roll" || die "Pin count exceeds pins on the lane"
+        calculate_score "$roll"
+        handle_frame "$roll"
     done
     assert "((${#bonus[@]} == 0 && frames==10))" "Score cannot be taken until the end of the game"
     echo "$score"
