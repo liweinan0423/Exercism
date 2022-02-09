@@ -11,10 +11,16 @@ die() {
 }
 ###############
 
-declare -a frame    # a temporary buffer to determine if a frame is complete while rolling
-declare -i score    # total score
-declare -i frames   # total frames
-declare -a bonus=() # pending bonus points
+declare -a frame  # a temporary buffer to determine if a frame is complete while rolling
+declare -i score  # total score
+declare -i frames # total frames
+
+# Pending bonus counter
+## - for a strike/spare frame, push 2/1 into the queue.
+## - Decrease the counter by 1 for each bonus roll.
+## - Counter is deleted from the queue when it is 0.
+## - The queue should be empty when the game is over
+declare -a bonus=()
 
 main() {
     local roll
@@ -41,6 +47,7 @@ roll_is_not_negative() {
 roll_is_less_than_10() {
     (($1 <= 10))
 }
+
 calculate_score() {
     local n=$1
     if ((frames < 10)); then
@@ -62,12 +69,12 @@ handle_frame() {
     frame+=("$n")
     if ((frames < 10)); then
         if ((n == 10)); then
-            bonus+=(2)
+            bonus+=(2) # a strike gets 2 bonus rolls
             ((frames++))
             frame=()
         elif ((${#frame[@]} == 2)); then
             if ((frame[0] + frame[1] == 10)); then
-                bonus+=(1)
+                bonus+=(1) # a spare gets 1 bonus rolls
             fi
             ((frames++))
             frame=()
@@ -76,18 +83,8 @@ handle_frame() {
 }
 
 valid_frame() {
-    local roll=$1
-    if ((${#frame[@]} == 0)); then
-        return 0
-    elif ((frames < 10)); then
-        if ((${#frame[@]} == 1)); then
-            ((frame[0] + roll <= 10))
-        fi
-    else
-        if ((${#frame[@]} == 1)); then
-            ((frame[0] == 10 || frame[0] + roll <= 10))
-        fi
-    fi
+    ((${#frame[@]} == 0)) ||                      # frame is empty, any roll is valid
+        ((frame[0] == 10 || frame[0] + $1 <= 10)) # if first roll is 10, next roll will be valid(this only happens in the bonus rolls at the end of the game); otherwise the two rolls cannot exceed 10
 }
 
 main "$@"
