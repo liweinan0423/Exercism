@@ -1,10 +1,6 @@
 #!/usr/bin/env bash
 
 ## Utilities ##
-assert() {
-    eval "$1" || die "$2"
-}
-
 die() {
     echo "$1"
     exit 1
