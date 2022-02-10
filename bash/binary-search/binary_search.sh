@@ -55,14 +55,12 @@ binary_search_iter() {
     local -i arrlen
     local -i midpoint
 
-    local -i offset key
-    offset=0 key=$2
+    local -i offset=0 key=$2
     shift 2
     array=("$@")
 
     while ((${#array[@]} > 0)); do
-        arrlen=${#array[@]}
-        midpoint=$((arrlen / 2))
+        midpoint=$(midpoint "${array[@]}")
         if ((key == array[midpoint])); then
             echo $((midpoint + offset))
             return
@@ -81,8 +79,8 @@ main() {
     local key=$1
     shift
     local -a array=("$@")
-    binary_search 0 "$key" "${array[@]}"
-    # binary_search_iter 0 "$key" "${array[@]}"
+    # binary_search 0 "$key" "${array[@]}"
+    binary_search_iter 0 "$key" "${array[@]}"
 }
 
 main "$@"
