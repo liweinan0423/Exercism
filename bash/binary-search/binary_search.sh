@@ -1,31 +1,6 @@
 #!/usr/bin/env bash
 
-# recursive solution
-binary_search() {
-    local -a array left right
-    local -i arrlen
-    local -i midpoint
-
-    local -i offset=$1 key=$2
-    shift 2
-    array=("$@")
-    arrlen=${#array[@]}
-    midpoint=$(midpoint "${array[@]}")
-    middle=$(middle "${array[@]}")
-    read -ra left < <(left "${array[@]}")
-    read -ra right < <(right "${array[@]}")
-
-    if ((arrlen == 0)); then
-        echo -1
-    elif ((key == middle)); then
-        echo $((midpoint + offset))
-    elif ((key < array[midpoint])); then
-        binary_search "$offset" "$key" "${left[@]}"
-    elif ((key > array[midpoint])); then
-        binary_search $((midpoint + offset + 1)) "$key" "${right[@]}"
-    fi
-}
-
+## array operations ##
 midpoint() {
     local len=${#array[@]}
     echo $((len / 2))
@@ -48,6 +23,35 @@ right() {
     midpoint=$((${#array[@]} / 2))
     echo "${array[@]:midpoint+1}"
 }
+#######################
+
+# recursive solution
+binary_search() {
+    local -a array left right
+    local -i arrlen
+    local -i midpoint
+
+    local -i offset=$1 key=$2
+    shift 2
+    array=("$@")
+    arrlen=${#array[@]}
+    midpoint=$(midpoint "${array[@]}")
+
+    middle=$(middle "${array[@]}")
+    read -ra left < <(left "${array[@]}")
+    read -ra right < <(right "${array[@]}")
+
+    if ((arrlen == 0)); then
+        echo -1
+    elif ((key == middle)); then
+        echo $((midpoint + offset))
+    elif ((key < array[midpoint])); then
+        binary_search "$offset" "$key" "${left[@]}"
+    elif ((key > array[midpoint])); then
+        binary_search $((midpoint + offset + 1)) "$key" "${right[@]}"
+    fi
+}
+
 
 # iterative solution
 binary_search_iter() {
