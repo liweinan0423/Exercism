@@ -2,12 +2,11 @@
 
 # recursive solution
 binary_search() {
-    local -a array
+    local -a array left right
     local -i arrlen
     local -i midpoint
 
-    local -i offset key
-    offset=$1 key=$2
+    local -i offset=$1 key=$2
     shift 2
     array=("$@")
     arrlen=${#array[@]}
