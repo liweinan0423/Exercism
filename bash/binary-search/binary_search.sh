@@ -65,7 +65,7 @@ binary_search_iter() {
             echo $((midpoint + offset))
             return
         elif ((key < array[midpoint])); then
-            array=("${array[@]:0:midpoint}")
+            read -ra array < <(left "${array[@]}")
         else
             array=("${array[@]:$((midpoint + 1))}")
             offset+=$((midpoint + 1))
