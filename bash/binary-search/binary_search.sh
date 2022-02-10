@@ -81,8 +81,8 @@ main() {
     local key=$1
     shift
     local -a array=("$@")
-    # binary_search 0 "$key" "${array[@]}"
-    binary_search_iter 0 "$key" "${array[@]}"
+    binary_search 0 "$key" "${array[@]}"
+    # binary_search_iter 0 "$key" "${array[@]}"
 }
 
 main "$@"
