@@ -8,6 +8,11 @@ die() {
 declare -i x y # coordinates
 declare dir    # direction
 
+declare -A Instructions=(
+    [R]=turn_right
+    [L]=turn_left
+    [A]=advance
+)
 main() {
     x=${1:-0} y=${2:-0}
     dir=${3:-north}
@@ -17,11 +22,7 @@ main() {
 
     while read -rn1 instruction; do
         valid_instruction "$instruction" || die "invalid instruction"
-        case $instruction in
-        R) turn_right ;;
-        L) turn_left ;;
-        A) advance ;;
-        esac
+        ${Instructions[$instruction]}
     done < <(printf "%s" "$instructions")
     echo "$x $y $dir"
 }
