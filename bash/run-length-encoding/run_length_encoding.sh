@@ -40,7 +40,6 @@ decode() {
     while [[ $encoded =~ ([0-9]*)([a-zA-Z ]) ]]; do
         count=${BASH_REMATCH[1]}
         char=${BASH_REMATCH[2]}
-        remainder=${BASH_REMATCH[3]}
         if [[ -z $count ]]; then
             result+=$char
         else
