@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
-declare -i x y # coordinates
-declare dir    # direction
-
 die() {
     echo "$1"
     exit 1
 }
 
+
+declare -i x y # coordinates
+declare dir    # direction
 main() {
     x=${1:-0} y=${2:-0}
     dir=${3:-north}
