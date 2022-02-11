@@ -7,7 +7,7 @@ die() {
 
 declare -i x y # coordinates
 declare dir    # direction
-shopt -s extglob
+
 main() {
     x=${1:-0} y=${2:-0}
     dir=${3:-north}
@@ -17,7 +17,11 @@ main() {
 
     while read -rn1 instruction; do
         valid_instruction "$instruction" || die "invalid instruction"
-        process "$instruction"
+        case $instruction in
+        R) turn_right ;;
+        L) turn_left ;;
+        A) advance ;;
+        esac
     done < <(printf "%s" "$instructions")
     echo "$x $y $dir"
 }
@@ -30,17 +34,54 @@ valid_instruction() {
     [[ $1 == [RAL] ]]
 }
 
-process() {
-    local instruction=$1
-    case $dir,$instruction in
-    @(north,R|south,L)) dir=east ;;
-    @(north,L|south,R)) dir=west ;;
-    @(east,R|west,L)) dir=south ;;
-    @(east,L|west,R)) dir=north ;;
-    east,A) ((x++)) ;;
-    west,A) ((x--)) ;;
-    north,A) ((y++)) ;;
-    south,A) ((y--)) ;;
+turn_left() {
+    case $dir in
+    north)
+        dir=west
+        ;;
+    east)
+        dir=north
+        ;;
+    south)
+        dir=east
+        ;;
+    west)
+        dir=south
+        ;;
+    esac
+}
+
+turn_right() {
+    case $dir in
+    north)
+        dir=east
+        ;;
+    east)
+        dir=south
+        ;;
+    south)
+        dir=west
+        ;;
+    west)
+        dir=north
+        ;;
+    esac
+}
+
+advance() {
+    case $dir in
+    north)
+        ((y++))
+        ;;
+    east)
+        ((x++))
+        ;;
+    south)
+        ((y--))
+        ;;
+    west)
+        ((x--))
+        ;;
     esac
 }
 
