@@ -28,13 +28,13 @@ encode() {
 
 decode() {
     local encoded=$1
-    local count char matched
+    local count char self
     while [[ $encoded =~ ([0-9]*)([a-zA-Z ]) ]]; do
-        matched=${BASH_REMATCH[0]}
+        self=${BASH_REMATCH[0]}
         count=${BASH_REMATCH[1]}
         char=${BASH_REMATCH[2]}
         repeat "$count" "$char"
-        encoded=${encoded#"${matched}"}
+        encoded=${encoded#"${self}"}
     done
 }
 
