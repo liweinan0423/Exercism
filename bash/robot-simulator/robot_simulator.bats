@@ -105,7 +105,7 @@ load bats-extra
 # moves the robot forward 1 space in the direction it is pointing
 
 @test "increases the y coordinate one when facing north" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash robot_simulator.sh 0 0 north A
     assert_success
     assert_output "0 1 north"

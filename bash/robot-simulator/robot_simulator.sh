@@ -19,6 +19,22 @@ main() {
         idx=$((idx < 0 ? 3 : idx))
         dir=${Directions[idx]}
         ;;
+    A)
+        case $dir in
+        north)
+            ((y++))
+            ;;
+        east)
+            ((x++))
+            ;;
+        south)
+            ((y--))
+            ;;
+        west)
+            ((x--))
+            ;;
+        esac
+        ;;
     esac
 
     echo "$x $y $dir"
