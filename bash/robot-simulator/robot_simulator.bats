@@ -26,7 +26,7 @@ load bats-extra
 }
 
 @test "Robots are created with a default position and direction" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash robot_simulator.sh
     assert_success
     assert_output "0 0 north"
