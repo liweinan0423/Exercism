@@ -27,7 +27,7 @@ main() {
     dir=${3:-north}
     local instructions=$4
 
-    valid_direction "$dir" || die "invalid direction"
+    valid_direction "$dir" || die "invalid direction: $dir"
 
     while read -rn1 instruction; do
         process "$instruction"
