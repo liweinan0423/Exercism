@@ -13,25 +13,20 @@ main() {
 
 encode() {
     local char
-    local result
-    local -a buf
-    while IFS= read -rn1 char || ((${#buf[@]} > 0)); do
 
-        if ((${#buf[@]} == 0)) || [[ $char == "${buf[-1]}" ]]; then
-            buf+=("$char")
+    local count next char
+    while IFS= read -rn1 next; do
+        if [[ $next == "$char" ]]; then
+            ((count++))
         else
-            result+=$(render "${buf[@]}")
-            buf=("$char")
+            render "$count" "$char"
+            count=1
         fi
-
-        # clear buf at the end
-        if [[ -z $char ]]; then
-            result+=$(render "${buf[@]}")
-            buf=()
-        fi
+        char=$next
     done < <(printf "%s" "$1")
 
-    echo "$result"
+    render "$count" "$char"
+
 }
 
 decode() {
@@ -51,11 +46,8 @@ repeat() {
 }
 
 render() {
-    if (($# == 1)); then
-        echo "$1"
-    else
-        echo "$#$1"
-    fi
+    ((count == 1)) && count=
+    echo -n "$count$char"
 }
 
 main "$@"
