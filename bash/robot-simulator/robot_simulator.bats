@@ -88,7 +88,7 @@ load bats-extra
 }
 
 @test "changes the direction from south to east" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash robot_simulator.sh 0 0 south L
     assert_success
     assert_output "0 0 east"
