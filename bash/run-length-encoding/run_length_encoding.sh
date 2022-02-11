@@ -12,7 +12,6 @@ main() {
 }
 
 encode() {
-    local char
 
     local count next char
     while IFS= read -rn1 next; do
@@ -21,12 +20,11 @@ encode() {
         else
             render "$count" "$char"
             count=1
+            char=$next
         fi
-        char=$next
     done < <(printf "%s" "$1")
 
     render "$count" "$char"
-
 }
 
 decode() {
