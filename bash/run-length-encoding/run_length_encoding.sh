@@ -6,7 +6,7 @@ main() {
         $1 "$2"
         ;;
     *)
-        echo "usage: $0 <encode|decode> string"
+        echo "usage: $0 <encode|decode> arg"
         ;;
     esac
 }
