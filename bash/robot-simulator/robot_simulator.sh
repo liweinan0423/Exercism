@@ -20,11 +20,12 @@ main() {
     echo "$x $y $dir"
 }
 
+shopt -s extglob
 process() {
     local instruction=$1
     case $dir,$instruction in
-    north,R) dir=east ;;
-    south,L) dir=east ;;
+    @(north,R|south,L)) dir=east ;;
+    # south,L) dir=east ;;
     north,L) dir=west ;;
     south,R) dir=west ;;
     east,R) dir=south ;;
