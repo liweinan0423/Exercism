@@ -1,0 +1,25 @@
+{
+  "blurb": "Implement run-length encoding and decoding.",
+  "authors": [
+    "glennj"
+  ],
+  "contributors": [
+    "bkhl",
+    "guygastineau",
+    "IsaacG",
+    "kotp"
+  ],
+  "files": {
+    "solution": [
+      "run_length_encoding.sh"
+    ],
+    "test": [
+      "run_length_encoding.bats"
+    ],
+    "example": [
+      ".meta/example.sh"
+    ]
+  },
+  "source": "Wikipedia",
+  "source_url": "https://en.wikipedia.org/wiki/Run-length_encoding"
+}
