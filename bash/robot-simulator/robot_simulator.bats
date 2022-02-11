@@ -138,14 +138,14 @@ load bats-extra
 # the correct position and direction
 
 @test "instructions to move east and north from README" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash robot_simulator.sh 7 3 north RAALAL
     assert_success
     assert_output "9 4 west"
 }
 
 @test "instructions to move west and north" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash robot_simulator.sh 0 0 north LAAARALA
     assert_success
     assert_output "-4 1 west"

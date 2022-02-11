@@ -9,18 +9,16 @@ declare dir    # direction
 main() {
     x=${1:-0} y=${2:-0}
     dir=${3:-north}
+    local instructions=$4
 
-    local instruction=$4
-
-    process "$instruction"
+    while read -rn1 instruction; do
+        process "$instruction"
+    done < <(printf "%s" "$instructions")
     echo "$x $y $dir"
 }
 
 process() {
-
     local instruction=$1
-
-    local idx
     case $instruction in
     R)
         idx=$((${!dir} + 1))
