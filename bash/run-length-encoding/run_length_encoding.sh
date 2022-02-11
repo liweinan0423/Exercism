@@ -40,16 +40,18 @@ decode() {
     while [[ $encoded =~ ([0-9]*)([a-zA-Z ]) ]]; do
         count=${BASH_REMATCH[1]}
         char=${BASH_REMATCH[2]}
-        if [[ -z $count ]]; then
-            result+=$char
-        else
-            for ((i = 0; i < count; i++)); do
-                result+=$char
-            done
-        fi
+        repeat "$count" "$char"
         encoded=${encoded#"${BASH_REMATCH[0]}"}
     done
     echo "$result"
+}
+
+repeat() {
+    local count=$1 char=$2
+    [[ -n $count ]] || count=1
+    for ((i = 0; i < count; i++)); do
+        echo -n "$char"
+    done
 }
 
 render() {
