@@ -1,7 +1,14 @@
 #!/usr/bin/env bash
 
 main() {
-    $1 "$2"
+    case $1 in
+    encode | decode)
+        $1 "$2"
+        ;;
+    *)
+        echo "usage: $0 <encode|decode> string"
+        ;;
+    esac
 }
 
 encode() {
