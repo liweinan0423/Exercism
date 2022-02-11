@@ -43,6 +43,7 @@ repeat() {
 }
 
 render() {
+    local count=$1 char=$2
     ((count == 1)) && count=
     echo -n "$count$char"
 }
