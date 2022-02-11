@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-declare -ra Directions=(north east south west)
-declare -r north=0 east=1 south=2 west=3
-
 declare -i x y # coordinates
 declare dir    # direction
 
