@@ -106,7 +106,7 @@ load bats-extra
 # encode and then decode
 
 @test "encode followed by decode gives original string" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     expected="zzz ZZ  zZ"
     run bash run_length_encoding.sh encode "zzz ZZ  zZ"
     assert_success
