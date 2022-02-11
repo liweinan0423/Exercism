@@ -14,6 +14,11 @@ main() {
         idx=$((idx == 4 ? 0 : idx))
         dir=${Directions[$idx]}
         ;;
+    L)
+        idx=$((${!dir} - 1))
+        idx=$((idx < 0 ? 3 : idx))
+        dir=${Directions[$idx]}
+        ;;
     esac
 
     echo "$x $y $dir"
