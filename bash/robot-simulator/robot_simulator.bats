@@ -126,7 +126,7 @@ load bats-extra
 }
 
 @test "decreases the x coordinate by one when facing west" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash robot_simulator.sh 0 0 west A
     assert_success
     assert_output "-1 0 west"
