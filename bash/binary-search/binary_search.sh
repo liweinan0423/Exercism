@@ -1,90 +1,58 @@
 #!/usr/bin/env bash
 
-## array operations ##
-midpoint() {
-    local len=${#array[@]}
-    echo $((len / 2))
-}
-
-middle() {
-    echo "${array[$(midpoint "$@")]}"
-}
-
-left() {
-    local midpoint
-    local -a array=("$@")
-    midpoint=$((${#array[@]} / 2))
-    echo "${array[@]:0:midpoint}"
-}
-
-right() {
-    local midpoint
-    local -a array=("$@")
-    midpoint=$((${#array[@]} / 2))
-    echo "${array[@]:midpoint+1}"
-}
-#######################
-
 # recursive solution
-binary_search() {
-    local -a array left right
-    local -i arrlen
-    local -i midpoint
+bsearch() {
 
-    local -i offset=$1 key=$2
-    shift 2
-    array=("$@")
-    arrlen=${#array[@]}
-    midpoint=$(midpoint "${array[@]}")
+    local -i key=$1 start=$2 end=$3
 
-    middle=$(middle "${array[@]}")
-    read -ra left < <(left "${array[@]}")
-    read -ra right < <(right "${array[@]}")
-
-    if ((arrlen == 0)); then
+    if ((start > end)); then
         echo -1
-    elif ((key == middle)); then
-        echo $((midpoint + offset))
+        return
+    fi
+
+    shift 3
+    local -a array=("$@")
+    local -i midpoint=$(((start + end) / 2))
+
+    if ((key == array[midpoint])); then
+        echo "$midpoint"
     elif ((key < array[midpoint])); then
-        binary_search "$offset" "$key" "${left[@]}"
-    elif ((key > array[midpoint])); then
-        binary_search $((midpoint + offset + 1)) "$key" "${right[@]}"
+        bsearch2 "$key" "$start" $((midpoint - 1)) "${array[@]}"
+    else
+        bsearch2 "$key" $((midpoint + 1)) "$end" "${array[@]}"
     fi
 }
 
-
 # iterative solution
-binary_search_iter() {
-    local -a array
-    local -i arrlen
-    local -i midpoint
+bsearch_iter() {
+    local -i key=$1
+    shift
+    local -a array=("$@")
 
-    local -i offset=0 key=$2
-    shift 2
-    array=("$@")
-
-    while ((${#array[@]} > 0)); do
-        midpoint=$(midpoint "${array[@]}")
+    local -i start=0 end=$((${#array[@]} - 1))
+    local -i midpoint result
+    local found=false
+    until ((start > end)) || $found; do
+        midpoint=$(((start + end) / 2))
         if ((key == array[midpoint])); then
-            echo $((midpoint + offset))
-            return
+            result=$midpoint
+            found=true
         elif ((key < array[midpoint])); then
-            read -ra array < <(left "${array[@]}")
+            end=$((midpoint - 1))
         else
-            read -ra array < <(right "${array[@]}")
-            offset+=$((midpoint + 1))
+            start=$((midpoint + 1))
         fi
     done
 
-    echo -1
+    $found && echo $result || echo -1
 }
 
 main() {
     local key=$1
     shift
     local -a array=("$@")
-    binary_search 0 "$key" "${array[@]}"
-    # binary_search_iter 0 "$key" "${array[@]}"
+    # bsearch "$key" 0 $((${#array[@]} - 1)) "${array[@]}"
+    bsearch_iter "$key" "${array[@]}"
 }
 
 main "$@"
