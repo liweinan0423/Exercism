@@ -43,7 +43,7 @@ load bats-extra
 # rotates the robot's direction 90 degrees clockwise
 
 @test "changes the direction from north to east" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash robot_simulator.sh 0 0 north R
     assert_success
     assert_output "0 0 east"
