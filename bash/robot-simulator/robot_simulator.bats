@@ -152,7 +152,7 @@ load bats-extra
 }
 
 @test "instructions to move west and south" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash robot_simulator.sh 2 -7 east RRAAAAALA
     assert_success
     assert_output "-3 -8 south"
