@@ -4,24 +4,8 @@ die() {
     echo "$1"
     exit 1
 }
-
-declare -A turnLeft=([north]=west [east]=north [south]=east [west]=south)
-declare -A turnRight=([north]=east [east]=south [south]=west [west]=north)
-declare -A dx=([north]=0 [south]=0 [east]=1 [west]=-1)
-declare -A dy=([north]=1 [south]=-1 [east]=0 [west]=0)
-
-
 declare -i x y # coordinates
 declare dir    # direction
-
-process() {
-    case $1 in
-    R) turn_right ;;
-    L) turn_left ;;
-    A) advance ;;
-    *) unknown ;;
-    esac
-}
 main() {
     x=${1:-0} y=${2:-0}
     dir=${3:-north}
@@ -43,6 +27,21 @@ valid_instruction() {
     [[ $1 == [RAL] ]]
 }
 
+process() {
+    case $1 in
+    R) turn_right ;;
+    L) turn_left ;;
+    A) advance ;;
+    *) unknown "$1" ;;
+    esac
+}
+
+declare -A turnLeft=([north]=west [east]=north [south]=east [west]=south)
+declare -A turnRight=([north]=east [east]=south [south]=west [west]=north)
+declare -A dx=([north]=0 [south]=0 [east]=1 [west]=-1)
+declare -A dy=([north]=1 [south]=-1 [east]=0 [west]=0)
+
+
 turn_left() {
     dir=${turnLeft[$dir]}
 }
@@ -57,6 +56,6 @@ advance() {
 }
 
 unknown() {
-    die "invalid instruction"
+    die "invalid instruction: $1"
 }
 main "$@"
