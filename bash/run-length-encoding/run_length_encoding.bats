@@ -22,7 +22,7 @@ load bats-extra
 }
 
 @test "encode string with no single characters" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     expected="2A3B4C"
     run bash run_length_encoding.sh encode "AABBBCCCC"
     assert_success
@@ -30,7 +30,7 @@ load bats-extra
 }
 
 @test "encode single characters mixed with repeated characters" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     expected="12WB12W3B24WB"
     run bash run_length_encoding.sh encode "WWWWWWWWWWWWBWWWWWWWWWWWWBBBWWWWWWWWWWWWWWWWWWWWWWWWB"
     assert_success
@@ -38,7 +38,7 @@ load bats-extra
 }
 
 @test "encode multiple whitespace mixed in string" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     expected="2 hs2q q2w2 "
     run bash run_length_encoding.sh encode "  hsqq qww  "
     assert_success
@@ -46,7 +46,7 @@ load bats-extra
 }
 
 @test "encode lowercase characters" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     expected="2a3b4c"
     run bash run_length_encoding.sh encode "aabbbcccc"
     assert_success

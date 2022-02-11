@@ -1,14 +1,37 @@
 #!/usr/bin/env bash
 
 main() {
-    local prev current
+    $1 "$2"
+}
+
+encode() {
+    local char
     local result
-    local -i counter=1
-    while read -rn1 current; do
-        result+=$current
-    done < <(printf "%s" "$2")
+    local -a buf
+    while IFS= read -rn1 char || ((${#buf[@]} > 0)); do
+        if ((${#buf[@]} == 0)); then
+            buf+=("$char")
+        elif [[ $char == "${buf[-1]}" ]]; then
+            buf+=("$char")
+        else
+            result+=$(pop "${buf[@]}")
+            buf=("$char")
+        fi
+        if [[ -z $char ]]; then
+            result+=$(pop "${buf[@]}")
+            buf=()
+        fi
+    done < <(printf "%s" "$1")
 
     echo "$result"
+}
+
+pop() {
+    if (($# == 1)); then
+        echo "$1"
+    else
+        echo "$#$1"
+    fi
 }
 
 main "$@"
