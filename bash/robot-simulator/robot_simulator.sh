@@ -36,9 +36,12 @@ process() {
         esac
         ;;
     L)
-        idx=$((${!dir} - 1))
-        idx=$((idx < 0 ? 3 : idx))
-        dir=${Directions[idx]}
+        case $dir in
+        north) dir=west ;;
+        east) dir=north ;;
+        south) dir=east ;;
+        west) dir=south ;;
+        esac
         ;;
     A)
         case $dir in
