@@ -2,7 +2,9 @@
 
 main() {
     case $1 in
-    encode | decode) $1 "$2" ;;
+    encode | decode)
+        $1 "$2"
+        ;;
     *)
         echo "usage: $0 <encode|decode> arg"
         ;;
