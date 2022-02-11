@@ -5,6 +5,12 @@ die() {
     exit 1
 }
 
+declare -A turnLeft=([north]=west [east]=north [south]=east [west]=south)
+declare -A turnRight=([north]=east [east]=south [south]=west [west]=north)
+declare -A dx=([north]=0 [south]=0 [east]=1 [west]=-1)
+declare -A dy=([north]=1 [south]=-1 [east]=0 [west]=0)
+
+
 declare -i x y # coordinates
 declare dir    # direction
 
@@ -15,10 +21,6 @@ process() {
     A) advance ;;
     *) unknown ;;
     esac
-}
-
-unknown() {
-    die "invalid instruction"
 }
 main() {
     x=${1:-0} y=${2:-0}
@@ -34,7 +36,7 @@ main() {
 }
 
 valid_direction() {
-    [[ $1 == @(north|east|south|west) ]]
+    [[ -n ${turnLeft[$1]} ]]
 }
 
 valid_instruction() {
@@ -42,54 +44,19 @@ valid_instruction() {
 }
 
 turn_left() {
-    case $dir in
-    north)
-        dir=west
-        ;;
-    east)
-        dir=north
-        ;;
-    south)
-        dir=east
-        ;;
-    west)
-        dir=south
-        ;;
-    esac
+    dir=${turnLeft[$dir]}
 }
 
 turn_right() {
-    case $dir in
-    north)
-        dir=east
-        ;;
-    east)
-        dir=south
-        ;;
-    south)
-        dir=west
-        ;;
-    west)
-        dir=north
-        ;;
-    esac
+    dir=${turnRight[$dir]}
 }
 
 advance() {
-    case $dir in
-    north)
-        y+=1
-        ;;
-    east)
-        x+=1
-        ;;
-    south)
-        y+=-1
-        ;;
-    west)
-        x+=-1
-        ;;
-    esac
+    x+=${dx[$dir]}
+    y+=${dy[$dir]}
 }
 
+unknown() {
+    die "invalid instruction"
+}
 main "$@"
