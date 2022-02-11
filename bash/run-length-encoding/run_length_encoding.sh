@@ -12,7 +12,6 @@ main() {
 }
 
 encode() {
-
     local count next char
     while IFS= read -rn1 next; do
         if [[ $next == "$char" ]]; then
