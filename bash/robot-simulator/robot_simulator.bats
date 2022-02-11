@@ -176,7 +176,7 @@ load bats-extra
 }
 
 @test "invalid instructions" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash robot_simulator.sh 0 0 north LRAX
     assert_failure
     assert_output --partial "invalid instruction"

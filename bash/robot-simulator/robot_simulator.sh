@@ -18,6 +18,7 @@ main() {
     local instructions=$4
 
     while read -rn1 instruction; do
+        [[ $instruction == [RAL] ]] || die "invalid instruction"
         process "$instruction"
     done < <(printf "%s" "$instructions")
     echo "$x $y $dir"
