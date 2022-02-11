@@ -37,7 +37,7 @@ encode() {
 decode() {
     local encoded=$1
     local result
-    while [[ $encoded =~ ([0-9]*)([a-zA-Z ])(.*) ]]; do
+    while [[ $encoded =~ ([0-9]*)([a-zA-Z ]) ]]; do
         count=${BASH_REMATCH[1]}
         char=${BASH_REMATCH[2]}
         remainder=${BASH_REMATCH[3]}
@@ -48,7 +48,7 @@ decode() {
                 result+=$char
             done
         fi
-        encoded=$remainder
+        encoded=${encoded#"${BASH_REMATCH[0]}"}
     done
     echo "$result"
 }
