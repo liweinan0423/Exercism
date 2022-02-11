@@ -25,9 +25,7 @@ process() {
     local instruction=$1
     case $dir,$instruction in
     @(north,R|south,L)) dir=east ;;
-    # south,L) dir=east ;;
-    north,L) dir=west ;;
-    south,R) dir=west ;;
+    @(north,L|south,R)) dir=west ;;
     east,R) dir=south ;;
     west,L) dir=south ;;
     east,L) dir=north ;;
