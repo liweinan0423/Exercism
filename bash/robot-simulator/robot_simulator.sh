@@ -26,10 +26,8 @@ process() {
     case $dir,$instruction in
     @(north,R|south,L)) dir=east ;;
     @(north,L|south,R)) dir=west ;;
-    east,R) dir=south ;;
-    west,L) dir=south ;;
-    east,L) dir=north ;;
-    west,R) dir=north ;;
+    @(east,R|west,L)) dir=south ;;
+    @(east,L|west,R)) dir=north ;;
     east,A) ((x++)) ;;
     west,A) ((x--)) ;;
     north,A) ((y++)) ;;
