@@ -40,7 +40,7 @@ decode() {
 
 repeat() {
     local count=$1 char=$2
-    [[ -n $count ]] || count=1
+    ((count)) || count=1
     for ((i = 0; i < count; i++)); do
         echo -n "$char"
     done
