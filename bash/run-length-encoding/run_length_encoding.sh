@@ -16,6 +16,8 @@ main() {
         fi
         prev=$current
     done < <(printf "%s" "$2")
+
+    echo "$result"
 }
 
 main "$@"

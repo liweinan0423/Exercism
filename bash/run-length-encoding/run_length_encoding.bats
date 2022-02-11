@@ -14,7 +14,7 @@ load bats-extra
 }
 
 @test "encode single characters only are encoded without count" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     expected="XYZ"
     run bash run_length_encoding.sh encode "XYZ"
     assert_success
