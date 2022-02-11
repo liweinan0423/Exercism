@@ -7,6 +7,7 @@ die() {
 
 declare -i x y # coordinates
 declare dir    # direction
+shopt -s extglob
 main() {
     x=${1:-0} y=${2:-0}
     dir=${3:-north}
@@ -29,7 +30,6 @@ valid_instruction() {
     [[ $1 == [RAL] ]]
 }
 
-shopt -s extglob
 process() {
     local instruction=$1
     case $dir,$instruction in
