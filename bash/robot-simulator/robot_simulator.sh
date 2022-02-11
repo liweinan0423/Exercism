@@ -14,7 +14,7 @@ die() {
 main() {
     x=${1:-0} y=${2:-0}
     dir=${3:-north}
-    ((${!dir} < 4 && ${!dir} >= 0)) || die "invalid direction"
+    [[ $dir == @(north|east|south|west) ]] || die "invalid direction"
     local instructions=$4
 
     while read -rn1 instruction; do
