@@ -8,11 +8,18 @@ die() {
 declare -i x y # coordinates
 declare dir    # direction
 
-declare -A Instructions=(
-    [R]=turn_right
-    [L]=turn_left
-    [A]=advance
-)
+process() {
+    case $1 in
+    R) turn_right ;;
+    L) turn_left ;;
+    A) advance ;;
+    *) unknown ;;
+    esac
+}
+
+unknown() {
+    die "invalid instruction"
+}
 main() {
     x=${1:-0} y=${2:-0}
     dir=${3:-north}
@@ -21,8 +28,7 @@ main() {
     valid_direction "$dir" || die "invalid direction"
 
     while read -rn1 instruction; do
-        valid_instruction "$instruction" || die "invalid instruction"
-        ${Instructions[$instruction]}
+        process "$instruction"
     done < <(printf "%s" "$instructions")
     echo "$x $y $dir"
 }
@@ -72,16 +78,16 @@ turn_right() {
 advance() {
     case $dir in
     north)
-        ((y++))
+        y+=1
         ;;
     east)
-        ((x++))
+        x+=1
         ;;
     south)
-        ((y--))
+        y+=-1
         ;;
     west)
-        ((x--))
+        x+=-1
         ;;
     esac
 }
