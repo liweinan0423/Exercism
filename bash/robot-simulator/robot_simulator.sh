@@ -23,10 +23,6 @@ valid_direction() {
     [[ -n ${turnLeft[$1]} ]]
 }
 
-valid_instruction() {
-    [[ $1 == [RAL] ]]
-}
-
 process() {
     case $1 in
     R) turn_right ;;
