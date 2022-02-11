@@ -34,7 +34,7 @@ decode() {
         count=${BASH_REMATCH[1]}
         char=${BASH_REMATCH[2]}
         repeat "$count" "$char"
-        encoded=${encoded#"${self}"}
+        encoded=${encoded##"${self}"}
     done
 }
 
