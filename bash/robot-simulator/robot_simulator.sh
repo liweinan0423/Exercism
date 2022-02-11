@@ -5,7 +5,6 @@ die() {
     exit 1
 }
 
-
 declare -i x y # coordinates
 declare dir    # direction
 main() {
@@ -23,39 +22,19 @@ main() {
 
 process() {
     local instruction=$1
-    case $instruction in
-    R)
-        case $dir in
-        north) dir=east ;;
-        east) dir=south ;;
-        south) dir=west ;;
-        west) dir=north ;;
-        esac
-        ;;
-    L)
-        case $dir in
-        north) dir=west ;;
-        east) dir=north ;;
-        south) dir=east ;;
-        west) dir=south ;;
-        esac
-        ;;
-    A)
-        case $dir in
-        north)
-            ((y++))
-            ;;
-        east)
-            ((x++))
-            ;;
-        south)
-            ((y--))
-            ;;
-        west)
-            ((x--))
-            ;;
-        esac
-        ;;
+    case $dir,$instruction in
+    north,R) dir=east ;;
+    south,L) dir=east ;;
+    north,L) dir=west ;;
+    south,R) dir=west ;;
+    east,R) dir=south ;;
+    west,L) dir=south ;;
+    east,L) dir=north ;;
+    west,R) dir=north ;;
+    east,A) ((x++)) ;;
+    west,A) ((x--)) ;;
+    north,A) ((y++)) ;;
+    south,A) ((y--)) ;;
     esac
 }
 
