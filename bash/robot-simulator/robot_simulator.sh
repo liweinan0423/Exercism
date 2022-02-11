@@ -17,7 +17,7 @@ main() {
     L)
         idx=$((${!dir} - 1))
         idx=$((idx < 0 ? 3 : idx))
-        dir=${Directions[$idx]}
+        dir=${Directions[idx]}
         ;;
     esac
 
