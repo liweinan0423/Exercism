@@ -80,7 +80,7 @@ load bats-extra
 }
 
 @test "decode single characters with repeated characters" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     expected="WWWWWWWWWWWWBWWWWWWWWWWWWBBBWWWWWWWWWWWWWWWWWWWWWWWWB"
     run bash run_length_encoding.sh decode "12WB12W3B24WB"
     assert_success
