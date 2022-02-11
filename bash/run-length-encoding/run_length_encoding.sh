@@ -9,6 +9,7 @@ encode() {
     local result
     local -a buf
     while IFS= read -rn1 char || ((${#buf[@]} > 0)); do
+
         if ((${#buf[@]} == 0)) || [[ $char == "${buf[-1]}" ]]; then
             buf+=("$char")
         else
@@ -16,6 +17,7 @@ encode() {
             buf=("$char")
         fi
 
+        # clear buf at the end
         if [[ -z $char ]]; then
             result+=$(pop "${buf[@]}")
             buf=()
