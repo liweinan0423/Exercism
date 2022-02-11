@@ -88,7 +88,7 @@ load bats-extra
 }
 
 @test "decode multiple whitespace mixed in string" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     expected="  hsqq qww  "
     run bash run_length_encoding.sh decode "2 hs2q q2w2 "
     assert_success
