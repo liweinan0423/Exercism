@@ -11,12 +11,11 @@ main() {
     x=${1:-0} y=${2:-0}
     dir=${3:-north}
     valid_direction "$dir" || die "invalid direction"
-    local instructions=$4
 
     while read -rn1 instruction; do
         valid_instruction "$instruction" || die "invalid instruction"
         process "$instruction"
-    done < <(printf "%s" "$instructions")
+    done < <(printf "%s" "$4")
     echo "$x $y $dir"
 }
 
