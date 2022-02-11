@@ -96,7 +96,7 @@ load bats-extra
 }
 
 @test "decode lower case string" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     expected="aabbbcccc"
     run bash run_length_encoding.sh decode "2a3b4c"
     assert_success
