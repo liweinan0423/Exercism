@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 declare -ra Directions=(north east south west)
-declare north=0 east=1 south=2 west=3
+declare -r north=0 east=1 south=2 west=3
 
 declare -i x y # coordinates
 declare dir    # direction
@@ -28,9 +28,12 @@ process() {
     local instruction=$1
     case $instruction in
     R)
-        idx=$((${!dir} + 1))
-        idx=$((idx == 4 ? 0 : idx))
-        dir=${Directions[idx]}
+        case $dir in
+        north) dir=east ;;
+        east) dir=south ;;
+        south) dir=west ;;
+        west) dir=north ;;
+        esac
         ;;
     L)
         idx=$((${!dir} - 1))
