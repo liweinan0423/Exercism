@@ -41,8 +41,7 @@ decode() {
                 result+=$char
             done
         fi
-        encoded=$remainder
-        [[ -z $encoded ]] && break
+        [[ -z $encoded ]] && break || encoded=$remainder
     done
     echo "$result"
 }
