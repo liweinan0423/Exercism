@@ -20,13 +20,13 @@ encode() {
         if ((${#buf[@]} == 0)) || [[ $char == "${buf[-1]}" ]]; then
             buf+=("$char")
         else
-            result+=$(pop "${buf[@]}")
+            result+=$(render "${buf[@]}")
             buf=("$char")
         fi
 
         # clear buf at the end
         if [[ -z $char ]]; then
-            result+=$(pop "${buf[@]}")
+            result+=$(render "${buf[@]}")
             buf=()
         fi
     done < <(printf "%s" "$1")
@@ -53,7 +53,7 @@ decode() {
     echo "$result"
 }
 
-pop() {
+render() {
     if (($# == 1)); then
         echo "$1"
     else
