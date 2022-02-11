@@ -11,6 +11,7 @@ main() {
     x=${1:-0} y=${2:-0}
     dir=${3:-north}
     local instructions=$4
+
     valid_direction "$dir" || die "invalid direction"
 
     while read -rn1 instruction; do
