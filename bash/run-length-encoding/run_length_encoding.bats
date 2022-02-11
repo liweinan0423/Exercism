@@ -56,7 +56,7 @@ load bats-extra
 # run-length decode a string
 
 @test "decode empty string" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     expected=""
     run bash run_length_encoding.sh decode ""
     assert_success
@@ -64,7 +64,7 @@ load bats-extra
 }
 
 @test "single characters only" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     expected="XYZ"
     run bash run_length_encoding.sh decode "XYZ"
     assert_success
@@ -72,7 +72,7 @@ load bats-extra
 }
 
 @test "decode string with no single characters" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     expected="AABBBCCCC"
     run bash run_length_encoding.sh decode "2A3B4C"
     assert_success
