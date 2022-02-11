@@ -6,9 +6,15 @@ declare north=0 east=1 south=2 west=3
 declare -i x y # coordinates
 declare dir    # direction
 
+die() {
+    echo "$1"
+    exit 1
+}
+
 main() {
     x=${1:-0} y=${2:-0}
     dir=${3:-north}
+    ((${!dir} < 4 && ${!dir} >= 0)) || die "invalid direction"
     local instructions=$4
 
     while read -rn1 instruction; do

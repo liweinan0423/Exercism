@@ -169,7 +169,7 @@ load bats-extra
 # error conditions
 
 @test "invalid direction" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash robot_simulator.sh 0 0 foo
     assert_failure
     assert_output --partial "invalid direction"
