@@ -59,8 +59,8 @@ id=${Students[$name]}
 
 output=()
 for i in $((2 * id)) $((2 * id + 1)) $((width + 2 * id)) $((width + 2 * id + 1)); do
-    plant=$(plant_name "${plants[i]}")
-    output+=("$plant")
+    output+=("$(plant_name "${plants[i]}")")
+
 done
 
 echo "${output[*]}"
