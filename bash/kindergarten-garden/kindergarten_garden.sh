@@ -1,24 +1,40 @@
 #!/usr/bin/env bash
 
-# The following comments should help you get started:
-# - Bash is flexible. You may use functions or write a "raw" script.
-#
-# - Complex code can be made easier to read by breaking it up
-#   into functions, however this is sometimes overkill in bash.
-#
-# - You can find links about good style and other resources
-#   for Bash in './README.md'. It came with this exercise.
-#
-#   Example:
-#   # other functions here
-#   # ...
-#   # ...
-#
-#   main () {
-#     # your main function code here
-#   }
-#
-#   # call main with all of the positional arguments
-#   main "$@"
-#
-# *** PLEASE REMOVE THESE COMMENTS BEFORE SUBMITTING YOUR SOLUTION ***
+rows=$1 name=$2
+plants=()
+declare -rA Students=(
+    [Alice]=0
+    [Bob]=1
+    [Charlie]=2
+    [David]=3
+    [Eve]=4
+    [Fred]=5
+    [Ginny]=6
+    [Harriet]=7
+    [Ileana]=8
+    [Joseph]=9
+    [Kincaid]=10
+    [Larry]=11
+)
+declare -A dict=(
+    [R]=radishes
+    [C]=clover
+    [V]=violets
+    [G]=grass
+)
+declare -i width
+while IFS=$'\n' read -r line; do
+    width=${#line}
+    while IFS= read -rn1 plant; do
+        [[ -n $plant ]] && plants+=("$plant")
+    done <<<"$line"
+done <<<"$rows"
+
+idx=${Students[$name]}
+
+output=()
+for i in $((2 * idx)) $((2 * idx + 1)) $((width + 2 * idx)) $((width + 2 * idx + 1)); do
+    output+=("${dict[${plants[$i]}]}")
+done
+
+echo "${output[*]}"
