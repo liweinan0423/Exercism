@@ -21,19 +21,20 @@ declare -A dict=(
     [G]=grass
 )
 
-rows=$1 name=$2
+garden=$1 name=$2
 while read -r line; do
     width=${#line}
     while read -rn1 plant; do
         plants+=("$plant")
     done < <(printf "%s" "$line")
-done <<<"$rows"
+done <<<"$garden"
 
-idx=${Students[$name]}
+id=${Students[$name]}
 
 output=()
-for i in $((2 * idx)) $((2 * idx + 1)) $((width + 2 * idx)) $((width + 2 * idx + 1)); do
-    output+=("${dict[${plants[$i]}]}")
+for i in $((2 * id)) $((2 * id + 1)) $((width + 2 * id)) $((width + 2 * id + 1)); do
+    plant=${plants[$i]}
+    output+=("${dict[$plant]}")
 done
 
 echo "${output[*]}"
