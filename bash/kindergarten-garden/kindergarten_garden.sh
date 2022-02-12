@@ -21,7 +21,7 @@ declare -A dict=(
     [G]=grass
 )
 
-plant_name() {
+plant() {
     case $1 in
     R) echo radishes ;;
     C) echo clover ;;
@@ -30,7 +30,7 @@ plant_name() {
     esac
 }
 
-student_id() {
+student() {
     case $1 in
     Alice) echo 0 ;;
     Bob) echo 1 ;;
@@ -55,11 +55,10 @@ while read -r line; do
     done < <(printf "%s" "$line")
 done <<<"$garden"
 
-id=$(student_id "$name")
-
-output=()
-for i in $((2 * id)) $((2 * id + 1)) $((width + 2 * id)) $((width + 2 * id + 1)); do
-    output+=("$(plant_name "${plants[i]}")")
+id=$(student "$name")
+positions=($((2 * id)) $((2 * id + 1)) $((width + 2 * id)) $((width + 2 * id + 1)))
+for i in "${positions[@]}"; do
+    output+=("$(plant "${plants[i]}")")
 done
 
 echo "${output[*]}"
