@@ -25,8 +25,8 @@ rows=$1 name=$2
 while read -r line; do
     width=${#line}
     while read -rn1 plant; do
-        [[ -n $plant ]] && plants+=("$plant")
-    done <<<"$line"
+        plants+=("$plant")
+    done < <(printf "%s" "$line")
 done <<<"$rows"
 
 idx=${Students[$name]}
