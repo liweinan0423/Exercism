@@ -17,13 +17,13 @@ encode() {
         if [[ $next == "$char" ]]; then
             ((count++))
         else
-            render "$count" "$char"
+            run_length "$count" "$char"
             count=1
             char=$next
         fi
     done < <(printf "%s" "$1")
 
-    render "$count" "$char"
+    run_length "$count" "$char"
 }
 
 decode() {
@@ -46,7 +46,7 @@ repeat() {
     done
 }
 
-render() {
+run_length() {
     local count=$1 char=$2
     ((count == 1)) && count=
     echo -n "$count$char"
