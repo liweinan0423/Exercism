@@ -1,43 +1,62 @@
 #!/usr/bin/env bash
 
-plant() {
-    case $1 in
-    R) echo radishes ;;
-    C) echo clover ;;
-    V) echo violets ;;
-    G) echo grass ;;
-    esac
+declare -rA Plants=(
+    [R]=radishes
+    [V]=violets
+    [C]=clover
+    [G]=grass
+)
+
+declare -rA Students=(
+    [Alice]=0
+    [Bob]=1
+    [Charlie]=2
+    [David]=3
+    [Eve]=4
+    [Fred]=5
+    [Ginny]=6
+    [Harriet]=7
+    [Ileana]=8
+    [Joseph]=9
+    [Kincaid]=10
+    [Larry]=11
+)
+
+# given rows of plots like
+#   VRCG
+#   GRGV
+# convert it into array like ("VRGR" "CGGV"), where every element in the array holds the plants for a single student
+parse() {
+    local -n __garden=$2
+
+    {
+        read -r row1
+        read -r row2
+    } <<<"$1"
+
+    while [[ -n $row1 ]]; do
+        __garden+=("${row1:0:2}${row2:0:2}")
+        row1=${row1#??}
+        row2=${row2#??}
+    done
+
 }
 
-student() {
-    case $1 in
-    Alice) echo 0 ;;
-    Bob) echo 1 ;;
-    Charlie) echo 2 ;;
-    David) echo 3 ;;
-    Eve) echo 4 ;;
-    Fred) echo 5 ;;
-    Ginny) echo 6 ;;
-    Harriet) echo 7 ;;
-    Ileana) echo 8 ;;
-    Joseph) echo 9 ;;
-    Kincaid) echo 10 ;;
-    Larry) echo 11 ;;
-    esac
+expand() {
+    for ((i = 0; i < ${#1}; i++)); do
+        code=${1:i:1}
+        output+=("${Plants[$code]}")
+    done
+
+    echo "${output[@]}"
 }
 
-input=$1 name=$2
-while read -r line; do
-    width=${#line}
-    while read -rn1 plant; do
-        garden+=("$plant")
-    done < <(printf "%s" "$line")
-done <<<"$input"
+main() {
+    local input=$1 name=$2
+    local -a gardent
 
-id=$(student "$name")
-offsets=($((2 * id)) $((2 * id + 1)) $((width + 2 * id)) $((width + 2 * id + 1)))
-for offset in "${offsets[@]}"; do
-    output+=("$(plant "${garden[offset]}")")
-done
+    parse "$input" gardent
+    expand "${gardent[${Students[$name]}]}"
+}
 
-echo "${output[*]}"
+main "$@"
