@@ -21,6 +21,32 @@ declare -A dict=(
     [G]=grass
 )
 
+plant_name() {
+    case $1 in
+    R) echo radishes ;;
+    C) echo clover ;;
+    V) echo violets ;;
+    G) echo grass ;;
+    esac
+}
+
+student_id() {
+    case $1 in
+    Alice) echo 0 ;;
+    Bob) echo 1 ;;
+    Charlie) echo 2 ;;
+    David) echo 3 ;;
+    Eve) echo 4 ;;
+    Fred) echo 5 ;;
+    Ginny) echo 6 ;;
+    Harriet) echo 7 ;;
+    Ileana) echo 8 ;;
+    Joseph) echo 9 ;;
+    Kincaid) echo 10 ;;
+    Larry) echo 11 ;;
+    esac
+}
+
 garden=$1 name=$2
 while read -r line; do
     width=${#line}
@@ -33,8 +59,8 @@ id=${Students[$name]}
 
 output=()
 for i in $((2 * id)) $((2 * id + 1)) $((width + 2 * id)) $((width + 2 * id + 1)); do
-    plant=${plants[$i]}
-    output+=("${dict[$plant]}")
+    plant=$(plant_name "${plants[i]}")
+    output+=("$plant")
 done
 
 echo "${output[*]}"
