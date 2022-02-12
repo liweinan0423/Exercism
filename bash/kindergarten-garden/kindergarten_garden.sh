@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-rows=$1 name=$2
-plants=()
 declare -rA Students=(
     [Alice]=0
     [Bob]=1
@@ -22,10 +20,11 @@ declare -A dict=(
     [V]=violets
     [G]=grass
 )
-declare -i width
-while IFS=$'\n' read -r line; do
+
+rows=$1 name=$2
+while read -r line; do
     width=${#line}
-    while IFS= read -rn1 plant; do
+    while read -rn1 plant; do
         [[ -n $plant ]] && plants+=("$plant")
     done <<<"$line"
 done <<<"$rows"
