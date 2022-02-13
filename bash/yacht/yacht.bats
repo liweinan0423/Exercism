@@ -158,7 +158,7 @@ load bats-extra
 }
 
 @test "Minimum is 1, maximum is 5, but not a little straight" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash yacht.sh "little straight" 1 1 3 4 5
     assert_success
     assert_output "0"
