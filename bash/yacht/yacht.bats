@@ -123,7 +123,7 @@ load bats-extra
 }
 
 @test "Full house is not Four of a Kind" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash yacht.sh "four of a kind" 3 3 3 5 5
     assert_success
     assert_output "0"

@@ -21,13 +21,20 @@ main() {
         four_of_a_kind "$@" || zero
         ;;
     esac
-
 }
 
 is_yacht() {
-    (($1 == $2 && $1 == $3 && $1 == $4 && $1 == $5))
+    is_combination 5 "$@"
 }
-
+is_combination() {
+    local -i combination=$1
+    shift
+    local -A counter
+    for roll; do
+        counter[$roll]=$((counter[$roll] + 1))
+    done
+    [[ ${counter[*]} =~ $combination ]]
+}
 is_fullhouse() {
     local -A counter
     for roll; do
@@ -43,7 +50,7 @@ four_of_a_kind() {
     for roll; do
         counter[$roll]=$((counter[$roll] + 1))
     done
-    [[ ${counter[*]} =~ (1 4|4 1|5) ]] || exit 1
+    [[ ${counter[*]} =~ (1 4|4 1|5) ]] || return 1
 
     for roll in "${!counter[@]}"; do
         ((counter[$roll] >= 4)) && echo $((4 * roll)) && return
