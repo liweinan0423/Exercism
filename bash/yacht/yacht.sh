@@ -38,9 +38,7 @@ is_combination() {
     local pattern=$1
     shift
     local -A counter
-    for roll; do
-        counter[$roll]=$((counter[$roll] + 1))
-    done
+    parse counter "$@"
     [[ ${counter[*]} =~ $pattern ]]
 }
 is_fullhouse() {
