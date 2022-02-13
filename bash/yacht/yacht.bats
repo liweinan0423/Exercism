@@ -25,7 +25,7 @@ load bats-extra
 }
 
 @test "Ones, out of order" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash yacht.sh "ones" 3 1 1 5 1
     assert_success
     assert_output "3"
