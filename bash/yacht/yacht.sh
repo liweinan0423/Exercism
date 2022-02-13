@@ -27,7 +27,7 @@ is_yacht() {
     is_combination 5 "$@"
 }
 is_combination() {
-    local -i combination=$1
+    local combination=$1
     shift
     local -A counter
     for roll; do
@@ -36,12 +36,7 @@ is_combination() {
     [[ ${counter[*]} =~ $combination ]]
 }
 is_fullhouse() {
-    local -A counter
-    for roll; do
-        counter[$roll]=$((counter[$roll] + 1))
-    done
-
-    [[ ${counter[*]} =~ (2 3|3 2) ]]
+    is_combination "(2 3|3 2)" "$@"
 }
 
 four_of_a_kind() {
