@@ -27,7 +27,7 @@ yacht() {
 }
 
 ones() {
-    local -i score
+    local -i score=0
     for roll; do
         ((roll == 1)) && ((score++))
     done
