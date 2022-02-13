@@ -13,7 +13,6 @@ main() {
     ones | twos | threes | fours | fives | sixes)
         $category "$@"
         ;;
-
     "full house")
         is_fullhouse "$@" && total "$@"
         ;;
