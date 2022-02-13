@@ -60,7 +60,7 @@ load bats-extra
 }
 
 @test "Yacht of 3s counted as fives" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash yacht.sh "fives" 3 3 3 3 3
     assert_success
     assert_output "0"
