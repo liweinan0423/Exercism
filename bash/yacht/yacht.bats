@@ -102,7 +102,7 @@ load bats-extra
 }
 
 @test "Yacht is not a full house" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash yacht.sh "full house" 2 2 2 2 2
     assert_success
     assert_output "0"
