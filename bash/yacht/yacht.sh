@@ -10,7 +10,7 @@ main() {
     yacht)
         is_yacht "$@" && yacht || zero
         ;;
-    ones | twos)
+    ones | twos | fours)
         $category "$@"
         ;;
     esac
@@ -38,6 +38,15 @@ twos() {
     local -i score=0
     for roll; do
         ((roll == 2)) && ((score += 2))
+    done
+
+    echo "$score"
+}
+
+fours() {
+    local -i score=0
+    for roll; do
+        ((roll == 4)) && ((score += 4))
     done
 
     echo "$score"
