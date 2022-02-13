@@ -20,6 +20,12 @@ main() {
     "four of a kind")
         is_four_of_a_kind "$@" && four_of_a_kind "$@" || zero
         ;;
+    "little straight")
+        is_little_straight "$@" && straight || zero
+        ;;
+    "big straight")
+        is_big_straight "$@" && straight || zero
+        ;;
     esac
 }
 
@@ -58,6 +64,26 @@ four_of_a_kind() {
     for roll in "${!counter[@]}"; do
         ((counter[$roll] >= 4)) && echo $((4 * roll)) && return
     done
+}
+
+is_little_straight() {
+    local -a sorted
+    local IFS=$'\n'
+    mapfile -t sorted < <(sort <<<"$*")
+    unset IFS
+    [[ ${sorted[*]} == "1 2 3 4 5" ]]
+}
+
+is_big_straight() {
+    local -a sorted
+    local IFS=$'\n'
+    mapfile -t sorted < <(sort <<<"$*")
+    unset IFS
+    [[ ${sorted[*]} == "2 3 4 5 6" ]]
+}
+
+straight() {
+    echo 30
 }
 
 yacht() {
