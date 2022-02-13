@@ -102,11 +102,6 @@ parse() {
     echo "$category"
 }
 
-match() {
-    local regex=$1 input=$2
-    grep -E "$regex" <<<"$input" >/dev/null
-}
-
 main() {
     local category=$1
     shift
