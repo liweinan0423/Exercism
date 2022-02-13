@@ -18,7 +18,7 @@ main() {
         is_fullhouse "$@" && total "$@" || zero
         ;;
     "four of a kind")
-        four_of_a_kind "$@"
+        four_of_a_kind "$@" || zero
         ;;
     esac
 
@@ -44,7 +44,7 @@ four_of_a_kind() {
         counter[$roll]=$((counter[$roll] + 1))
     done
 
-    [[ ${counter[*]} =~ (1 4|4 1) ]] || echo 0 && return
+    [[ ${counter[*]} =~ (1 4|4 1) ]] || exit 1
 
     for roll in "${!counter[@]}"; do
         ((roll == 4)) && echo $((4 * roll)) && return
