@@ -13,7 +13,9 @@ main() {
     ones)
         ones "$@"
         ;;
-
+    twos)
+        twos "$@"
+        ;;
     esac
 
 }
@@ -29,7 +31,16 @@ yacht() {
 ones() {
     local -i score=0
     for roll; do
-        ((roll == 1)) && ((score++))
+        ((roll == 1)) && ((score += 1))
+    done
+
+    echo "$score"
+}
+
+twos() {
+    local -i score=0
+    for roll; do
+        ((roll == 2)) && ((score += 2))
     done
 
     echo "$score"

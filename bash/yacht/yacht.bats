@@ -39,7 +39,7 @@ load bats-extra
 }
 
 @test "Twos" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash yacht.sh "twos" 2 3 4 5 6
     assert_success
     assert_output "2"
