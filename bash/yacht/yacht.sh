@@ -24,7 +24,7 @@ main() {
 }
 
 is_yacht() {
-    is_combination '5' "$@"
+    is_combination 5 "$@"
 }
 is_combination() {
     local -i combination=$1
