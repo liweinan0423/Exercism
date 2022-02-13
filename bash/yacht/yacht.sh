@@ -13,6 +13,10 @@ main() {
     ones | twos | threes | fours | fives | sixes)
         $category "$@"
         ;;
+
+    full\ house)
+        is_fullhouse "$@" && fullhouse "$@" || zero
+        ;;
     esac
 
 }
@@ -20,9 +24,25 @@ main() {
 is_yacht() {
     (($1 == $2 && $1 == $3 && $1 == $4 && $1 == $5))
 }
+is_fullhouse() {
+    local -A counter
+    for roll; do
+        counter[$roll]=$((counter[$roll] + 1))
+    done
+
+    [[ ${counter[*]} =~ (2 3|3 2) ]]
+}
 
 yacht() {
     echo 50
+}
+
+fullhouse() {
+    local -i score=0
+    for roll; do
+        ((score += roll))
+    done
+    echo "$score"
 }
 
 numbers() {
