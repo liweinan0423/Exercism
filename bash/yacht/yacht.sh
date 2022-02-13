@@ -10,7 +10,7 @@ main() {
     yacht)
         is_yacht "$@" && yacht || zero
         ;;
-    ones | twos | fours)
+    ones | twos | threes | fours)
         $category "$@"
         ;;
     esac
@@ -41,7 +41,9 @@ ones() {
 twos() {
     numbers 2 "$@"
 }
-
+threes() {
+    numbers 3 "$@"
+}
 fours() {
     numbers 4 "$@"
 }
