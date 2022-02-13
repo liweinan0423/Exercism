@@ -25,31 +25,25 @@ yacht() {
     echo 50
 }
 
-ones() {
-    local -i score=0
+numbers() {
+    local -i number=$1 score=0
+    shift
     for roll; do
-        ((roll == 1)) && ((score += 1))
+        ((roll == number)) && ((score += number))
     done
-
     echo "$score"
+}
+
+ones() {
+    numbers 1 "$@"
 }
 
 twos() {
-    local -i score=0
-    for roll; do
-        ((roll == 2)) && ((score += 2))
-    done
-
-    echo "$score"
+    numbers 2 "$@"
 }
 
 fours() {
-    local -i score=0
-    for roll; do
-        ((roll == 4)) && ((score += 4))
-    done
-
-    echo "$score"
+    numbers 4 "$@"
 }
 
 zero() {
