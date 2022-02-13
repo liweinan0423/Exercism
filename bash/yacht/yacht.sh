@@ -26,6 +26,9 @@ main() {
     "big straight")
         is_big_straight "$@" && straight || zero
         ;;
+    "choice")
+        total "$@"
+        ;;
     esac
 }
 
