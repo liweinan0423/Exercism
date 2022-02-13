@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+declare -a Groups
 sum_of() {
     local -i number=$1 score=0
     shift
@@ -38,32 +39,44 @@ sixes() {
 }
 
 full_house() {
-    local -A schema
-    parse schema "$@"
-    [[ ${schema[category]} == "full_house" ]] && total "$@"
+    ((${#Groups[@]} == 2)) || return 1
+    for die in "${!Groups[@]}"; do
+        if [[ ${Groups[die]} == [23] ]]; then
+            total "$@"
+            return
+        else
+            return 1
+        fi
+    done
 }
 
 big_straight() {
-    local -A schema
-    parse schema "$@"
-    [[ ${schema[category]} == big_straight ]] && echo 30
+    local -a sorted
+    local IFS=$'\n'
+    mapfile -t sorted < <(sort -n <<<"$*")
+    unset IFS
+    [[ ${sorted[*]} == "2 3 4 5 6" ]] && echo 30
 }
 
 little_straight() {
-    local -A schema
-    parse schema "$@"
-    [[ ${schema[category]} == little_straight ]] && echo 30
+    local -a sorted
+    local IFS=$'\n'
+    mapfile -t sorted < <(sort -n <<<"$*")
+    unset IFS
+    [[ ${sorted[*]} == "1 2 3 4 5" ]] && echo 30
 }
 
 four_of_a_kind() {
-    local -A schema
-    parse schema "$@"
-    [[ ${schema[category]} =~ (four_of_a_kind|yacht) ]] && echo $((schema[four] * 4))
+    for die in "${!Groups[@]}"; do
+        if [[ ${Groups[die]} == [45] ]]; then
+            echo $((4 * die))
+            return
+        fi
+    done
+    return 1
 }
 yacht() {
-    local -A schema
-    parse schema "$@"
-    [[ ${schema[category]} =~ yacht ]] && echo 50
+    ((${#Groups[@]} == 1)) && echo 50
 }
 choice() {
     total "$@"
@@ -74,33 +87,14 @@ zero() {
 }
 
 parse() {
-    local -n __schema=$1
-    shift
-
-    local -a sorted
-    local IFS=$'\n'
-    mapfile -t sorted < <(sort -n <<<"$*")
-
-    IFS=""
-    if [[ ${sorted[*]} =~ ${sorted[0]}{5} ]]; then
-        __schema["category"]=yacht
-        __schema["four"]=${sorted[0]} # yacht is also a four_of_a_kind
-    elif [[ ${sorted[*]} == 12345 ]]; then
-        __schema["category"]=little_straight
-    elif [[ ${sorted[*]} == 23456 ]]; then
-        __schema["category"]=big_straight
-    elif [[ ${sorted[*]} =~ (${sorted[0]}{3}${sorted[3]}{2}|${sorted[0]}{2}${sorted[2]}{3}) ]]; then
-        __schema["category"]=full_house
-    elif [[ ${sorted[*]} =~ ([${sorted[0]}|${sorted[1]}]){4} ]]; then
-        __schema["four"]="${BASH_REMATCH[1]}"
-        __schema["category"]=four_of_a_kind
-    fi
+    for die; do
+        ((Groups[die] += 1))
+    done
 }
-
 main() {
     local category=$1
     shift
-
+    parse "$@"
     ${category// /_} "$@" || zero
 }
 main "$@"
