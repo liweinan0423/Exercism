@@ -1,95 +1,5 @@
 #!/usr/bin/env bash
 
-# shellcheck disable=SC2015
-
-main() {
-    local category=$1
-    shift
-
-    case $category in
-    yacht)
-        is_yacht "$@" && yacht
-        ;;
-    ones | twos | threes | fours | fives | sixes)
-        $category "$@"
-        ;;
-    "full house")
-        is_fullhouse "$@" && total "$@"
-        ;;
-    "four of a kind")
-        is_four_of_a_kind "$@" && four_of_a_kind "$@"
-        ;;
-    "little straight")
-        is_little_straight "$@" && straight
-        ;;
-    "big straight")
-        is_big_straight "$@" && straight
-        ;;
-    "choice")
-        total "$@"
-        ;;
-    esac || zero
-}
-
-is_yacht() {
-    is_combination 5 "$@"
-}
-is_combination() {
-    local pattern=$1
-    shift
-    local -A counter
-    parse counter "$@"
-    [[ ${counter[*]} =~ $pattern ]]
-}
-is_fullhouse() {
-    is_combination "(2 3|3 2)" "$@"
-}
-
-is_four_of_a_kind() {
-    is_combination "(1 4|4 1)" "$@" || is_yacht "$@"
-}
-
-parse() {
-    local -n __counter=$1
-    shift
-    for roll; do
-        __counter[$roll]=$((__counter[$roll] + 1))
-    done
-}
-four_of_a_kind() {
-
-    local -A counter
-    parse counter "$@"
-
-    for roll in "${!counter[@]}"; do
-        ((counter[$roll] >= 4)) && echo $((4 * roll)) && return
-    done
-}
-
-is_little_straight() {
-    local -a sorted
-    local IFS=$'\n'
-    mapfile -t sorted < <(sort <<<"$*")
-    unset IFS
-    [[ ${sorted[*]} == "1 2 3 4 5" ]]
-}
-
-is_big_straight() {
-    local -a sorted
-    local IFS=$'\n'
-    mapfile -t sorted < <(sort <<<"$*")
-    unset IFS
-    [[ ${sorted[*]} == "2 3 4 5 6" ]]
-}
-
-straight() {
-    echo 30
-}
-
-yacht() {
-    echo 50
-}
-
 total() {
     local -i score=0
     for roll; do
@@ -98,7 +8,7 @@ total() {
     echo "$score"
 }
 
-numbers() {
+sum_of() {
     local -i number=$1 score=0
     shift
     for roll; do
@@ -108,27 +18,99 @@ numbers() {
 }
 
 ones() {
-    numbers 1 "$@"
+    sum_of 1 "$@"
 }
 
 twos() {
-    numbers 2 "$@"
+    sum_of 2 "$@"
 }
 threes() {
-    numbers 3 "$@"
+    sum_of 3 "$@"
 }
 fours() {
-    numbers 4 "$@"
+    sum_of 4 "$@"
 }
 fives() {
-    numbers 5 "$@"
+    sum_of 5 "$@"
 }
 sixes() {
-    numbers 6 "$@"
+    sum_of 6 "$@"
+}
+
+full_house() {
+    [[ $(parse schema "$@") == "full_house" ]] && total "$@"
+}
+
+big_straight() {
+    local -A schema
+    parse schema "$@" >/dev/null
+    [[ ${schema[category]} == big_straight ]] && echo 30
+}
+
+little_straight() {
+    local -A schema
+    parse schema "$@" >/dev/null
+    [[ ${schema[category]} == little_straight ]] && echo 30
+}
+
+four_of_a_kind() {
+    local -A schema
+    parse schema "$@" >/dev/null
+    [[ ${schema[category]} =~ (four_of_a_kind|yacht) ]] && echo $((schema[four] * 4))
+}
+yacht() {
+    local category
+    category=$(parse schema "$@")
+    [[ $category == yacht ]] && echo 50
+}
+choice() {
+    total "$@"
 }
 
 zero() {
     echo 0
 }
 
+parse() {
+    local -n __schema=$1
+    shift
+
+    local -a sorted
+    local IFS=$'\n'
+    mapfile -t sorted < <(sort -n <<<"$*")
+
+    local category
+    IFS=""
+    if [[ ${sorted[*]} =~ ${sorted[0]}{5} ]]; then
+        category=yacht
+        __schema["category"]=yacht
+        __schema["four"]=${sorted[0]}
+    elif [[ ${sorted[*]} == 12345 ]]; then
+        category=little_straght
+        __schema["category"]=little_straight
+    elif [[ ${sorted[*]} == 23456 ]]; then
+        category=big_straight
+        __schema["category"]=big_straight
+    elif [[ ${sorted[*]} =~ (${sorted[0]}{3}${sorted[3]}{2}|${sorted[0]}{2}${sorted[2]}{3}) ]]; then
+        category=full_house
+        __schema["category"]=full_house
+    elif [[ ${sorted[*]} =~ ([${sorted[0]}|${sorted[1]}]){4} ]]; then
+        category=four_of_a_kind
+        __schema["four"]="${BASH_REMATCH[1]}"
+        __schema["category"]=four_of_a_kind
+    fi
+    echo "$category"
+}
+
+match() {
+    local regex=$1 input=$2
+    grep -E "$regex" <<<"$input" >/dev/null
+}
+
+main() {
+    local category=$1
+    shift
+
+    ${category// /_} "$@" || zero
+}
 main "$@"
