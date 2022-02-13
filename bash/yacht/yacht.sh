@@ -27,13 +27,13 @@ is_yacht() {
     is_combination 5 "$@"
 }
 is_combination() {
-    local combination=$1
+    local pattern=$1
     shift
     local -A counter
     for roll; do
         counter[$roll]=$((counter[$roll] + 1))
     done
-    [[ ${counter[*]} =~ $combination ]]
+    [[ ${counter[*]} =~ $pattern ]]
 }
 is_fullhouse() {
     is_combination "(2 3|3 2)" "$@"
