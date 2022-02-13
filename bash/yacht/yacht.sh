@@ -4,32 +4,32 @@
 
 main() {
     local category=$1
-
     shift
+
     case $category in
     yacht)
-        is_yacht "$@" && yacht || zero
+        is_yacht "$@" && yacht
         ;;
     ones | twos | threes | fours | fives | sixes)
         $category "$@"
         ;;
 
     "full house")
-        is_fullhouse "$@" && total "$@" || zero
+        is_fullhouse "$@" && total "$@"
         ;;
     "four of a kind")
-        is_four_of_a_kind "$@" && four_of_a_kind "$@" || zero
+        is_four_of_a_kind "$@" && four_of_a_kind "$@"
         ;;
     "little straight")
-        is_little_straight "$@" && straight || zero
+        is_little_straight "$@" && straight
         ;;
     "big straight")
-        is_big_straight "$@" && straight || zero
+        is_big_straight "$@" && straight
         ;;
     "choice")
         total "$@"
         ;;
-    esac
+    esac || zero
 }
 
 is_yacht() {
