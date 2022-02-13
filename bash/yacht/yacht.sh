@@ -39,6 +39,10 @@ is_fullhouse() {
     is_combination "(2 3|3 2)" "$@"
 }
 
+is_four_of_a_kind() {
+    is_combination "(1 4|4 1)" "$@" || is_yacht "$@"
+}
+
 four_of_a_kind() {
 
     local -A counter
