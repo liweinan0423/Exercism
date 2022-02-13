@@ -172,7 +172,7 @@ load bats-extra
 }
 
 @test "Big Straight as little straight" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash yacht.sh "little straight" 6 5 4 3 2
     assert_success
     assert_output "0"
