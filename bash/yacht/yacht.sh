@@ -14,8 +14,11 @@ main() {
         $category "$@"
         ;;
 
-    full\ house)
-        is_fullhouse "$@" && fullhouse "$@" || zero
+    "full house")
+        is_fullhouse "$@" && total "$@" || zero
+        ;;
+    "four of a kind")
+        four_of_a_kind "$@"
         ;;
     esac
 
@@ -24,6 +27,7 @@ main() {
 is_yacht() {
     (($1 == $2 && $1 == $3 && $1 == $4 && $1 == $5))
 }
+
 is_fullhouse() {
     local -A counter
     for roll; do
@@ -33,11 +37,25 @@ is_fullhouse() {
     [[ ${counter[*]} =~ (2 3|3 2) ]]
 }
 
+four_of_a_kind() {
+
+    local -A counter
+    for roll; do
+        counter[$roll]=$((counter[$roll] + 1))
+    done
+
+    [[ ${counter[*]} =~ (1 4|4 1) ]] || echo 0 && return
+
+    for roll in "${!counter[@]}"; do
+        ((roll == 4)) && echo $((4 * roll)) && return
+    done
+}
+
 yacht() {
     echo 50
 }
 
-fullhouse() {
+total() {
     local -i score=0
     for roll; do
         ((score += roll))
