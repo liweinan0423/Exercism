@@ -144,7 +144,7 @@ load bats-extra
 }
 
 @test "Four in order but not a little straight" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash yacht.sh "little straight" 1 1 2 3 4
     assert_success
     assert_output "0"
