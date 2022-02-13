@@ -109,14 +109,14 @@ load bats-extra
 }
 
 @test "Four of a Kind" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash yacht.sh "four of a kind" 6 6 4 6 6
     assert_success
     assert_output "24"
 }
 
 @test "Yacht can be scored as Four of a Kind" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash yacht.sh "four of a kind" 3 3 3 3 3
     assert_success
     assert_output "12"

@@ -43,11 +43,10 @@ four_of_a_kind() {
     for roll; do
         counter[$roll]=$((counter[$roll] + 1))
     done
-
-    [[ ${counter[*]} =~ (1 4|4 1) ]] || exit 1
+    [[ ${counter[*]} =~ (1 4|4 1|5) ]] || exit 1
 
     for roll in "${!counter[@]}"; do
-        ((roll == 4)) && echo $((4 * roll)) && return
+        ((counter[$roll] >= 4)) && echo $((4 * roll)) && return
     done
 }
 
