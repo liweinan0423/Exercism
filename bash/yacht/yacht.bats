@@ -95,7 +95,7 @@ load bats-extra
 }
 
 @test "Four of a kind is not a full house" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash yacht.sh "full house" 1 4 4 4 4
     assert_success
     assert_output "0"
