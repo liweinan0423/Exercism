@@ -179,7 +179,7 @@ load bats-extra
 }
 
 @test "No pairs but not a big straight" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash yacht.sh "big straight" 6 5 4 3 1
     assert_success
     assert_output "0"
