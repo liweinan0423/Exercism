@@ -10,7 +10,9 @@ main() {
     yacht)
         is_yacht "$@" && yacht || zero
         ;;
-    ones) ;;
+    ones)
+        ones "$@"
+        ;;
 
     esac
 
@@ -22,6 +24,15 @@ is_yacht() {
 
 yacht() {
     echo 50
+}
+
+ones() {
+    local -i score
+    for roll; do
+        ((roll == 1)) && ((score++))
+    done
+
+    echo "$score"
 }
 
 zero() {
