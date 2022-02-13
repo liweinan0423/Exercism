@@ -84,7 +84,7 @@ parse() {
     if [[ ${sorted[*]} =~ ${sorted[0]}{5} ]]; then
         category=yacht
         __schema["category"]=yacht
-        __schema["four"]=${sorted[0]}
+        __schema["four"]=${sorted[0]} # yacht is also a four_of_a_kind
     elif [[ ${sorted[*]} == 12345 ]]; then
         category=little_straght
         __schema["category"]=little_straight
