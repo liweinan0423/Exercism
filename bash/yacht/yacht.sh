@@ -18,7 +18,7 @@ main() {
         is_fullhouse "$@" && total "$@" || zero
         ;;
     "four of a kind")
-        four_of_a_kind "$@" || zero
+        is_four_of_a_kind "$@" && four_of_a_kind "$@" || zero
         ;;
     esac
 }
