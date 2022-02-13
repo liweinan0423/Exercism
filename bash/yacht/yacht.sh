@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
 
-total() {
-    local -i score=0
-    for roll; do
-        ((score += roll))
-    done
-    echo "$score"
-}
-
 sum_of() {
     local -i number=$1 score=0
     shift
     for roll; do
         ((roll == number)) && ((score += number))
+    done
+    echo "$score"
+}
+
+total() {
+    local -i score=0
+    for roll; do
+        ((score += roll))
     done
     echo "$score"
 }
