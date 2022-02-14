@@ -13,7 +13,7 @@ load bats-extra
 }
 
 @test "highest card out of all hands wins" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash poker.sh "4D 5S 6S 8D 3C" "2S 4C 7S 9H 10H" "3S 4S 5D 6H JH" 
     assert_success
     assert_line "3S 4S 5D 6H JH"
