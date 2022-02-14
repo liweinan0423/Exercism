@@ -51,19 +51,28 @@ full_house() {
 }
 
 big_straight() {
-    local -a sorted
-    local IFS=$'\n'
-    mapfile -t sorted < <(sort -n <<<"$*")
-    unset IFS
-    [[ ${sorted[*]} == "2 3 4 5 6" ]] && echo 30
+    straight big "$@" && echo 30
 }
 
 little_straight() {
+    straight little "$@" && echo 30
+}
+
+straight() {
     local -a sorted
     local IFS=$'\n'
+    local type=$1
+    shift
     mapfile -t sorted < <(sort -n <<<"$*")
     unset IFS
-    [[ ${sorted[*]} == "1 2 3 4 5" ]] && echo 30
+    case $type in
+    big)
+        [[ ${sorted[*]} == "2 3 4 5 6" ]]
+        ;;
+    little)
+        [[ ${sorted[*]} == "1 2 3 4 5" ]]
+        ;;
+    esac
 }
 
 four_of_a_kind() {
