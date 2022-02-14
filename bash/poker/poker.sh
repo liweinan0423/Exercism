@@ -12,18 +12,15 @@ main() {
 
     local win=$1
     for hand; do
-        if compare_hands "$hand" "$win"; then
+        if win "$hand" "$win"; then
             win=$hand
         fi
     done
     echo "$win"
 }
 
-compare_hands() {
-    local high_left high_right
-    high_left=$(highest_rank "$1")
-    high_right=$(highest_rank "$2")
-    ((high_left > high_right))
+win() {
+    (($(highest_rank "$1") > $(highest_rank "$2")))
 }
 
 highest_rank() {
