@@ -9,14 +9,20 @@ done
 unset seq
 
 main() {
+    local -a winners=("$1")
 
-    local win=$1
     for hand; do
-        if win "$hand" "$win"; then
-            win=$hand
+        if win "$hand" "${winners[0]}"; then
+            winners=("$hand")
+        elif tie "$hand" "${winners[0]}"; then
+            [[ $hand != "${winners[0]}" ]] && winners+=("$hand")
         fi
     done
-    echo "$win"
+    local IFS=$'\n'
+    echo "${winners[*]}"
+}
+tie() {
+    (($(highest_rank "$1") == $(highest_rank "$2")))
 }
 
 win() {
