@@ -30,7 +30,7 @@ load bats-extra
 }
 
 @test "multiple hands with the same high cards, tie compares next highest ranked, down to last card" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash poker.sh "3S 5H 6S 8D 7H" "2S 5D 6D 8C 7S" 
     assert_success
     assert_line "3S 5H 6S 8D 7H"

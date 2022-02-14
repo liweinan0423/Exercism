@@ -11,29 +11,35 @@ unset seq
 main() {
     local -a winners=("$1")
 
+    local result
     for hand; do
-        if win "$hand" "${winners[0]}"; then
+        result=$(compare "$hand" "${winners[0]}")
+        case $result in
+        win)
             winners=("$hand")
-        elif tie "$hand" "${winners[0]}"; then
+            ;;
+        tie)
             [[ $hand != "${winners[0]}" ]] && winners+=("$hand")
-        fi
+            ;;
+        esac
     done
     local IFS=$'\n'
     echo "${winners[*]}"
 }
-tie() {
-    (($(highest_rank "$1") == $(highest_rank "$2")))
-}
 
-win() {
-    (($(highest_rank "$1") > $(highest_rank "$2")))
-}
-
-highest_rank() {
-    local hand=$1
-    local -a sorted
-    sort_hand "$hand" sorted
-    echo "${sorted[0]%?}"
+compare() {
+    local -a sorted1 sorted2
+    sort_hand "$1" sorted1
+    sort_hand "$2" sorted2
+    winner=$(cat <(echo "${sorted1[@]%?}") <(echo "${sorted2[@]%?}") | sort -rn | head -n1)
+    looser=$(cat <(echo "${sorted1[@]%?}") <(echo "${sorted2[@]%?}") | sort -rn | tail -n1)
+    if [[ $winner == "$looser" ]]; then
+        echo tie
+    elif [[ $winner == "${sorted1[*]%?}" ]]; then
+        echo win
+    else
+        echo loose
+    fi
 }
 
 sort_hand() {
