@@ -1,13 +1,5 @@
 #!/usr/bin/env bash
 
-declare -a Cards=(2 3 4 5 6 7 8 9 10 J Q K A)
-declare -A Ranks
-
-for rank in "${!Cards[@]}"; do
-    Ranks[${Cards[$rank]}]=$rank
-done
-unset seq
-
 main() {
     local -a winners=("$1")
 
@@ -26,6 +18,10 @@ main() {
 }
 
 compare() {
+    compare_high_card "$1" "$2"
+}
+
+compare_high_card() {
     local -a sorted1 sorted2
     sort_hand "$1" sorted1
     sort_hand "$2" sorted2
@@ -39,6 +35,25 @@ compare() {
         echo loose
     fi
 }
+
+hand::group() {
+    local -A group
+    local hand=$1
+    local -a cards
+    read -ra cards <<<"$hand"
+
+    for card in "${cards[@]}"; do
+        ((group[${card%?}] += 1))
+    done
+}
+
+declare -a Cards=(2 3 4 5 6 7 8 9 10 J Q K A)
+declare -A Ranks
+
+for rank in "${!Cards[@]}"; do
+    Ranks[${Cards[$rank]}]=$rank
+done
+unset seq
 
 sort_hand() {
     local -n __sorted=$2
