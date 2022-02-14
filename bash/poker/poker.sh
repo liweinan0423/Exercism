@@ -11,10 +11,8 @@ unset seq
 main() {
     local -a winners=("$1")
 
-    local result
     for hand; do
-        result=$(compare "$hand" "${winners[0]}")
-        case $result in
+        case $(compare "$hand" "${winners[0]}") in
         win)
             winners=("$hand")
             ;;
