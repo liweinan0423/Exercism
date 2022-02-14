@@ -1,0 +1,23 @@
+{
+  "blurb": "Pick the best hand(s) from a list of poker hands.",
+  "authors": [
+    "glennj"
+  ],
+  "contributors": [
+    "guygastineau",
+    "IsaacG"
+  ],
+  "files": {
+    "solution": [
+      "poker.sh"
+    ],
+    "test": [
+      "poker.bats"
+    ],
+    "example": [
+      ".meta/example.sh"
+    ]
+  },
+  "source": "Inspired by the training course from Udacity.",
+  "source_url": "https://www.udacity.com/course/viewer#!/c-cs212/"
+}
