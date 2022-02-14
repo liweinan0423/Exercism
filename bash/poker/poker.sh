@@ -31,7 +31,7 @@ win() {
 
 highest_rank() {
     local hand=$1
-    local -a sorted=$2
+    local -a sorted
     sort_hand "$hand" sorted
     echo "${sorted[0]%?}"
 }
