@@ -40,7 +40,7 @@ sort_hand() {
     local -n __sorted=$2
     local -a cards
     read -ra cards <<<"$1"
-    mapfile -t sorted < <(for card in "${cards[@]}"; do
+    mapfile -t __sorted < <(for card in "${cards[@]}"; do
         echo "${Ranks[${card%?}]} ${card:(-1)}" # <rank> <suit>
     done | sort -k1,1rn)
 }
