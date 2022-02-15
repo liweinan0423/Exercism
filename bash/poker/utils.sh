@@ -58,6 +58,9 @@ hand::parse() {
     elif ((${#pairs[@]} == 2)); then
         array::remove ranks "[${pairs[0]}${pairs[1]}]"
         result="two_pairs ${pairs[*]} ${ranks[*]}"
+    elif [[ -n $quad ]]; then
+        array::remove ranks "$quad"
+        result="four_of_a_kind $quad ${ranks[*]}"
     fi
     echo "${result}"
 }
