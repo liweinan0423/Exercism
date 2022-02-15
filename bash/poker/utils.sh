@@ -112,7 +112,6 @@ rank::sort() {
 
     __ranks=("${sortedRanks[@]}")
 }
-
 hand::group() {
     local -n __groups=$2
     local hand=$1

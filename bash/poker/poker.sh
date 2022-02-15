@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source ./utils.sh
+
 main() {
     local -a winners=("$1")
 
@@ -16,9 +18,32 @@ main() {
     local IFS=$'\n'
     echo "${winners[*]}"
 }
-
+declare -rA Priorities=(
+    [straight_flush]=1
+    [four_of_a_kind]=2
+    [full_house]=3
+    [flush]=4
+    [straight]=5
+    [three_of_a_kind]=6
+    [two_pairs]=7
+    [one_pair]=8
+    [high_card]=9
+)
 compare() {
-    compare_high_card "$1" "$2"
+    local -a hand1 hand2
+    local category1 category2
+    read -ra hand1 <<<"$(hand::parse "$1")"
+    read -ra hand2 <<<"$(hand::parse "$2")"
+    category1=${hand1[0]}
+    category2=${hand2[0]}
+    if ((${Priorities[$category1]} < ${Priorities[$category2]})); then
+        echo win
+    elif ((${Priorities[$category1]} > ${Priorities[$category2]})); then
+        echo loose
+    else
+        # compare in the same category
+        "compare_$category1" "$1" "$2"
+    fi
 }
 
 compare_high_card() {
