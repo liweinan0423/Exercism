@@ -35,3 +35,8 @@ load bats-extra
     run bash utils.sh test hand::parse "3S 4D 2S 6D 5C"
     assert_output "straight 2"
 }
+
+@test "should parse straight flush" {
+    run bash utils.sh test hand::parse "7S 8S 9S 6S 10S"
+    assert_output "straight_flush S 6"
+}

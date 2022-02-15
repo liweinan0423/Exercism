@@ -73,8 +73,11 @@ hand::parse() {
     elif [[ -n $quad ]]; then
         array::remove ranks "$quad"
         result="four_of_a_kind $quad ${ranks[*]}"
-    elif ((straight)); then
+    elif ((straight)) && [[ -z $flush ]]; then
         result="straight $straight"
+    elif ((straight)) && [[ -n $flush ]]; then
+        result="straight_flush $flush $straight"
+
     fi
     echo "${result}"
 }
