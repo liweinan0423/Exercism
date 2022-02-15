@@ -97,6 +97,21 @@ array::remove() {
     __ary=("${result[@]}")
 }
 
+# compare two desc-sorted array
+array::compare() {
+    local -n __ary1=$1 __ary2=$2
+
+    winner=$(cat <(echo "${__ary1[@]}") <(echo "${__ary2[@]}") | sort -rn | head -n1)
+    looser=$(cat <(echo "${__ary1[@]}") <(echo "${__ary2[@]}") | sort -rn | tail -n1)
+    if [[ $winner == "$looser" ]]; then
+        echo tie
+    elif [[ $winner == "${__ary1[*]}" ]]; then
+        echo win
+    else
+        echo loose
+    fi
+}
+
 rank::sort() {
     local -n __ranks=$1
     local -a sortedValues sortedRanks

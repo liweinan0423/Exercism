@@ -67,6 +67,19 @@ compare_one_pair() {
 
 }
 
+compare_two_pairs() {
+
+    local -a hand1 hand2
+    local -a pairs1 pairs2
+    read -ra hand1 <<<"$(hand::parse "$1")"
+    read -ra hand2 <<<"$(hand::parse "$2")"
+
+    pairs1=("${hand1[@]:1:2}")
+    pairs2=("${hand2[@]:1:2}")
+
+    array::compare pairs1 pairs2
+}
+
 compare_high_card() {
     local -a hand1 hand2
     read -ra hand1 <<<"$(hand::parse "$1")"

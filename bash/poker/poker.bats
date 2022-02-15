@@ -62,7 +62,7 @@ load bats-extra
 }
 
 @test "both hands have two pairs, highest ranked pair wins" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash poker.sh "2S 8H 2D 8D 3H" "4S 5H 4C 8S 5D" 
     assert_success
     assert_line "2S 8H 2D 8D 3H"
