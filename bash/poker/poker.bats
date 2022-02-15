@@ -86,7 +86,7 @@ load bats-extra
 }
 
 @test "three of a kind beats two pair" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash poker.sh "2S 8H 2H 8D JH" "4S 5H 4C 8S 4H" 
     assert_success
     assert_line "4S 5H 4C 8S 4H"
