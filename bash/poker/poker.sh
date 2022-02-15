@@ -48,6 +48,25 @@ compare() {
     fi
 }
 
+compare_one_pair() {
+    local -a hand1 hand2
+    local pair1 pair2
+    read -ra hand1 <<<"$(hand::parse "$1")"
+    read -ra hand2 <<<"$(hand::parse "$2")"
+
+    pair1=${hand1[1]}
+    pair2=${hand2[1]}
+
+    if ((pair1 > pair2)); then
+        echo win
+    elif ((pair1 == pair2)); then
+        echo tie
+    else
+        echo loose
+    fi
+
+}
+
 compare_high_card() {
     local -a hand1 hand2
     read -ra hand1 <<<"$(hand::parse "$1")"

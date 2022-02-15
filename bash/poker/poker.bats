@@ -46,7 +46,7 @@ load bats-extra
 }
 
 @test "highest pair wins" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash poker.sh "4S 2H 6S 2D JH" "2S 4H 6C 4D JD" 
     assert_success
     assert_line "2S 4H 6C 4D JD"
