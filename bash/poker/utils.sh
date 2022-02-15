@@ -47,15 +47,17 @@ hand::parse() {
     array::remove ranks "[SHDC]"
     rank::sort ranks
     [[ -n $flush ]] && result="flush $flush ${ranks[*]}"
-    if ((${#pairs[@]} == 1)); then
+    if [[ -n $triplet ]] && ((${#pairs[@]} == 0)); then
+        array::remove ranks "${triplet}"
+        result="three_of_a_kind ${triplet} ${ranks[*]}"
+    elif [[ -n $triplet ]] && ((${#pairs[@]} == 1)); then
+        result="full_house $triplet ${pairs[0]}"
+    elif ((${#pairs[@]} == 1)); then
         array::remove ranks "${pairs[0]}"
         result="one_pair ${pairs[0]} ${ranks[*]}"
     elif ((${#pairs[@]} == 2)); then
         array::remove ranks "[${pairs[0]}${pairs[1]}]"
         result="two_pairs ${pairs[*]} ${ranks[*]}"
-    elif [[ -n $triplet ]]; then
-        array::remove ranks "${triplet}"
-        result="three_of_a_kind ${triplet} ${ranks[*]}"
     fi
     echo "${result}"
 }
