@@ -70,7 +70,7 @@ load bats-extra
 }
 
 @test "both hands have two pairs, with the same highest ranked pair, tie goes to low pair" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash poker.sh "2S QS 2C QD JH" "JD QH JS 8D QC" 
     assert_success
     assert_line "JD QH JS 8D QC"
