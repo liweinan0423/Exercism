@@ -44,7 +44,6 @@ compare() {
     elif ((${Priorities[$category1]} > ${Priorities[$category2]})); then
         echo loose
     else
-        # compare in the same category
         "compare_$category1" "$1" "$2"
     fi
 }
