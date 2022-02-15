@@ -54,6 +54,9 @@ hand::parse() {
     elif ((${#pairs[@]} == 2)); then
         array::remove ranks "[${pairs[0]}${pairs[1]}]"
         result="two_pairs ${pairs[*]} ${ranks[*]}"
+    elif [[ -n $triplet ]]; then
+        array::remove ranks "${triplet}"
+        result="three_of_a_kind ${triplet} ${ranks[*]}"
     fi
     echo "${result}"
 }

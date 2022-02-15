@@ -15,3 +15,8 @@ load bats-extra
     run bash utils.sh test hand::parse "4S 5H 4C 8C 5C"
     assert_output "two_pairs 5 4 8"
 }
+
+@test "should parse three of a kind" {
+    run bash utils.sh test hand::parse "4S 5H 4C 8S 4H"
+    assert_output "three_of_a_kind 4 8 5"
+}
