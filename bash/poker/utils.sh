@@ -43,8 +43,7 @@ hand::parse() {
             ;;
         esac
     done
-    local -a keys=("${!groups[@]}")
-    local -a ranks=("${keys[@]/[SHDC]/}")
+    local -a ranks=("${!groups[@]}")
     array::remove ranks "[SHDC]"
     rank::sort ranks
     [[ -n $flush ]] && result="flush $flush ${ranks[*]}"
