@@ -5,8 +5,10 @@ source ./utils.sh
 main() {
     local -a winners=("$1")
 
+    local result
     for hand; do
-        case $(compare "$hand" "${winners[0]}") in
+        result=$(compare "$hand" "${winners[0]}")
+        case $result in
         win)
             winners=("$hand")
             ;;
@@ -18,6 +20,7 @@ main() {
     local IFS=$'\n'
     echo "${winners[*]}"
 }
+
 declare -rA Priorities=(
     [straight_flush]=1
     [four_of_a_kind]=2
@@ -47,46 +50,68 @@ compare() {
 }
 
 compare_high_card() {
-    local -a sorted1 sorted2
-    sort_hand "$1" sorted1
-    sort_hand "$2" sorted2
-    winner=$(cat <(echo "${sorted1[@]%?}") <(echo "${sorted2[@]%?}") | sort -rn | head -n1)
-    looser=$(cat <(echo "${sorted1[@]%?}") <(echo "${sorted2[@]%?}") | sort -rn | tail -n1)
+    # local -a sorted1 sorted2
+    # sort_hand "$1" sorted1
+    # sort_hand "$2" sorted2
+    # winner=$(cat <(echo "${sorted1[@]%?}") <(echo "${sorted2[@]%?}") | sort -rn | head -n1)
+    # looser=$(cat <(echo "${sorted1[@]%?}") <(echo "${sorted2[@]%?}") | sort -rn | tail -n1)
+    # if [[ $winner == "$looser" ]]; then
+    #     echo tie
+    # elif [[ $winner == "${sorted1[*]%?}" ]]; then
+    #     echo win
+    # else
+    #     echo loose
+    # fi
+    compare_high_card2 "$@"
+}
+
+compare_high_card2() {
+    local -a hand1 hand2
+    read -ra hand1 <<<"$(hand::parse "$1")"
+    read -ra hand2 <<<"$(hand::parse "$2")"
+    for ((i = 1; i < ${#hand1[@]}; i++)); do
+        hand1[$i]=${Ranks[${hand1[$i]}]}
+        hand2[$i]=${Ranks[${hand2[$i]}]}
+    done
+
+    winner=$(cat <(echo "${hand1[@]}") <(echo "${hand2[@]}") | sort -rn | head -n1)
+    looser=$(cat <(echo "${hand1[@]}") <(echo "${hand2[@]}") | sort -rn | tail -n1)
+
     if [[ $winner == "$looser" ]]; then
         echo tie
-    elif [[ $winner == "${sorted1[*]%?}" ]]; then
+    elif [[ $winner == "${hand1[*]}" ]]; then
         echo win
     else
         echo loose
     fi
 }
 
-hand::group() {
-    local -A group
-    local hand=$1
-    local -a cards
-    read -ra cards <<<"$hand"
+# hand::group() {
+#     local -A group
+#     local hand=$1
+#     local -a cards
+#     read -ra cards <<<"$hand"
 
-    for card in "${cards[@]}"; do
-        ((group[${card%?}] += 1))
-    done
-}
+#     for card in "${cards[@]}"; do
+#         ((group[${card%?}] += 1))
+#     done
+# }
 
-declare -a Cards=(2 3 4 5 6 7 8 9 10 J Q K A)
-declare -A Ranks
+# declare -a Cards=(2 3 4 5 6 7 8 9 10 J Q K A)
+# declare -A Ranks
 
-for rank in "${!Cards[@]}"; do
-    Ranks[${Cards[$rank]}]=$rank
-done
-unset seq
+# for rank in "${!Cards[@]}"; do
+#     Ranks[${Cards[$rank]}]=$rank
+# done
+# unset seq
 
-sort_hand() {
-    local -n __sorted=$2
-    local -a cards
-    read -ra cards <<<"$1"
-    mapfile -t __sorted < <(for card in "${cards[@]}"; do
-        echo "${Ranks[${card%?}]}${card:(-1)}" # <rank> <suit>
-    done | sort -k1,1rn)
-}
+# sort_hand() {
+#     local -n __sorted=$2
+#     local -a cards
+#     read -ra cards <<<"$1"
+#     mapfile -t __sorted < <(for card in "${cards[@]}"; do
+#         echo "${Ranks[${card%?}]}${card:(-1)}" # <rank> <suit>
+#     done | sort -k1,1rn)
+# }
 
 main "$@"

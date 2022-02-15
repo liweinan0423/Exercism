@@ -8,14 +8,14 @@ for rank in "${!Cards[@]}"; do
 done
 
 # straight A
-# one_pair A 8 9 10
+# one_pair A 10 9 8
 # tow_pairs 2 3 8
 # three_of_a_kind 3 A 2
 # full_house 3 4
 # four_of_a_kind 10 A
 # flush H 2 4 6 8 9
 # straight_flush S 10
-# high_card 1 3 5 7 9
+# high_card 10 8 7 5 4
 hand::parse() {
     local -A groups
     hand::group "$1" groups
@@ -46,8 +46,8 @@ hand::parse() {
     local -a ranks=("${!groups[@]}")
     array::remove ranks "[SHDC]"
     rank::sort ranks
+    # debug "***${groups[@]}" 1>&2
     straight=${ranks[0]}
-
     for ((i = 1; i < ${#ranks[@]}; i++)); do
         if ((ranks[i] + 1 == straight)); then
             straight=${ranks[i]}
@@ -127,6 +127,7 @@ hand::group() {
     for card in "${cards[@]}"; do
         ((__groups[${card:(-1)}] += 1))
     done
+    # debug "--groups--${__groups[@]}"
 }
 
 if [[ $1 == "test" ]]; then
@@ -134,3 +135,7 @@ if [[ $1 == "test" ]]; then
     shift 2
     $func "$@"
 fi
+
+debug() {
+    echo 1>&2 "$@"
+}
