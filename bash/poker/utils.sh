@@ -45,10 +45,31 @@ hand::parse() {
     done
     local -a keys=("${!groups[@]}")
     local -a ranks=("${keys[@]/[SHDC]/}")
+    array::remove ranks "[SHDC]"
     rank::sort ranks
     [[ -n $flush ]] && result="flush $flush ${ranks[*]}"
-    ((${#pairs} == 1)) && result="one_pair ${pairs[0]} ${ranks[*]/${pairs[0]}/}"
-    echo "${result/  / }"
+    if ((${#pairs[@]} == 1)); then
+        array::remove ranks "${pairs[0]}"
+        result="one_pair ${pairs[0]} ${ranks[*]}"
+    elif ((${#pairs[@]} == 2)); then
+        array::remove ranks "[${pairs[0]}${pairs[1]}]"
+        result="two_pairs ${pairs[*]} ${ranks[*]}"
+    fi
+    echo "${result}"
+}
+
+array::remove() {
+    local -n __ary=$1
+    local pattern=$2
+    local -a result
+    for e in "${__ary[@]}"; do
+        # shellcheck disable=SC2053
+        if [[ $e != $pattern ]]; then
+            result+=("$e")
+        fi
+    done
+
+    __ary=("${result[@]}")
 }
 
 rank::sort() {
