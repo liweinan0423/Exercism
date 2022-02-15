@@ -78,7 +78,7 @@ load bats-extra
 }
 
 @test "both hands have two identically ranked pairs, tie goes to remaining card (kicker)" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash poker.sh "JD QH JS 8D QC" "JS QS JC 2D QD" 
     assert_success
     assert_line "JD QH JS 8D QC"
