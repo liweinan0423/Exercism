@@ -40,3 +40,8 @@ load bats-extra
     run bash utils.sh test hand::parse "7S 8S 9S 6S 10S"
     assert_output "straight_flush S 6"
 }
+
+@test "should parse high card" {
+    run bash utils.sh test hand::parse "4S 5H 6C 8D KH"
+    assert_output "high_card K 8 6 5 4"
+}

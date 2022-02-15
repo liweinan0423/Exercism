@@ -77,7 +77,8 @@ hand::parse() {
         result="straight $straight"
     elif ((straight)) && [[ -n $flush ]]; then
         result="straight_flush $flush $straight"
-
+    else
+        result="high_card ${ranks[*]}"
     fi
     echo "${result}"
 }
