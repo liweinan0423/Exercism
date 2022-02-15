@@ -77,7 +77,17 @@ compare_two_pairs() {
     pairs1=("${hand1[@]:1:2}")
     pairs2=("${hand2[@]:1:2}")
 
-    array::compare pairs1 pairs2
+    if [[ $(array::compare pairs1 pairs2) == tie ]]; then
+        if ((hand1[3] > hand2[3])); then
+            echo win
+        elif ((hand1[3] == hand2[3])); then
+            echo tie
+        else
+            echo loose
+        fi
+    else
+        array::compare pairs1 pairs2
+    fi
 }
 
 compare_high_card() {
