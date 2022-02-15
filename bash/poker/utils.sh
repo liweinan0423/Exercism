@@ -103,9 +103,6 @@ rank::sort() {
     readarray -t sortedValues < <(for rank in "${__ranks[@]}"; do
         [[ -n $rank ]] && echo "${Ranks[$rank]}"
     done | sort -rn)
-    # for rank in "${__ranks[@]}"; do
-    #     [[ -n $rank ]] && echo "${Ranks[$rank]}"
-    # done | sort -rn
     for val in "${sortedValues[@]}"; do
         sortedRanks+=("${Cards[$val]}")
     done
