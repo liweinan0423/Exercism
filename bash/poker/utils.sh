@@ -7,7 +7,7 @@ for rank in "${!Cards[@]}"; do
     Ranks[${Cards[$rank]}]=$rank
 done
 
-# straight AH
+# straight A
 # one_pair A 8 9 10
 # tow_pairs 2 3 8
 # three_of_a_kind 3 A 2
@@ -46,8 +46,20 @@ hand::parse() {
     local -a ranks=("${!groups[@]}")
     array::remove ranks "[SHDC]"
     rank::sort ranks
-    [[ -n $flush ]] && result="flush $flush ${ranks[*]}"
-    if [[ -n $triplet ]] && ((${#pairs[@]} == 0)); then
+    straight=${ranks[0]}
+
+    for ((i = 1; i < ${#ranks[@]}; i++)); do
+        if ((ranks[i] + 1 == straight)); then
+            straight=${ranks[i]}
+        else
+            straight=0
+            break
+        fi
+    done
+
+    if [[ -n $flush ]] && ((!straight)); then
+        result="flush $flush ${ranks[*]}"
+    elif [[ -n $triplet ]] && ((${#pairs[@]} == 0)); then
         array::remove ranks "${triplet}"
         result="three_of_a_kind ${triplet} ${ranks[*]}"
     elif [[ -n $triplet ]] && ((${#pairs[@]} == 1)); then
@@ -61,6 +73,8 @@ hand::parse() {
     elif [[ -n $quad ]]; then
         array::remove ranks "$quad"
         result="four_of_a_kind $quad ${ranks[*]}"
+    elif ((straight)); then
+        result="straight $straight"
     fi
     echo "${result}"
 }
