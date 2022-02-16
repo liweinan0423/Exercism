@@ -102,7 +102,7 @@ load bats-extra
 }
 
 @test "with multiple decks, two players can have same three of a kind, ties go to highest remaining cards" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash poker.sh "4S AH AS 7C AD" "4S AH AS 8C AD" 
     assert_success
     assert_line "4S AH AS 8C AD"

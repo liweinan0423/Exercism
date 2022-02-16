@@ -73,7 +73,13 @@ compare_three_of_a_kind() {
     triplet1=${hand1[1]}
     triplet2=${hand2[1]}
 
-    rank::compare "$triplet1" "$triplet2"
+    remainder1=("${hand1[@]:2}")
+    remainder2=("${hand2[@]:2}")
+    if [[ $(rank::compare "$triplet1" "$triplet2") == tie ]]; then
+        array::compare remainder1 remainder2
+    else
+        rank::compare "$triplet1" "$triplet2"
+    fi
 }
 
 compare_two_pairs() {
