@@ -94,7 +94,6 @@ compare_straight() {
     else
         rank::compare "${hand1[1]}" "${hand2[1]}"
     fi
-
 }
 
 compare_two_pairs() {
