@@ -21,7 +21,6 @@ array::sort() {
     local -a sorted
     local IFS=$'\n'
     readarray -t sorted <<<"$(sort -rn <(echo "${__array[*]}"))"
-
     __array=("${sorted[@]}")
 }
 
