@@ -174,7 +174,7 @@ load bats-extra
 }
 
 @test "both hands have a full house, tie goes to highest-ranked triplet" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash poker.sh "4H 4S 4D 9S 9D" "5H 5S 5D 8S 8D" 
     assert_success
     assert_line "5H 5S 5D 8S 8D"

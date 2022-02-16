@@ -67,6 +67,18 @@ compare_one_pair() {
 compare_flush() {
     compare_high_card "$@"
 }
+
+compare_full_house() {
+    local -a hand1 hand2
+    local pair1 pair2
+    read -ra hand1 <<<"$(hand::parse "$1")"
+    read -ra hand2 <<<"$(hand::parse "$2")"
+
+    local triplet1=${hand1[1]} triplet2=${hand2[1]}
+
+    rank::compare "$triplet1" "$triplet2"
+}
+
 compare_three_of_a_kind() {
     local -a hand1 hand2
     read -ra hand1 <<<"$(hand::parse "$1")"
