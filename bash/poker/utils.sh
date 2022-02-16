@@ -108,6 +108,17 @@ array::remove() {
     __ary=("${result[@]}")
 }
 
+# sort array by desc order
+array::sort() {
+    local -n __array=$1
+    local -a sorted
+    readarray -t sorted < <(for n in "${__array[@]}"; do
+        echo "$n"
+    done | sort -rn)
+
+    __array=("${sorted[@]}")
+}
+
 # compare two desc-sorted array
 array::compare() {
     local -n __ary1=$1 __ary2=$2
@@ -127,7 +138,7 @@ ranks::compare() {
     read -ra ranks1 <<<"$1"
     read -ra ranks2 <<<"$2"
     local -a values1 values2
-    for ((i=0;i<${#ranks1[@]}; i++)); do
+    for ((i = 0; i < ${#ranks1[@]}; i++)); do
         r1=${ranks1[$i]}
         r2=${ranks2[$i]}
         values1+=("${Ranks[$r1]}")
@@ -137,15 +148,17 @@ ranks::compare() {
 }
 rank::sort() {
     local -n __ranks=$1
-    local -a sortedValues sortedRanks
-    readarray -t sortedValues < <(for rank in "${__ranks[@]}"; do
-        [[ -n $rank ]] && echo "${Ranks[$rank]}"
-    done | sort -rn)
-    for val in "${sortedValues[@]}"; do
-        sortedRanks+=("${Cards[$val]}")
+    local -a values
+    for rank in "${__ranks[@]}"; do
+        values+=("${Ranks[$rank]}")
     done
 
-    __ranks=("${sortedRanks[@]}")
+    array::sort values
+
+    __ranks=()
+    for val in "${values[@]}"; do
+        __ranks+=("${Cards[$val]}")
+    done
 }
 
 hand::group() {
