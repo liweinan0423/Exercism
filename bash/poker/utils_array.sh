@@ -20,7 +20,7 @@ array::sort() {
     local -n __array=$1
     local -a sorted
     local IFS=$'\n'
-    readarray -t sorted < <(echo "${__array[*]}" | sort -rn)
+    readarray -t sorted < <(sort -rn < <(echo "${__array[*]}"))
 
     __array=("${sorted[@]}")
 }
