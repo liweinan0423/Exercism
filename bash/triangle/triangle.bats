@@ -112,7 +112,7 @@ load bats-extra
 # Test returns true if the triangle is scalene
 
 @test "no sides are equal, scalene" {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+  # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash triangle.sh scalene 5 4 6
   assert_success
   assert_output "true"
