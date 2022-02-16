@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source ./utils.sh
+source ./utils_poker.sh
 
 main() {
     local -a winners=("$1")
