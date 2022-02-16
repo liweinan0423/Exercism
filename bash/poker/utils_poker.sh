@@ -129,9 +129,8 @@ rank::sort() {
 
 hand::group() {
     local -n __groups=$2
-    local hand=$1
     local -a cards
-    read -ra cards <<<"$hand"
+    read -ra cards <<<"$1"
 
     # grouping ranks
     for rank in "${cards[@]%?}"; do

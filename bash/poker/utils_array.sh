@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# remove element(s) from array by pattern
 array::remove() {
     local -n __ary=$1
     local pattern=$2
@@ -14,13 +15,12 @@ array::remove() {
     __ary=("${result[@]}")
 }
 
-# sort array by desc order
+# sort array in descending order
 array::sort() {
     local -n __array=$1
     local -a sorted
-    readarray -t sorted < <(for n in "${__array[@]}"; do
-        echo "$n"
-    done | sort -rn)
+    local IFS=$'\n'
+    readarray -t sorted < <(echo "${__array[*]}" | sort -rn)
 
     __array=("${sorted[@]}")
 }
