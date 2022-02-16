@@ -7,6 +7,7 @@ check() {
     (($1 > 0 && $2 > 0 && $3 > 0)) || return 1
     (($1 == $2 && $2 == $3)) && echo equilateral
     (($1 != $2 && $2 != $3)) && echo scalene
+    (($1 != $2 && $2 == $3)) && echo isosceles
 }
 
 handle_float() {
