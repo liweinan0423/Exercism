@@ -182,7 +182,7 @@ load bats-extra
 }
 
 @test "with multiple decks, both hands have a full house with the same triplet, tie goes to the pair" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash poker.sh "5H 5S 5D 9S 9D" "5H 5S 5D 8S 8D" 
     assert_success
     assert_line "5H 5S 5D 9S 9D"

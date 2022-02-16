@@ -75,8 +75,13 @@ compare_full_house() {
     read -ra hand2 <<<"$(hand::parse "$2")"
 
     local triplet1=${hand1[1]} triplet2=${hand2[1]}
+    local pair1=${hand1[2]} pair2=${hand2[2]}
 
-    rank::compare "$triplet1" "$triplet2"
+    if [[ $(rank::compare "$triplet1" "$triplet2") == tie ]]; then
+        rank::compare "$pair1" "$pair2"
+    else
+        rank::compare "$triplet1" "$triplet2"
+    fi
 }
 
 compare_three_of_a_kind() {
