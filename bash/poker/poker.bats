@@ -166,7 +166,7 @@ load bats-extra
 }
 
 @test "full house beats a flush" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash poker.sh "3H 6H 7H 8H 5H" "4S 5H 4C 5D 4H" 
     assert_success
     assert_line "4S 5H 4C 5D 4H"
