@@ -94,7 +94,7 @@ load bats-extra
 }
 
 @test "both hands have three of a kind, tie goes to highest ranked triplet" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash poker.sh "2S 2H 2C 8D JH" "4S AH AS 8C AD" 
     assert_success
     assert_line "4S AH AS 8C AD"

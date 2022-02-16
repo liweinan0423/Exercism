@@ -126,6 +126,16 @@ rank::sort() {
 
     __ranks=("${sortedRanks[@]}")
 }
+
+rank::compare() {
+    if ((Ranks[$1] > Ranks[$2])); then
+        echo win
+    elif ((Ranks[$1] == Ranks[$2])); then
+        echo tie
+    else
+        echo loose
+    fi
+}
 hand::group() {
     local -n __groups=$2
     local hand=$1
