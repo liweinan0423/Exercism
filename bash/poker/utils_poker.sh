@@ -106,10 +106,8 @@ ranks::compare() {
     read -ra ranks2 <<<"$2"
     local -a values1 values2
     for ((i = 0; i < ${#ranks1[@]}; i++)); do
-        r1=${ranks1[$i]}
-        r2=${ranks2[$i]}
-        values1+=("${Ranks[$r1]}")
-        values2+=("${Ranks[$r2]}")
+        values1+=("${Ranks[${ranks1[$i]}]}")
+        values2+=("${Ranks[${ranks2[$i]}]}")
     done
     array::compare values1 values2
 }
