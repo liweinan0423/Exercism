@@ -27,7 +27,7 @@ check() {
 }
 
 handle_float() {
-    echo ${1/./}
+    echo $((${1/./} * 10))
 }
 
 main() {
