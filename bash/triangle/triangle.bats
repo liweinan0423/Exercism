@@ -133,7 +133,7 @@ load bats-extra
 }
 
 @test "may not violate triangle inequality" {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+  # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash triangle.sh scalene 7 3 2
   assert_success
   assert_output "false"
