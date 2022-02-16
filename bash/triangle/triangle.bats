@@ -103,7 +103,7 @@ load bats-extra
 # Bonus: deal with floats
 
 @test "sides may be floats, isosceles" {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+  # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash triangle.sh isosceles 0.5 0.4 0.5
   assert_success
   assert_output "true"
