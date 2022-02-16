@@ -2,9 +2,9 @@
 
 source ./utils_array.sh
 
+# support bi-directional lookup between ranks and values(for comparison)
 declare -a Cards=(2 3 4 5 6 7 8 9 10 J Q K A)
 declare -A Ranks
-
 for rank in "${!Cards[@]}"; do
     Ranks[${Cards[$rank]}]=$rank
 done
@@ -46,9 +46,12 @@ hand::parse() {
         esac
     done
     local -a ranks=("${!groups[@]}")
+
+    # remove suit from the groups and sort them in descending order
     array::remove ranks "[SHDC]"
     rank::sort ranks
 
+    # check for straight 
     # aces lead to special cases for a straight
     case ${ranks[*]} in
     "A 5 4 3 2")
@@ -63,7 +66,7 @@ hand::parse() {
             if ((ranks[i] - 1 == straight)); then
                 straight=${ranks[i]}
             else
-                straight=0
+                straight=
                 break
             fi
         done
@@ -71,7 +74,7 @@ hand::parse() {
     esac
 
     local result
-    if [[ -n $flush ]] && ((!straight)); then
+    if [[ -n $flush ]] && [[ -z $straight ]]; then
         result="flush $flush ${ranks[*]}"
     elif [[ -n $triplet ]] && ((${#pairs[@]} == 0)); then
         array::remove ranks "${triplet}"
@@ -87,9 +90,9 @@ hand::parse() {
     elif [[ -n $quad ]]; then
         array::remove ranks "$quad"
         result="four_of_a_kind $quad ${ranks[*]}"
-    elif [[ $straight != 0 ]] && [[ -z $flush ]]; then
+    elif [[ -n $straight ]] && [[ -z $flush ]]; then
         result="straight $straight"
-    elif [[ $straight != 0 ]] && [[ -n $flush ]]; then
+    elif [[ -n $straight ]] && [[ -n $flush ]]; then
         result="straight_flush $straight $flush"
     else
         result="high_card ${ranks[*]}"
@@ -110,6 +113,7 @@ ranks::compare() {
     done
     array::compare values1 values2
 }
+
 rank::sort() {
     local -n __ranks=$1
     local -a values
@@ -140,7 +144,6 @@ hand::group() {
     for card in "${cards[@]}"; do
         ((__groups[${card:(-1)}] += 1))
     done
-    # debug "--groups--${__groups[@]}"
 }
 
 debug() {
