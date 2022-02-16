@@ -1,6 +1,17 @@
 #!/usr/bin/env bash
 
-(($2 == $3 && $3 == $4)) && type=equilateral
-(($2 != $3 && $3 != $4)) && type=scalene
+check() {
+    (($1 > 0 && $2 > 0 && $3 > 0)) || return 1
+    (($1 == $2 && $2 == $3)) && echo equilateral
+    (($1 != $2 && $2 != $3)) && echo scalene
+}
 
-[[ $type == "$1" ]] && echo true || echo false
+main() {
+    if [[ $(check $2 $3 $4) == "$1" ]]; then
+        echo true
+    else
+        echo false
+    fi
+}
+
+main "$@"
