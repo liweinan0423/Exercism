@@ -94,7 +94,7 @@ load bats-extra
 }
 
 @test "third triangle inequality violation" {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+  # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash triangle.sh isosceles 3 1 1
   assert_success
   assert_output "false"
