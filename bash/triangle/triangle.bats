@@ -27,7 +27,7 @@ load bats-extra
 }
 
 @test "all zero sides is not a triangle" {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+  # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash triangle.sh equilateral 0 0 0
   assert_success
   assert_output "false"
@@ -36,7 +36,7 @@ load bats-extra
 # Bonus: deal with floats
 
 @test "sides may be floats, equilateral" {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+  # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash triangle.sh equilateral 0.5 0.5 0.5
   assert_success
   assert_output "true"
