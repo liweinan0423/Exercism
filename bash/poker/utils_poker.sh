@@ -54,7 +54,7 @@ hand::parse() {
     array::remove ranks "[SHDC]"
     rank::sort ranks
 
-    # check for straight 
+    # check for straight
     # aces lead to special cases for a straight
     case ${ranks[*]} in
     "A 5 4 3 2")
@@ -76,31 +76,63 @@ hand::parse() {
         ;;
     esac
 
-    local result
-    if [[ -n $flush ]] && [[ -z $straight ]]; then
-        result="flush $flush ${ranks[*]}"
-    elif [[ -n $triplet ]] && ((${#pairs[@]} == 0)); then
+    # due to shell's dynamic scoping, the functions below can access the variables defined in current function
+    flush ||
+        three_of_a_kind ||
+        full_house ||
+        one_pair ||
+        two_pairs ||
+        four_of_a_kind ||
+        straight ||
+        straight_flush ||
+        high_card
+}
+
+flush() {
+    [[ -n $flush && -z $straight ]] && echo "flush $flush ${ranks[*]}"
+}
+
+three_of_a_kind() {
+    [[ -n $triplet ]] && ((${#pairs[@]} == 0)) && {
         array::remove ranks "${triplet}"
-        result="three_of_a_kind ${triplet} ${ranks[*]}"
-    elif [[ -n $triplet ]] && ((${#pairs[@]} == 1)); then
-        result="full_house $triplet ${pairs[0]}"
-    elif ((${#pairs[@]} == 1)); then
+        echo "three_of_a_kind ${triplet} ${ranks[*]}"
+    }
+}
+
+full_house() {
+    [[ -n $triplet ]] && ((${#pairs[@]} == 1)) && echo "full_house $triplet ${pairs[0]}"
+}
+
+one_pair() {
+    ((${#pairs[@]} == 1)) && {
         array::remove ranks "${pairs[0]}"
-        result="one_pair ${pairs[0]} ${ranks[*]}"
-    elif ((${#pairs[@]} == 2)); then
+        echo "one_pair ${pairs[0]} ${ranks[*]}"
+    }
+}
+
+two_pairs() {
+    ((${#pairs[@]} == 2)) && {
         array::remove ranks "[${pairs[0]}${pairs[1]}]"
-        result="two_pairs ${pairs[*]} ${ranks[*]}"
-    elif [[ -n $quad ]]; then
+        echo "two_pairs ${pairs[*]} ${ranks[*]}"
+    }
+}
+four_of_a_kind() {
+    [[ -n $quad ]] && {
         array::remove ranks "$quad"
-        result="four_of_a_kind $quad ${ranks[*]}"
-    elif [[ -n $straight ]] && [[ -z $flush ]]; then
-        result="straight $straight"
-    elif [[ -n $straight ]] && [[ -n $flush ]]; then
-        result="straight_flush $straight $flush"
-    else
-        result="high_card ${ranks[*]}"
-    fi
-    echo "${result}"
+        echo "four_of_a_kind $quad ${ranks[*]}"
+    }
+}
+
+straight() {
+    [[ -n $straight && -z $flush ]] && echo "straight $straight"
+}
+
+straight_flush() {
+    [[ -n $straight && -n $flush ]] && echo "straight_flush $straight $flush"
+}
+
+high_card() {
+    echo "high_card ${ranks[*]}"
 }
 
 ranks::compare() {
@@ -139,7 +171,7 @@ hand::group() {
     for rank in "${cards[@]%?}"; do
         # __groups is a nameref of an associative array, `$` cannot be omitted
         #shellcheck disable=SC2004
-        ((__groups[$rank] += 1)) 
+        ((__groups[$rank] += 1))
     done
 
     # grouping suits
