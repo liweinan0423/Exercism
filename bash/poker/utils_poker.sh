@@ -9,15 +9,18 @@ for rank in "${!Cards[@]}"; do
     Ranks[${Cards[$rank]}]=$rank
 done
 
-# straight A
-# one_pair A 10 9 8
-# tow_pairs 2 3 8
-# three_of_a_kind 3 A 2
-# full_house 3 4
-# four_of_a_kind 10 A
-# flush H 2 4 6 8 9
-# straight_flush S 10
-# high_card 10 8 7 5 4
+## parse the hand of poker into a "machine-readable" format, which is a space separated values in the structure below:
+# <category> [suit] (ranks), where the list `ranks` are sorted in descending order, A is the biggest
+# Following is some example structures:
+# `straight 10`,            10 is the biggest rank in the straight
+# `one_pair A 10 9 8`,      A is the pair, 10 9 8 are other cards
+# `tow_pairs 3 2 8`,        3 and 2 are pairs, 8 is the kicker
+# `three_of_a_kind 3 A 2`,  3 is the triplet, A and 2 are the remaining cards
+# `full_house 3 4`,         3 is the triplet, 4 is the pair
+# `four_of_a_kind 10 A`,    10 is the quad, A is the kicker
+# `flush H 2 4 6 8 9`,      H is the suit, 2 4 6 8 9 are the cards
+# `straight_flush S 10`,    S is the suit, 10 is the biggest rank in the straight
+# `high_card 10 8 7 5 4`    cards in descending order
 hand::parse() {
     local -A groups
     hand::group "$1" groups
@@ -134,7 +137,9 @@ hand::group() {
 
     # grouping ranks
     for rank in "${cards[@]%?}"; do
-        ((__groups[$rank] += 1))
+        # __groups is a nameref of an associative array, `$` cannot be omitted
+        #shellcheck disable=SC2004
+        ((__groups[$rank] += 1)) 
     done
 
     # grouping suits
