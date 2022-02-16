@@ -30,6 +30,7 @@ declare -rA Priorities=(
     [one_pair]=8
     [high_card]=9
 )
+
 compare() {
     local -a hand1 hand2
     local category1 category2
@@ -42,7 +43,7 @@ compare() {
     elif ((${Priorities[$category1]} > ${Priorities[$category2]})); then
         echo -1
     else
-        "compare_in_category" "$1" "$2"
+        compare_in_category "$1" "$2"
     fi
 }
 
