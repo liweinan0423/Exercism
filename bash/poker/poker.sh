@@ -7,10 +7,10 @@ main() {
     shift
     for hand; do
         case $(compare "$hand" "${winners[0]}") in
-        win)
+        1)
             winners=("$hand")
             ;;
-        tie)
+        0)
             winners+=("$hand")
             ;;
         esac
@@ -38,9 +38,9 @@ compare() {
     category1=${hand1[0]}
     category2=${hand2[0]}
     if ((${Priorities[$category1]} < ${Priorities[$category2]})); then
-        echo win
+        echo 1
     elif ((${Priorities[$category1]} > ${Priorities[$category2]})); then
-        echo loose
+        echo -1
     else
         "compare_in_category" "$1" "$2"
     fi

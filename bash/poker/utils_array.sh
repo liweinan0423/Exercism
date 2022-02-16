@@ -31,10 +31,10 @@ array::compare() {
     winner=$(cat <(echo "${sorted1[@]}") <(echo "${sorted2[@]}") | sort -rn | head -n1)
     looser=$(cat <(echo "${sorted1[@]}") <(echo "${sorted2[@]}") | sort -rn | tail -n1)
     if [[ $winner == "$looser" ]]; then
-        echo tie
+        echo 0
     elif [[ $winner == "${sorted1[*]}" ]]; then
-        echo win
+        echo 1
     else
-        echo loose
+        echo -1
     fi
 }
