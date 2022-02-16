@@ -46,8 +46,7 @@ hand::parse() {
     local -a ranks=("${!groups[@]}")
     array::remove ranks "[SHDC]"
     rank::sort ranks
-    # debug "***${groups[@]}"
-
+    
     # aces lead to special cases for a straight
     case ${ranks[*]} in
     "A 5 4 3 2")
@@ -85,9 +84,9 @@ hand::parse() {
     elif [[ -n $quad ]]; then
         array::remove ranks "$quad"
         result="four_of_a_kind $quad ${ranks[*]}"
-    elif ((straight)) && [[ -z $flush ]]; then
+    elif [[ $straight != 0 ]] && [[ -z $flush ]]; then
         result="straight $straight"
-    elif ((straight)) && [[ -n $flush ]]; then
+    elif [[ $straight != 0 ]] && [[ -n $flush ]]; then
         result="straight_flush $flush $straight"
     else
         result="high_card ${ranks[*]}"
@@ -167,12 +166,13 @@ hand::group() {
     # debug "--groups--${__groups[@]}"
 }
 
+debug() {
+    echo 1>&2 "$@"
+}
+
 if [[ $1 == "test" ]]; then
     func=$2
     shift 2
     $func "$@"
 fi
 
-debug() {
-    echo 1>&2 "$@"
-}
