@@ -198,7 +198,7 @@ load bats-extra
 }
 
 @test "both hands have four of a kind, tie goes to high quad" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash poker.sh "2S 2H 2C 8D 2D" "4S 5H 5S 5D 5C" 
     assert_success
     assert_line "4S 5H 5S 5D 5C"

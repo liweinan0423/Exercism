@@ -84,6 +84,22 @@ compare_full_house() {
     fi
 }
 
+compare_four_of_a_kind() {
+    local -a hand1 hand2
+    local pair1 pair2
+    read -ra hand1 <<<"$(hand::parse "$1")"
+    read -ra hand2 <<<"$(hand::parse "$2")"
+    local -a quad1=${hand1[1]} quad2=${hand2[1]}
+    local remainder1=("${hand1[@]:2}")
+    local remainder2=("${hand2[@]:2}")
+    if [[ $(rank::compare "$quad1" "$quad2") == tie ]]; then
+        array::compare remainder1 remainder2
+    else
+        rank::compare "$quad1" "$quad2"
+    fi
+
+}
+
 compare_three_of_a_kind() {
     local -a hand1 hand2
     read -ra hand1 <<<"$(hand::parse "$1")"
@@ -92,8 +108,8 @@ compare_three_of_a_kind() {
     triplet1=${hand1[1]}
     triplet2=${hand2[1]}
 
-    remainder1=("${hand1[@]:2}")
-    remainder2=("${hand2[@]:2}")
+    local remainder1=("${hand1[@]:2}")
+    local remainder2=("${hand2[@]:2}")
     if [[ $(rank::compare "$triplet1" "$triplet2") == tie ]]; then
         array::compare remainder1 remainder2
     else
