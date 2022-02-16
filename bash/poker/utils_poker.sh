@@ -76,7 +76,7 @@ hand::parse() {
         ;;
     esac
 
-    # due to shell's dynamic scoping, the functions below can access the variables defined in current function
+    # $triplet, $pairs, $quad, $straight, $flush, $ranks are bound to dynamic scoping
     flush ||
         three_of_a_kind ||
         full_house ||
