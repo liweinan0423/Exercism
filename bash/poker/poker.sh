@@ -82,6 +82,14 @@ compare_three_of_a_kind() {
     fi
 }
 
+compare_straight() {
+    local -a hand1 hand2
+    read -ra hand1 <<<"$(hand::parse "$1")"
+    read -ra hand2 <<<"$(hand::parse "$2")"
+
+    rank::compare "${hand1[1]}" "${hand2[1]}"
+}
+
 compare_two_pairs() {
 
     local -a hand1 hand2
