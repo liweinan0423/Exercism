@@ -38,7 +38,7 @@ load bats-extra
 
 @test "should parse straight flush" {
     run bash utils.sh test hand::parse "7S 8S 9S 6S 10S"
-    assert_output "straight_flush S 6"
+    assert_output "straight_flush 6 S"
 }
 
 @test "should parse high card" {

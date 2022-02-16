@@ -101,7 +101,7 @@ compare_four_of_a_kind() {
 }
 
 compare_straight_flush() {
-    compare_high_card "$@"
+    compare_straight "$@"
 }
 
 compare_three_of_a_kind() {

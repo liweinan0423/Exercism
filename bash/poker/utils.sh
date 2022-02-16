@@ -87,7 +87,7 @@ hand::parse() {
     elif [[ $straight != 0 ]] && [[ -z $flush ]]; then
         result="straight $straight"
     elif [[ $straight != 0 ]] && [[ -n $flush ]]; then
-        result="straight_flush $flush $straight"
+        result="straight_flush $straight $flush"
     else
         result="high_card ${ranks[*]}"
     fi
