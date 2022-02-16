@@ -222,7 +222,7 @@ load bats-extra
 }
 
 @test "both hands have straight flush, tie goes to highest-ranked card" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash poker.sh "4H 6H 7H 8H 5H" "5S 7S 8S 9S 6S" 
     assert_success
     assert_line "5S 7S 8S 9S 6S"

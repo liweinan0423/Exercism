@@ -100,6 +100,10 @@ compare_four_of_a_kind() {
 
 }
 
+compare_straight_flush() {
+    compare_high_card "$@"
+}
+
 compare_three_of_a_kind() {
     local -a hand1 hand2
     read -ra hand1 <<<"$(hand::parse "$1")"
