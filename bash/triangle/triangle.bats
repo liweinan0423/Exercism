@@ -52,7 +52,7 @@ load bats-extra
 }
 
 @test "first two sides are equal" {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+  # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash triangle.sh isosceles 4 4 3
   assert_success
   assert_output "true"
