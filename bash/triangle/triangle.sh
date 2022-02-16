@@ -1,18 +1,23 @@
 #!/usr/bin/env bash
 
-#shellcheck disable=SC2086,SC2046
+#shellcheck disable=SC2086,SC2046,SC2068
 
 check() {
-    set -- $(handle_float $1) $(handle_float $2) $(handle_float $3)
-    (($1 > 0 && $2 > 0 && $3 > 0)) || {
-        echo none
-        return
-    }
-    (($1 + $2 > $3 && $2 + $3 > $1 && $1 + $3 > $2)) || {
-        echo none
-        return
-    }
+    set -- $(normalize $1) $(normalize $2) $(normalize $3)
+    sides_should_be_positive $@ &&
+        sides_should_form_triangle $@ &&
+        determine_type $@ || echo none
+}
 
+sides_should_be_positive() {
+    (($1 > 0 && $2 > 0 && $3 > 0))
+}
+
+sides_should_form_triangle() {
+    (($1 + $2 > $3 && $2 + $3 > $1 && $1 + $3 > $2))
+}
+
+determine_type() {
     local -i equals=0
 
     (($1 == $2)) && ((equals++))
@@ -25,8 +30,7 @@ check() {
     0) echo scalene ;;
     esac
 }
-
-handle_float() {
+normalize() {
     echo $((${1/./} * 10))
 }
 
