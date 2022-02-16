@@ -142,7 +142,7 @@ load bats-extra
 }
 
 @test "even though an ace is usually high, a 5-high straight is the lowest-scoring straight" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash poker.sh "2H 3C 4D 5D 6H" "4S AH 3S 2D 5H" 
     assert_success
     assert_line "2H 3C 4D 5D 6H"

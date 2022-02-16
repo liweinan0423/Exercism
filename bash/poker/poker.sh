@@ -87,7 +87,14 @@ compare_straight() {
     read -ra hand1 <<<"$(hand::parse "$1")"
     read -ra hand2 <<<"$(hand::parse "$2")"
 
-    rank::compare "${hand1[1]}" "${hand2[1]}"
+    if [[ ${hand1[1]} == A && ${hand2[1]} != A ]]; then
+        echo -1
+    elif [[ ${hand1[1]} == A && ${hand2[1]} == A ]]; then
+        echo 0
+    else
+        rank::compare "${hand1[1]}" "${hand2[1]}"
+    fi
+
 }
 
 compare_two_pairs() {
