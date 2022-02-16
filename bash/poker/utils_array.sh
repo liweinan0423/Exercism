@@ -19,8 +19,7 @@ array::remove() {
 array::sort() {
     local -n __array=$1
     local -a sorted
-    local IFS=$'\n'
-    readarray -t sorted <<<"$(sort -rn <(echo "${__array[*]}"))"
+    readarray -t sorted <<<"$(sort -rn <(printf "%s\n" "${__array[@]}"))"
     __array=("${sorted[@]}")
 }
 
