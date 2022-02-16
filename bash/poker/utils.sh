@@ -112,8 +112,6 @@ array::remove() {
 array::compare() {
     local -n __ary1=$1 __ary2=$2
     local -a sorted1=("${__ary1[@]}") sorted2=("${__ary2[@]}")
-    rank::sort sorted1
-    rank::sort sorted2
     winner=$(cat <(echo "${sorted1[@]}") <(echo "${sorted2[@]}") | sort -rn | head -n1)
     looser=$(cat <(echo "${sorted1[@]}") <(echo "${sorted2[@]}") | sort -rn | tail -n1)
     if [[ $winner == "$looser" ]]; then
@@ -124,7 +122,19 @@ array::compare() {
         echo loose
     fi
 }
-
+compare_ranks() {
+    local -a ranks1 ranks2
+    read -ra ranks1 <<<"$1"
+    read -ra ranks2 <<<"$2"
+    local -a values1 values2
+    for ((i=0;i<${#ranks1[@]}; i++)); do
+        r1=${ranks1[$i]}
+        r2=${ranks2[$i]}
+        values1+=("${Ranks[$r1]}")
+        values2+=("${Ranks[$r2]}")
+    done
+    array::compare values1 values2
+}
 rank::sort() {
     local -n __ranks=$1
     local -a sortedValues sortedRanks
