@@ -4,7 +4,7 @@ source ./utils.sh
 
 main() {
     local -a winners=("$1")
-
+    shift
     local result
     for hand; do
         result=$(compare "$hand" "${winners[0]}")
@@ -13,7 +13,7 @@ main() {
             winners=("$hand")
             ;;
         tie)
-            [[ $hand != "${winners[0]}" ]] && winners+=("$hand")
+            winners+=("$hand")
             ;;
         esac
     done
