@@ -59,28 +59,28 @@ load bats-extra
 }
 
 @test "first and last sides are equal" {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+  # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash triangle.sh isosceles 4 3 4
   assert_success
   assert_output "true"
 }
 
 @test "equilateral triangles are also isosceles" {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+  # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash triangle.sh isosceles 4 4 4
   assert_success
   assert_output "true"
 }
 
 @test "no sides are equal, isosceles" {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+  # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash triangle.sh isosceles 2 3 4
   assert_success
   assert_output "false"
 }
 
 @test "first triangle inequality violation" {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+  # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash triangle.sh isosceles 1 1 3
   assert_success
   assert_output "false"
