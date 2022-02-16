@@ -46,16 +46,28 @@ hand::parse() {
     local -a ranks=("${!groups[@]}")
     array::remove ranks "[SHDC]"
     rank::sort ranks
-    # debug "***${groups[@]}" 1>&2
-    straight=${ranks[0]}
-    for ((i = 1; i < ${#ranks[@]}; i++)); do
-        if ((ranks[i] + 1 == straight)); then
-            straight=${ranks[i]}
-        else
-            straight=0
-            break
-        fi
-    done
+    # debug "***${groups[@]}"
+
+    # aces lead to special cases for a straight
+    case ${ranks[*]} in
+    "A 5 4 3 2")
+        straight=A
+        ;;
+    "A K Q J 10")
+        straight=10
+        ;;
+    *)
+        straight=${ranks[0]}
+        for ((i = 1; i < ${#ranks[@]}; i++)); do
+            if ((ranks[i] + 1 == straight)); then
+                straight=${ranks[i]}
+            else
+                straight=0
+                break
+            fi
+        done
+        ;;
+    esac
 
     if [[ -n $flush ]] && ((!straight)); then
         result="flush $flush ${ranks[*]}"
@@ -136,6 +148,7 @@ rank::compare() {
         echo loose
     fi
 }
+
 hand::group() {
     local -n __groups=$2
     local hand=$1

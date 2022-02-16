@@ -118,7 +118,7 @@ load bats-extra
 }
 
 @test "aces can end a straight (10 J Q K A)" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash poker.sh "4S 5H 4C 8D 4H" "10D JH QS KD AC" 
     assert_success
     assert_line "10D JH QS KD AC"
