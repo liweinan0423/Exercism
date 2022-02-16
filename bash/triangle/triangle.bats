@@ -20,7 +20,7 @@ load bats-extra
 }
 
 @test "no sides are equal, equilateral" {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+  # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash triangle.sh equilateral 5 4 6
   assert_success
   assert_output "false"
