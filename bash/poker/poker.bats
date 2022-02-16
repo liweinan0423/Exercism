@@ -206,7 +206,7 @@ load bats-extra
 }
 
 @test "with multiple decks, both hands with identical four of a kind, tie determined by kicker" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash poker.sh "3S 3H 2S 3D 3C" "3S 3H 4S 3D 3C" 
     assert_success
     assert_line "3S 3H 4S 3D 3C"
