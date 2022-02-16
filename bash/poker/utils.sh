@@ -122,7 +122,7 @@ array::compare() {
         echo loose
     fi
 }
-compare_ranks() {
+ranks::compare() {
     local -a ranks1 ranks2
     read -ra ranks1 <<<"$1"
     read -ra ranks2 <<<"$2"
@@ -146,16 +146,6 @@ rank::sort() {
     done
 
     __ranks=("${sortedRanks[@]}")
-}
-
-rank::compare() {
-    if ((Ranks[$1] > Ranks[$2])); then
-        echo win
-    elif ((Ranks[$1] == Ranks[$2])); then
-        echo tie
-    else
-        echo loose
-    fi
 }
 
 hand::group() {

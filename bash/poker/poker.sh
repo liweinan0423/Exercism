@@ -56,7 +56,7 @@ compare_in_category() {
     array::remove ranks1 "[SHDC]"
     array::remove ranks2 "[SHDC]"
 
-    compare_ranks "${ranks1[*]}" "${ranks2[*]}"
+    ranks::compare "${ranks1[*]}" "${ranks2[*]}"
 }
 
 main "$@"
