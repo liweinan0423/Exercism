@@ -126,7 +126,7 @@ load bats-extra
 }
 
 @test "two sides are equal" {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+  # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash triangle.sh scalene 4 4 3
   assert_success
   assert_output "false"
