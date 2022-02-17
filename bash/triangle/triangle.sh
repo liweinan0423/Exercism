@@ -31,7 +31,12 @@ determine_type() {
     esac
 }
 normalize() {
-    echo $((${1/./} * 10))
+    if [[ $1 =~ .*\.(.*) ]]; then
+        exp=${#BASH_REMATCH[1]}
+        echo $((${1/./} * (10 ** exp)))
+    else
+        echo $@
+    fi
 }
 
 main() {
