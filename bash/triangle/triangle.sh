@@ -30,12 +30,11 @@ determine_type() {
     0) echo scalene ;;
     esac
 }
+
+# handle float points - proportionally enlarge the sides does not change the type of the triagle
 normalize() {
     if [[ $1 =~ .*\.?(.*) ]]; then
-        exp=${#BASH_REMATCH[1]}
-        echo $((${1/./} * (10 ** exp)))
-    # else
-    #     echo $@
+        echo $((${1/./} * (10 ** ${#BASH_REMATCH[1]})))
     fi
 }
 
