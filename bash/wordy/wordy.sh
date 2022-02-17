@@ -15,7 +15,7 @@ parse() {
         else
             die "syntax error"
         fi
-    elif is_operand "$token"; then
+    elif is_operator "$token"; then
         if [[ -z $operator ]] && ((${#operands[@]} == 1)); then
             operator=$token
         else
@@ -59,7 +59,7 @@ is_operand2() {
     [[ $1 =~ -?[0-9]+ ]]
 }
 
-is_operand() {
+is_operator() {
     [[ $1 == @(plus|minus|multiplied|divided) ]]
 }
 
