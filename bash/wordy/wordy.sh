@@ -21,7 +21,7 @@ parse() {
 
 parse_operand() {
     shopt -s extglob
-    token=${token%@(th|st|nd)}
+    token=${token%@(th|st|nd|rd)}
     if ((${#operands[@]} == 0)); then
         operands+=("${token}")
     elif ((${#operands[@]} == 1)) && [[ -n $operator ]]; then
@@ -72,7 +72,7 @@ output() {
 }
 
 is_operand() {
-    [[ $token =~ -?[0-9]+(th|st|nd)? ]]
+    [[ $token =~ -?[0-9]+(th|st|nd|rd)? ]]
 }
 
 is_operator() {
