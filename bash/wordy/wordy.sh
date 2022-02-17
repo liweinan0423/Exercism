@@ -7,25 +7,28 @@ die() {
 
 calculate() {
     local -n __operators=$1 __operand=$2
-    local op1=${__operators[0]} op2=${__operators[1]}
+    local -i op1 op2
     local -i result
-    case $__operand in
-    plus)
-        result=$((op1 + op2))
-        ;;
-    minus)
-        result=$((op1 - op2))
-        ;;
-    multiplied)
-        result=$((op1 * op2))
-        ;;
-    divided)
-        result=$((op1 / op2))
-        ;;
-    esac
+    if [[ ${#operators[@]} -eq 2 && -n $operand ]]; then
+        op1=${__operators[0]} op2=${__operators[1]}
+        case $__operand in
+        plus)
+            result=$((op1 + op2))
+            ;;
+        minus)
+            result=$((op1 - op2))
+            ;;
+        multiplied)
+            result=$((op1 * op2))
+            ;;
+        divided)
+            result=$((op1 / op2))
+            ;;
+        esac
+        __operators=("$result")
+        __operand=
+    fi
 
-    __operators=("$result")
-    __operand=
 }
 
 is_operator() {
@@ -71,9 +74,7 @@ main() {
 
     for token in "${tokens[@]}"; do
         parse "$token"
-        if [[ ${#operators[@]} -eq 2 && -n $operand ]]; then
-            calculate operators operand
-        fi
+        calculate operators operand
     done
 
     [[ ${#operators[@]} -eq 1 && -z $operand ]] || die "syntax error"
