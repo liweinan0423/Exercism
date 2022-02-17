@@ -2,7 +2,7 @@
 
 #shellcheck disable=SC2086,SC2046,SC2068
 
-check() {
+triangle() {
     set -- $(normalize $1) $(normalize $2) $(normalize $3)
     sides_should_be_positive $@ &&
         sides_should_form_triangle $@ &&
@@ -37,24 +37,32 @@ normalize() {
 main() {
     local expected=$1
     shift
-    local answer
-    answer=$(check $1 $2 $3)
+    local actual
+    actual=$(triangle $1 $2 $3)
 
-    if
-        case $expected in
-        equilateral | scalene) [[ $answer == "$expected" ]] ;;
-        isosceles)
-            [[ $answer == @(isosceles|equilateral) ]]
-            ;;
-
-        *) false ;;
-        esac
-    then
+    # this call goes to `command_not_found_handle` to imitate "dynamic meta-programming"
+    if "${actual}_is_a" $expected; then
         echo true
     else
         echo false
     fi
+}
 
+command_not_found_handle() {
+    if [[ $1 == *_is_a ]]; then
+        local actual=${1%_is_a} expected=$2
+        case $expected in
+        isosceles)
+            [[ $actual == @(isosceles|equilateral) ]]
+            ;;
+        *)
+            [[ $actual == "$expected" ]]
+            ;;
+        esac
+    else
+        echo "${0##*/}: line ${BASH_LINENO[0]}: $1: command not found"
+        exit 1
+    fi
 }
 
 main "$@"
