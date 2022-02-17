@@ -8,15 +8,15 @@ main() {
 
 parse() {
     if is_operator "$token"; then
-        if ((${#operators[@]} == 0)); then
-            operators+=("$token")
-        elif ((${#operators[@]} == 1)) && [[ -n $operand ]]; then
-            operators+=("$token")
+        if ((${#operands[@]} == 0)); then
+            operands+=("$token")
+        elif ((${#operands[@]} == 1)) && [[ -n $operand ]]; then
+            operands+=("$token")
         else
             die "syntax error"
         fi
     elif is_operand "$token"; then
-        if [[ -z $operand ]] && ((${#operators[@]} == 1)); then
+        if [[ -z $operand ]] && ((${#operands[@]} == 1)); then
             operand=$token
         else
             die "syntax error"
@@ -29,8 +29,8 @@ parse() {
 calculate() {
     local -i op1 op2
     local -i result
-    if [[ ${#operators[@]} -eq 2 && -n $operand ]]; then
-        op1=${operators[0]} op2=${operators[1]}
+    if [[ ${#operands[@]} -eq 2 && -n $operand ]]; then
+        op1=${operands[0]} op2=${operands[1]}
         case $operand in
         plus)
             result=$((op1 + op2))
@@ -45,14 +45,14 @@ calculate() {
             result=$((op1 / op2))
             ;;
         esac
-        operators=("$result")
+        operands=("$result")
         operand=
     fi
 }
 
 output() {
-    [[ ${#operators[@]} -eq 1 && -z $operand ]] || die "syntax error"
-    echo "${operators[0]}"
+    [[ ${#operands[@]} -eq 1 && -z $operand ]] || die "syntax error"
+    echo "${operands[0]}"
 }
 
 is_operator() {
