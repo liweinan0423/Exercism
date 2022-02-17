@@ -48,7 +48,6 @@ calculate() {
         operators=("$result")
         operand=
     fi
-
 }
 
 output() {
