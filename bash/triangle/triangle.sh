@@ -25,7 +25,7 @@ determine_type() {
     (($1 == $3)) && ((equals++))
 
     case $equals in
-    2 | 3) echo equilateral ;;
+    [23]) echo equilateral ;;
     1) echo isosceles ;;
     0) echo scalene ;;
     esac
