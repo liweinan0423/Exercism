@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+declare -a operands
+declare operator
+
 main() {
     #shellcheck disable=SC2086
     set -- ${1%"?"} #remove trailing quesiton mark, and split into words
