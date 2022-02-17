@@ -8,17 +8,11 @@ main() {
 }
 
 is_anagram() {
-    shopt -s nocasematch
-    if [[ ${#word} -eq ${#target} && $word != "$target" ]]; then
-        local buf=$word
-        for ((idx = 0; idx < ${#target}; idx++)); do
-            char=${target:$idx:1}
-            buf=${buf/$char/}
-        done
-        [[ -z $buf ]]
-    else
-        false
-    fi
+    [[ ${word,,} != "${target,,}" && $(ordered "${target,,}") == $(ordered "${word,,}") ]]
+}
+
+ordered() {
+    echo "$1" | grep -o . | sort | paste -sd " " -
 }
 
 main "$@"
