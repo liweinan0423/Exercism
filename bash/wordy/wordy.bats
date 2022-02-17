@@ -179,8 +179,14 @@ load bats-extra
     assert_output "syntax error"
 }
 
-@test "What is 2 raised to the 5th power?" {
+@test "exp *th power" {
     run bash wordy.sh "What is 2 raised to the 5th power?"
     assert_success
     assert_output 32
+}
+
+@test "exp *st power" {
+    run bash wordy.sh "What is 2 raised to the 21st power?"
+    assert_success
+    assert_output 2097152
 }

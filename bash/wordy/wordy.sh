@@ -20,10 +20,12 @@ parse() {
 }
 
 parse_operand() {
+    token=${token%th}
+    token=${token%st}
     if ((${#operands[@]} == 0)); then
-        operands+=("${token%th}")
+        operands+=("${token}")
     elif ((${#operands[@]} == 1)) && [[ -n $operator ]]; then
-        operands+=("${token%th}")
+        operands+=("${token}")
     else
         die "syntax error"
     fi
@@ -70,7 +72,7 @@ output() {
 }
 
 is_operand() {
-    [[ $token =~ -?[0-9]+(th)? ]]
+    [[ $token =~ -?[0-9]+(th|st|nd)? ]]
 }
 
 is_operator() {
