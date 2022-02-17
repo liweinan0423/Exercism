@@ -6,21 +6,26 @@ die() {
 }
 
 calculate() {
-    local op1=$1 operand=$2 op2=$3
-    case $operand in
+    local -n __operators=$1 __operand=$2
+    local op1=${__operators[0]} op2=${__operators[1]}
+    local -i result
+    case $__operand in
     plus)
-        echo $((op1 + op2))
+        result=$((op1 + op2))
         ;;
     minus)
-        echo $((op1 - op2))
+        result=$((op1 - op2))
         ;;
     multiplied)
-        echo $((op1 * op2))
+        result=$((op1 * op2))
         ;;
     divided)
-        echo $((op1 / op2))
+        result=$((op1 / op2))
         ;;
     esac
+
+    __operators=("$result")
+    __operand=
 }
 
 is_operator() {
@@ -31,21 +36,26 @@ is_operand() {
     [[ $1 == @(plus|minus|multiplied|divided) ]]
 }
 
+is_noise() {
+    [[ $1 == @(What|is|by) ]]
+}
+
+parse() {
+    local token=$1
+}
+
 main() {
     local -a tokens
     read -ra tokens <<<"${1%"?"}"
     local -a operators
     local operand
 
-    local -i tmp
     for token in "${tokens[@]}"; do
         if is_operator "$token"; then
             if ((${#operators[@]} == 0)); then
                 operators+=("$token")
             elif ((${#operators[@]} == 1)) && [[ -n $operand ]]; then
-                tmp=$(calculate "${operators[0]}" "$operand" "$token")
-                operators=("$tmp")
-                operand=
+                operators+=("$token")
             else
                 die "syntax error"
             fi
@@ -55,10 +65,13 @@ main() {
             else
                 die "syntax error"
             fi
-        elif [[ $token == @(What|is|by) ]]; then
+        elif is_noise "$token"; then
             continue
         else
             die "unknown operation"
+        fi
+        if [[ ${#operators[@]} -eq 2 && -n $operand ]]; then
+            calculate operators operand
         fi
     done
 
