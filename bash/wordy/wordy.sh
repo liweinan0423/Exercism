@@ -6,12 +6,11 @@ die() {
 }
 
 calculate() {
-    local -n __operators=$1 __operand=$2
     local -i op1 op2
     local -i result
     if [[ ${#operators[@]} -eq 2 && -n $operand ]]; then
-        op1=${__operators[0]} op2=${__operators[1]}
-        case $__operand in
+        op1=${operators[0]} op2=${operators[1]}
+        case $operand in
         plus)
             result=$((op1 + op2))
             ;;
@@ -25,8 +24,8 @@ calculate() {
             result=$((op1 / op2))
             ;;
         esac
-        __operators=("$result")
-        __operand=
+        operators=("$result")
+        operand=
     fi
 
 }
@@ -44,7 +43,6 @@ is_noise() {
 }
 
 parse() {
-    local token=$1
     if is_operator "$token"; then
         if ((${#operators[@]} == 0)); then
             operators+=("$token")
@@ -71,8 +69,7 @@ main() {
     local operand
 
     for token in "${tokens[@]}"; do
-        parse "$token"
-        calculate operators operand
+        parse && calculate
     done
 
     [[ ${#operators[@]} -eq 1 && -z $operand ]] || die "syntax error"
