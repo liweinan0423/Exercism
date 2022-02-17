@@ -13,4 +13,13 @@ square_of_sum() {
     echo $((result * result))
 }
 
+sum_of_square() {
+    local -i result
+    for ((i = 1; i <= $1; i++)); do
+        ((result += i * i))
+    done
+
+    echo $result
+}
+
 main "$@"
