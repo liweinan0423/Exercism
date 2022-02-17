@@ -9,7 +9,7 @@ main() {
 parse() {
     if is_operand; then
         parse_operand
-    elif is_operator "$token"; then
+    elif is_operator; then
         if [[ -z $operator ]] && ((${#operands[@]} == 1)); then
             operator=$token
         else
@@ -64,7 +64,7 @@ is_operand() {
 }
 
 is_operator() {
-    [[ $1 == @(plus|minus|multiplied|divided) ]]
+    [[ $token == @(plus|minus|multiplied|divided) ]]
 }
 
 is_nop() {
