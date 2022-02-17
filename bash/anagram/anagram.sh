@@ -17,7 +17,7 @@ is_anagram() {
         done
         [[ -z $buf ]]
     else
-        return 1
+        false
     fi
 }
 
