@@ -21,9 +21,9 @@ parse() {
 
 parse_operand() {
     if ((${#operands[@]} == 0)); then
-        operands+=("$token")
+        operands+=("${token%th}")
     elif ((${#operands[@]} == 1)) && [[ -n $operator ]]; then
-        operands+=("$token")
+        operands+=("${token%th}")
     else
         die "syntax error"
     fi
@@ -55,6 +55,9 @@ calculate() {
         divided)
             result=$((op1 / op2))
             ;;
+        raised)
+            result=$((op1 ** op2))
+            ;;
         esac
         operands=("$result")
         operator=
@@ -67,15 +70,15 @@ output() {
 }
 
 is_operand() {
-    [[ $token =~ -?[0-9]+ ]]
+    [[ $token =~ -?[0-9]+(th)? ]]
 }
 
 is_operator() {
-    [[ $token == @(plus|minus|multiplied|divided) ]]
+    [[ $token == @(plus|minus|multiplied|divided|raised) ]]
 }
 
 is_not_nop() {
-    ! [[ $token == @(What|is|by) ]]
+    ! [[ $token == @(What|is|by|to|the|power) ]]
 }
 
 die() {
