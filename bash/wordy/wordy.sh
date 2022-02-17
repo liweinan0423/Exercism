@@ -42,6 +42,25 @@ is_noise() {
 
 parse() {
     local token=$1
+    if is_operator "$token"; then
+        if ((${#operators[@]} == 0)); then
+            operators+=("$token")
+        elif ((${#operators[@]} == 1)) && [[ -n $operand ]]; then
+            operators+=("$token")
+        else
+            die "syntax error"
+        fi
+    elif is_operand "$token"; then
+        if [[ -z $operand ]] && ((${#operators[@]} == 1)); then
+            operand=$token
+        else
+            die "syntax error"
+        fi
+    elif is_noise "$token"; then
+        :
+    else
+        die "unknown operation"
+    fi
 }
 
 main() {
@@ -51,25 +70,7 @@ main() {
     local operand
 
     for token in "${tokens[@]}"; do
-        if is_operator "$token"; then
-            if ((${#operators[@]} == 0)); then
-                operators+=("$token")
-            elif ((${#operators[@]} == 1)) && [[ -n $operand ]]; then
-                operators+=("$token")
-            else
-                die "syntax error"
-            fi
-        elif is_operand "$token"; then
-            if [[ -z $operand ]] && ((${#operators[@]} == 1)); then
-                operand=$token
-            else
-                die "syntax error"
-            fi
-        elif is_noise "$token"; then
-            continue
-        else
-            die "unknown operation"
-        fi
+        parse "$token"
         if [[ ${#operators[@]} -eq 2 && -n $operand ]]; then
             calculate operators operand
         fi
