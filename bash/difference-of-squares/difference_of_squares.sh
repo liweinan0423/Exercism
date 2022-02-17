@@ -22,8 +22,26 @@ sum_of_squares() {
     echo $result
 }
 
+## time complexity: O(n)
 difference() {
     echo $(($(square_of_sum $1) - $(sum_of_squares $1)))
+}
+
+## (n1 + n2 + ... + nk)^2 = n1^2 + n2^2 + n3^2 + ... + nk^2 +
+##                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+##                                                           2*n1*n2 + 2*n1*n3 + ... + 2*n1*nk +
+##                                                           2*n2*n3 + 2*n2*n4 + ... * 2*n2*nk +
+##                                                           ... +
+##                                                           2*n(k-1)*nk
+## time complexity: O(n^2)
+difference2() {
+    local -i sum
+    for ((i = 0; i <= $1; i++)); do
+        for ((j = i + 1; j <= $1; j++)); do
+            ((sum += 2 * i * j))
+        done
+    done
+    echo $sum
 }
 
 main "$@"
