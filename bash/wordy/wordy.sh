@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+main() {
+    #shellcheck disable=SC2086
+    set -- ${1%"?"} #remove trailing quesiton mark, and split into words
+    for token; do parse && calculate; done && output
+}
+
 parse() {
     if is_operator "$token"; then
         if ((${#operators[@]} == 0)); then
@@ -67,7 +73,4 @@ die() {
     exit 1
 }
 
-#shellcheck disable=SC2086
-set -- ${1%"?"} #remove trailing quesiton mark, and split into words
-
-for token; do parse && calculate; done && output
+main "$@"
