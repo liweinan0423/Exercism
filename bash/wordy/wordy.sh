@@ -7,7 +7,7 @@ main() {
 }
 
 parse() {
-    if is_operator "$token"; then
+    if is_operand2 "$token"; then
         if ((${#operands[@]} == 0)); then
             operands+=("$token")
         elif ((${#operands[@]} == 1)) && [[ -n $operator ]]; then
@@ -55,7 +55,7 @@ output() {
     echo "${operands[0]}"
 }
 
-is_operator() {
+is_operand2() {
     [[ $1 =~ -?[0-9]+ ]]
 }
 
