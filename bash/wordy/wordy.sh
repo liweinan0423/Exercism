@@ -3,15 +3,7 @@
 main() {
     #shellcheck disable=SC2086
     set -- ${1%"?"} #remove trailing quesiton mark, and split into words
-    local -a operators
-    local operand
-
-    for token; do
-        parse && calculate
-    done
-
-    [[ ${#operators[@]} -eq 1 && -z $operand ]] || die "syntax error"
-    echo "${operators[0]}"
+    for token; do parse && calculate; done && output
 }
 
 parse() {
@@ -57,6 +49,11 @@ calculate() {
         operand=
     fi
 
+}
+
+output() {
+    [[ ${#operators[@]} -eq 1 && -z $operand ]] || die "syntax error"
+    echo "${operators[0]}"
 }
 
 is_operator() {
