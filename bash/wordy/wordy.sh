@@ -7,14 +7,8 @@ main() {
 }
 
 parse() {
-    if is_operand "$token"; then
-        if ((${#operands[@]} == 0)); then
-            operands+=("$token")
-        elif ((${#operands[@]} == 1)) && [[ -n $operator ]]; then
-            operands+=("$token")
-        else
-            die "syntax error"
-        fi
+    if is_operand; then
+        parse_operand
     elif is_operator "$token"; then
         if [[ -z $operator ]] && ((${#operands[@]} == 1)); then
             operator=$token
@@ -23,6 +17,16 @@ parse() {
         fi
     elif ! is_nop "$token"; then
         die "unknown operation"
+    fi
+}
+
+parse_operand() {
+    if ((${#operands[@]} == 0)); then
+        operands+=("$token")
+    elif ((${#operands[@]} == 1)) && [[ -n $operator ]]; then
+        operands+=("$token")
+    else
+        die "syntax error"
     fi
 }
 
@@ -56,7 +60,7 @@ output() {
 }
 
 is_operand() {
-    [[ $1 =~ -?[0-9]+ ]]
+    [[ $token =~ -?[0-9]+ ]]
 }
 
 is_operator() {
