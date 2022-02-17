@@ -72,7 +72,7 @@ is_operator() {
 }
 
 is_not_nop() {
-    [[ ! $token == @(What|is|by) ]]
+    ! [[ $token == @(What|is|by) ]]
 }
 
 die() {
