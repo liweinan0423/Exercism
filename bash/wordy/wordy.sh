@@ -11,7 +11,7 @@ parse() {
         parse_operand
     elif is_operator; then
         parse_operator
-    elif ! is_nop; then
+    elif is_not_nop; then
         die "unknown operation"
     fi
 }
@@ -71,8 +71,8 @@ is_operator() {
     [[ $token == @(plus|minus|multiplied|divided) ]]
 }
 
-is_nop() {
-    [[ $token == @(What|is|by) ]]
+is_not_nop() {
+    [[ ! $token == @(What|is|by) ]]
 }
 
 die() {
