@@ -190,3 +190,9 @@ load bats-extra
     assert_success
     assert_output 2097152
 }
+
+@test "exp *nd power" {
+    run bash wordy.sh "What is 2 raised to the 2nd power?"
+    assert_success
+    assert_output 4
+}

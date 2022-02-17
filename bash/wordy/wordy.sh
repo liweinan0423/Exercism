@@ -20,8 +20,8 @@ parse() {
 }
 
 parse_operand() {
-    token=${token%th}
-    token=${token%st}
+    shopt -s extglob
+    token=${token%@(th|st|nd)}
     if ((${#operands[@]} == 0)); then
         operands+=("${token}")
     elif ((${#operands[@]} == 1)) && [[ -n $operator ]]; then
