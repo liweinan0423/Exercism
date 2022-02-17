@@ -2,7 +2,6 @@
 
 main() {
     quotient=$1
-    ((quotient == 1)) && return
     local -a factors
     while ((quotient > 1)); do
         for ((i = 2; i <= $1; i++)); do
@@ -13,8 +12,6 @@ main() {
             fi
         done
     done
-
-    ((${#factors[@]} == 0)) && factors+=("$1")
 
     echo "${factors[@]}"
 }
