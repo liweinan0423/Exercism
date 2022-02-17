@@ -22,4 +22,8 @@ sum_of_squares() {
     echo $result
 }
 
+difference() {
+    echo $(($(square_of_sum $1) - $(sum_of_squares $1)))
+}
+
 main "$@"

@@ -47,21 +47,21 @@ load bats-extra
 }
 # Subtract sum of squares from square of sums
 @test "difference of squares 1" {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+  # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash difference_of_squares.sh difference 1
   assert_success
   assert_output "0"
 }
 
 @test "difference of squares 5" {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+  # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash difference_of_squares.sh difference 5
   assert_success
   assert_output "170"
 }
 
 @test "difference of squares 100" {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+  # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash difference_of_squares.sh difference 100
   assert_success
   assert_output "25164150"
