@@ -2,18 +2,18 @@
 
 main() {
     quotient=$1
-    for ((i = 2; i <= $1; i++)); do
-        if ((quotient % i == 0)); then
-            ((quotient = quotient / i))
-            echo -n "$i"
-            if ((quotient != 1)); then
-                echo -n " "
-                i=1
-            else
+    local -a factors
+    while ((quotient > 1)); do
+        for ((i = 2; i <= $1; i++)); do
+            if ((quotient % i == 0)); then
+                factors+=("$i")
+                ((quotient = quotient / i))
                 break
             fi
-        fi
+        done
     done
+
+    echo "${factors[@]}"
 }
 
 main "$@"
