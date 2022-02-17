@@ -21,7 +21,7 @@ parse() {
         else
             die "syntax error"
         fi
-    elif ! is_noise "$token"; then
+    elif ! is_nop "$token"; then
         die "unknown operation"
     fi
 }
@@ -63,7 +63,7 @@ is_operand() {
     [[ $1 == @(plus|minus|multiplied|divided) ]]
 }
 
-is_noise() {
+is_nop() {
     [[ $1 == @(What|is|by) ]]
 }
 
