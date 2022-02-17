@@ -59,9 +59,7 @@ parse() {
         else
             die "syntax error"
         fi
-    elif is_noise "$token"; then
-        :
-    else
+    elif ! is_noise "$token"; then
         die "unknown operation"
     fi
 }
