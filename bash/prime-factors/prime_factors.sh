@@ -1,26 +1,19 @@
 #!/usr/bin/env bash
-quotient=$1
 
-factors=()
+main() {
+    quotient=$1
+    local -a factors
+    while ((quotient > 1)); do
+        for ((i = 2; i <= $1; i++)); do
+            if ((quotient % i == 0)); then
+                factors+=("$i")
+                ((quotient = quotient / i))
+                break
+            fi
+        done
+    done
 
-prime=2
+    echo "${factors[@]}"
+}
 
-while ((prime * prime <= quotient)); do
-
-    if ((quotient % prime == 0)); then
-
-        factors+=("$prime")
-
-        ((quotient /= prime))
-
-    else
-
-        ((prime++))
-
-    fi
-
-done
-
-((quotient > 1)) && factors+=("$quotient")
-
-echo "${factors[*]}"
+main "$@"
