@@ -5,43 +5,21 @@ main() {
     $1 $2
 }
 
+# sum of arithmetic progression: n(n+1)/2
+# time complexity: O(1)
 square_of_sum() {
-    local -i result
-    for ((i = 1; i <= $1; i++)); do
-        ((result += i))
-    done
-    echo $((result * result))
+    echo $((($1 * (1 + $1) / 2) ** 2))
 }
 
+# https://www.cuemath.com/algebra/sum-of-squares/
+# time complexity: O(1)
 sum_of_squares() {
-    local -i result
-    for ((i = 1; i <= $1; i++)); do
-        ((result += i * i))
-    done
-
-    echo $result
+    echo $(($1 * ($1 + 1) * (2 * $1 + 1) / 6))
 }
 
-## time complexity: O(n)
+## time complexity: O(1)
 difference() {
     echo $(($(square_of_sum $1) - $(sum_of_squares $1)))
-}
-
-## (1 + 2 + ... + n)^2 = 1^2 + 2^2 + 3^2 + ... + n^2 + (2*1*2 + 2*1*3 + ... + 2*1*n +
-##                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-##                                                      2*2*3 + 2*2*4 + ... * 2*2*n +
-##                                                      ... +
-##                                                      2*(n-2)*(n-1) + 2*(n-2)*n +
-##                                                      2*(n-1)*n)
-## time complexity: O(n^2)
-difference2() {
-    local -i sum
-    for ((i = 0; i <= $1; i++)); do
-        for ((j = i + 1; j <= $1; j++)); do
-            ((sum += 2 * i * j))
-        done
-    done
-    echo $sum
 }
 
 main "$@"
