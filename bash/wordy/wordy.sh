@@ -1,8 +1,37 @@
 #!/usr/bin/env bash
 
-die() {
-    echo "$@"
-    exit 1
+main() {
+    #shellcheck disable=SC2086
+    set -- ${1%"?"} #remove trailing quesiton mark, and split into words
+    local -a operators
+    local operand
+
+    for token; do
+        parse && calculate
+    done
+
+    [[ ${#operators[@]} -eq 1 && -z $operand ]] || die "syntax error"
+    echo "${operators[0]}"
+}
+
+parse() {
+    if is_operator "$token"; then
+        if ((${#operators[@]} == 0)); then
+            operators+=("$token")
+        elif ((${#operators[@]} == 1)) && [[ -n $operand ]]; then
+            operators+=("$token")
+        else
+            die "syntax error"
+        fi
+    elif is_operand "$token"; then
+        if [[ -z $operand ]] && ((${#operators[@]} == 1)); then
+            operand=$token
+        else
+            die "syntax error"
+        fi
+    elif ! is_noise "$token"; then
+        die "unknown operation"
+    fi
 }
 
 calculate() {
@@ -42,38 +71,9 @@ is_noise() {
     [[ $1 == @(What|is|by) ]]
 }
 
-parse() {
-    if is_operator "$token"; then
-        if ((${#operators[@]} == 0)); then
-            operators+=("$token")
-        elif ((${#operators[@]} == 1)) && [[ -n $operand ]]; then
-            operators+=("$token")
-        else
-            die "syntax error"
-        fi
-    elif is_operand "$token"; then
-        if [[ -z $operand ]] && ((${#operators[@]} == 1)); then
-            operand=$token
-        else
-            die "syntax error"
-        fi
-    elif ! is_noise "$token"; then
-        die "unknown operation"
-    fi
-}
-
-main() {
-    local -a tokens
-    read -ra tokens <<<"${1%"?"}"
-    local -a operators
-    local operand
-
-    for token in "${tokens[@]}"; do
-        parse && calculate
-    done
-
-    [[ ${#operators[@]} -eq 1 && -z $operand ]] || die "syntax error"
-    echo "${operators[0]}"
+die() {
+    echo "$@"
+    exit 1
 }
 
 main "$@"
