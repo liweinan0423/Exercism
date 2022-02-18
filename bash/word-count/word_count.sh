@@ -13,8 +13,9 @@ for word in $phrase; do
         word=${word#\'}            # remote leading single quote
         word=${word%\'}            # remove trailing single quote
         word=${word//[^a-z0-9\']/} # remove special characters
-        word=${word/\'/-}          # associative array doesn't like "'" in the key, replace with "-" temporarily
-        ((stats[$word]++))
+
+        count=${stats[$word]}
+        stats[$word]=$((count + 1))
     fi
 done
 
