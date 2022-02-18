@@ -1,0 +1,24 @@
+{
+  "blurb": "Translate RNA sequences into proteins.",
+  "authors": [
+    "glennj"
+  ],
+  "contributors": [
+    "bkhl",
+    "guygastineau",
+    "IsaacG",
+    "kotp"
+  ],
+  "files": {
+    "solution": [
+      "protein_translation.sh"
+    ],
+    "test": [
+      "protein_translation.bats"
+    ],
+    "example": [
+      ".meta/example.sh"
+    ]
+  },
+  "source": "Tyler Long"
+}
