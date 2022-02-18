@@ -20,11 +20,10 @@ for word in $phrase; do
         word=${word#\'}            # remote leading single quote
         word=${word%\'}            # remove trailing single quote
         word=${word//[^a-z0-9\']/} # remove special characters
-
         count "$word"
     fi
 done
 
 for word in "${!stats[@]}"; do
-    echo "${word/-/\'}: ${stats["$word"]}"
+    echo "${word}: ${stats["$word"]}"
 done
