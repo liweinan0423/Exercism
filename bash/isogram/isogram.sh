@@ -7,4 +7,4 @@ while IFS= read -rn1 char; do
     ((counters[$char]++))
 done < <(printf "%s" "${1//[\ -]/}")
 
-[[ $(printf "%s" "${counters[@]}") =~ ^1*$ ]] && echo true || echo false
+[[ ${counters[*]} =~ ^[1\ ]*$ ]] && echo true || echo false
