@@ -4,12 +4,7 @@ declare -A counters
 
 declare -l char
 while IFS= read -rn1 char; do
-    if [[ -z ${counters[${char}]} ]]; then
-        counters[$char]=1
-    elif [[ $char != [\ -] ]]; then
-        echo false
-        exit
-    fi
+    [[ $char != [\ -] ]] && ((counters[$char]++))
 done < <(printf "%s" "$1")
 
-echo true
+[[ $(printf "%s" "${counters[@]}") =~ ^1*$ ]] && echo true || echo false
