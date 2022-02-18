@@ -4,7 +4,7 @@ load bats-extra
 # local version: 1.4.0.1
 
 @test "count one word" {
-  #[[ $BATS_RUN_SKIPPED == "true" ]] || skip
+  ##[[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash word_count.sh "word"
   assert_success
   assert_line "word: 1"
@@ -12,7 +12,7 @@ load bats-extra
 }
 
 @test "count one of each word" {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+  #[[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash word_count.sh "one of each"
   assert_success
   assert_line "one: 1"
@@ -22,7 +22,7 @@ load bats-extra
 }
 
 @test "multiple occurrences of a word" {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+  #[[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash word_count.sh "one fish two fish red fish blue fish"
   assert_success
   assert_line "one: 1"
@@ -34,7 +34,7 @@ load bats-extra
 }
 
 @test "handles cramped lists" {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+  #[[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash word_count.sh "one,two,three"
   assert_success
   assert_line "one: 1"
@@ -44,7 +44,7 @@ load bats-extra
 }
 
 @test "handles expanded lists" {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+  #[[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash word_count.sh "one,\ntwo,\nthree"
   assert_success
   assert_line "one: 1"
@@ -54,7 +54,7 @@ load bats-extra
 }
 
 @test "ignore punctuation" {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+  #[[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash word_count.sh "car: carpet as java: javascript!!&@$%^&"
   assert_success
   assert_line "car: 1"
@@ -66,7 +66,7 @@ load bats-extra
 }
 
 @test "include numbers" {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+  #[[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash word_count.sh "testing, 1, 2 testing"
   assert_success
   assert_line "testing: 2"
@@ -76,7 +76,7 @@ load bats-extra
 }
 
 @test "normalize case" {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+  #[[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash word_count.sh "go Go GO Stop stop"
   assert_success
   assert_line "go: 3"
@@ -85,7 +85,7 @@ load bats-extra
 }
 
 @test "with apostrophes" {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+  #[[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash word_count.sh "First: don't laugh. Then: don't cry."
   assert_success
   assert_line "first: 1"
@@ -97,7 +97,7 @@ load bats-extra
 }
 
 @test "with quotations" {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+  #[[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash word_count.sh "Joe can't tell between 'large' and large."
   assert_success
   assert_line "joe: 1"
@@ -110,7 +110,7 @@ load bats-extra
 }
 
 @test "substrings from the beginning" {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+  #[[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash word_count.sh "Joe can't tell between apple, app and a."
   assert_success
   assert_line "joe: 1"
@@ -124,7 +124,7 @@ load bats-extra
 }
 
 @test "multiple spaces not detected as a word" {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+  #[[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash word_count.sh " multiple   whitespaces"
   assert_success
   assert_line "multiple: 1"
@@ -133,7 +133,7 @@ load bats-extra
 }
 
 @test "alternating word separators are not detected as a word" {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+  #[[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash word_count.sh $',\n,one,\n ,two \n \'three\''
   assert_success
   assert_line "one: 1"
@@ -147,7 +147,7 @@ load bats-extra
 # https://www.gnu.org/software/bash/manual/bash.html#Shell-Expansions
 
 @test "contains shell globbing character" {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+  #[[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash word_count.sh "two * words"
   assert_success
   assert_line "two: 1"
