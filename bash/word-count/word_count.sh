@@ -9,9 +9,8 @@ phrase=${phrase//[,*]/\ } # replace all delimeters with space
 
 declare -A stats
 
-
 # arithmetic expression breaks if there is single quote in it, so we have to assign the value use a variable to do the math separately
-incr() {
+count() {
     local -i count=${stats[$1]}
     stats[$1]=$((count + 1))
 }
@@ -22,7 +21,7 @@ for word in $phrase; do
         word=${word%\'}            # remove trailing single quote
         word=${word//[^a-z0-9\']/} # remove special characters
 
-        incr "$word"
+        count "$word"
     fi
 done
 
