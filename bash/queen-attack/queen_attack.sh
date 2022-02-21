@@ -17,11 +17,58 @@ main() {
 
     validate
 
-    can_attack && echo true 
+    can_attack && echo true || echo false
 }
 
 can_attack() {
-    same_row || same_column
+    same_row || same_column || on_diagonal
+}
+
+on_diagonal() {
+    local -i x y
+
+    x=${w[0]} y=${w[0]}
+    while ((x < 8 && y < 8)); do
+        if ((x == b[0] && y == b[1])); then
+            return
+        else
+            ((x++))
+            ((y++))
+        fi
+    done
+
+    x=${w[0]} y=${w[0]}
+    while ((x < 8 && y >= 0)); do
+        if ((x == b[0] && y == b[1])); then
+            return
+        else
+            ((x++))
+            ((y--))
+        fi
+    done
+
+    x=${w[0]} y=${w[0]}
+    while ((x >= 0 && y < 8)); do
+        if ((x == b[0] && y == b[1])); then
+            return
+        else
+            ((x--))
+            ((y++))
+        fi
+    done
+
+    x=${w[0]} y=${w[0]}
+    while ((x >= 0 && y >= 0)); do
+        if ((x == b[0] && y == b[1])); then
+            return
+        else
+            ((x--))
+            ((y--))
+        fi
+    done
+
+    return 1
+
 }
 
 same_row() {
