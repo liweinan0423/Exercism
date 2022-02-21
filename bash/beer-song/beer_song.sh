@@ -78,7 +78,7 @@ state_machine() {
             bottles="1 bottle"
             then="pass it around"
             bottles_left="no more bottles"
-            take="Take it down"
+            take="take it down"
             ;;
         0)
             bottles="no more bottles"
