@@ -37,10 +37,12 @@ on_diagonal() {
 
     search_ne || search_se || search_sw || search_nw
 }
+
 start_from_white_queen() {
     x=${w[0]}
     y=${w[1]}
 }
+
 search_ne() {
     start_from_white_queen
     while not_on_corner ne && ! meet; do
@@ -79,6 +81,7 @@ not_on_corner() {
     esac
 
 }
+
 move_or_stop() {
     case $1 in
     nw)
@@ -137,9 +140,11 @@ die() {
     echo "$1"
     exit 1
 }
+
 usage() {
     echo "Usage: ${0##*/} -w <x>,<y> -b <x>,<y>"
 }
+
 parse() {
     local -n __ary=$1
 
