@@ -26,23 +26,7 @@ can_attack() {
 
 on_diagonal() {
     local -i x y
-
-    if search_ne; then
-        return
-    fi
-
-    if search_se; then
-        return
-    fi
-
-    if search_sw; then
-        return
-    fi
-
-    if search_nw; then
-        return
-    fi
-    return 1
+    search_ne || search_se || search_sw || search_nw
 }
 search_nw() {
     x=${w[0]} y=${w[1]}
