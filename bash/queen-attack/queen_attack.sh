@@ -35,15 +35,9 @@ on_diagonal() {
         return
     fi
 
-    x=${w[0]} y=${w[1]}
-    while ((x >= 0 && y < 8)); do
-        if meet; then
-            return
-        else
-            ((x--))
-            ((y++))
-        fi
-    done
+    if search_sw; then
+        return
+    fi
 
     x=${w[0]} y=${w[1]}
     while ((x >= 0 && y >= 0)); do
@@ -57,7 +51,18 @@ on_diagonal() {
 
     return 1
 }
-
+search_sw() {
+    x=${w[0]} y=${w[1]}
+    while ((x >= 0 && y < 8)); do
+        if meet; then
+            return
+        else
+            ((x--))
+            ((y++))
+        fi
+    done
+    return 1
+}
 search_ne() {
     x=${w[0]} y=${w[1]}
     while ((x < 8 && y < 8)); do
