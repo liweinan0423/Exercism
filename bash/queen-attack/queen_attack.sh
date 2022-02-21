@@ -56,7 +56,7 @@ search_se() {
 
 search_sw() {
     x=${w[0]} y=${w[1]}
-    while ((x >= 0 && y < 8)) && ! meet; do
+    while not_on_corner sw && ! meet; do
         advance sw
     done
     meet
@@ -73,7 +73,7 @@ not_on_corner() {
     local dir=$1
     case $dir in
     nw) ((x >= 0 && y >= 0)) ;;
-    sw) ;;
+    sw) ((x >= 0 && y < 8)) ;;
     se) ;;
     ne) ;;
     esac
