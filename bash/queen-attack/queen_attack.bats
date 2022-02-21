@@ -13,7 +13,7 @@ load bats-extra
 }
 
 @test "queen must have row on board" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run  bash queen_attack.sh -w 8,4 -b 7,7
     assert_failure
     assert_output --partial "row not on board"
