@@ -49,8 +49,7 @@ search_ne() {
 search_se() {
     x=${w[0]} y=${w[1]}
     while ((x < 8 && y >= 0)) && ! meet; do
-        ((x++))
-        ((y--))
+        advance se
     done
     meet
 }
