@@ -16,7 +16,7 @@ main() {
     done
 
     ((w[0] >= 0 && w[1] >= 0 && b[0] >= 0 && b[1] >= 0)) || die "row not positive"
-
+    ((w[0] < 8 && b[0] < 8)) || die "row not on board"
 }
 
 die() {
