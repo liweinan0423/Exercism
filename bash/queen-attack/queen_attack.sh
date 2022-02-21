@@ -27,16 +27,10 @@ can_attack() {
 on_diagonal() {
     local -i x y
 
-    x=${w[0]} y=${w[1]}
-    while ((x < 8 && y < 8)); do
-        if meet; then
-            return
-        else
-            ((x++))
-            ((y++))
-        fi
-    done
-
+    if search_ne; then
+        echo true
+        return
+    fi
     x=${w[0]} y=${w[1]}
     while ((x < 8 && y >= 0)); do
         if meet; then
@@ -67,6 +61,19 @@ on_diagonal() {
         fi
     done
 
+    return 1
+}
+
+search_ne() {
+    x=${w[0]} y=${w[1]}
+    while ((x < 8 && y < 8)); do
+        if meet; then
+            return
+        else
+            ((x++))
+            ((y++))
+        fi
+    done
     return 1
 }
 
