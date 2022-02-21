@@ -44,15 +44,14 @@ start_from_white_queen() {
 search_ne() {
     start_from_white_queen
     while not_on_corner ne && ! meet; do
-        advance ne
+        move_or_stop ne
     done
-    meet
 }
 
 search_se() {
     start_from_white_queen
     while not_on_corner se && ! meet; do
-        advance se
+        move_or_stop se
     done
     meet
 }
@@ -60,18 +59,17 @@ search_se() {
 search_sw() {
     start_from_white_queen
     while not_on_corner sw && ! meet; do
-        advance sw
+        move_or_stop sw
     done
-    meet
 }
 
 search_nw() {
     start_from_white_queen
     while not_on_corner nw && ! meet; do
-        advance nw
+        move_or_stop nw
     done
-    meet
 }
+
 not_on_corner() {
     local dir=$1
     case $dir in
@@ -82,7 +80,7 @@ not_on_corner() {
     esac
 
 }
-advance() {
+move_or_stop() {
     local dir=$1
     case $dir in
     nw)
@@ -102,6 +100,7 @@ advance() {
         ((y++))
         ;;
     esac
+    meet && return || return 1
 }
 
 meet() {
