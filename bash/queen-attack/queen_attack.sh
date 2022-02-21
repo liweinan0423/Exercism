@@ -35,7 +35,6 @@ on_diagonal() {
     local -i x y
 
     (($(abs "${w[0]}" "${b[0]}") == $(abs "${w[1]}" "${b[1]}")))
-    # search_ne || search_se || search_sw || search_nw
 }
 
 abs() {
@@ -44,76 +43,6 @@ abs() {
     else
         echo $(($2 - $1))
     fi
-}
-
-start_from_white_queen() {
-    x=${w[0]}
-    y=${w[1]}
-}
-
-search_ne() {
-    start_from_white_queen
-    while not_on_corner ne && ! meet; do
-        move_or_stop ne
-    done
-}
-
-search_se() {
-    start_from_white_queen
-    while not_on_corner se && ! meet; do
-        move_or_stop se
-    done
-    meet
-}
-
-search_sw() {
-    start_from_white_queen
-    while not_on_corner sw && ! meet; do
-        move_or_stop sw
-    done
-}
-
-search_nw() {
-    start_from_white_queen
-    while not_on_corner nw && ! meet; do
-        move_or_stop nw
-    done
-}
-
-not_on_corner() {
-    case $1 in
-    nw) ((x >= 0 && y >= 0)) ;;
-    sw) ((x >= 0 && y < 8)) ;;
-    se) ((x < 8 && y >= 0)) ;;
-    ne) ((x < 8 && y < 8)) ;;
-    esac
-
-}
-
-move_or_stop() {
-    case $1 in
-    nw)
-        ((x--))
-        ((y--))
-        ;;
-    sw)
-        ((x--))
-        ((y++))
-        ;;
-    se)
-        ((x++))
-        ((y--))
-        ;;
-    ne)
-        ((x++))
-        ((y++))
-        ;;
-    esac
-    meet && return || return 1
-}
-
-meet() {
-    ((x == b[0] && y == b[1]))
 }
 
 validate() {
