@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-
 main() {
     local -a a b
     parse a "$1"
@@ -17,14 +16,17 @@ parse() {
 
 compare() {
     local -n left=$1 right=$2
-    if ((${#left[@]} == 0 && ${#right[@]} == 0)); then
+
+    local s1=${left[*]} s2=${right[*]}
+
+    if [[ $s1 == *$s2* && $s2 == *$s1* ]]; then
         echo equal
-    elif ((${#left[@]} == 0 && ${#right[@]} > 0)); then
-        echo sublist
-    elif ((${#left[@]} > 0 && ${#right[@]} == 0)); then
+    elif [[ $s1 == *$s2* && $s2 != *$s1* ]]; then
         echo superlist
+    elif [[ $s1 != *$s2* && $s2 == *$s1* ]]; then
+        echo sublist
     else
-        :
+        echo unequal
     fi
 }
 
