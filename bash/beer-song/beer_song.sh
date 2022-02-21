@@ -45,14 +45,14 @@ it() {
 }
 bottles() {
     local output
-    if (($1 > 1)); then
-        output="$1 bottles"
-    elif (($1 == 1)); then
-        output="$1 bottle"
-    elif (($1 == 0)); then
+    if (($1 == 0)); then
         output="no more bottles"
     elif (($1 == -1)); then
         output="99 bottles"
+    elif (($1 == 1)); then
+        output="1 bottle"
+    elif (($1 > 1)); then
+        output="$1 bottles"
     fi
     echo "$output"
 }
