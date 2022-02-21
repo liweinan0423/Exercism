@@ -39,6 +39,12 @@ on_diagonal() {
         return
     fi
 
+    if search_nw; then
+        return
+    fi
+    return 1
+}
+search_nw() {
     x=${w[0]} y=${w[1]}
     while ((x >= 0 && y >= 0)); do
         if meet; then
@@ -48,7 +54,6 @@ on_diagonal() {
             ((y--))
         fi
     done
-
     return 1
 }
 search_sw() {
