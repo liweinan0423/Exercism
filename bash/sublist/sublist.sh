@@ -16,13 +16,13 @@ parse() {
 
 compare() {
     local -n __left=$1 __right=$2
-    local s1=${__left[*]} s2=${__right[*]}
+    local left=${__left[*]} right=${__right[*]}
 
-    if [[ $s1 == *$s2* && $s2 == *$s1* ]]; then
+    if [[ $left == *$right* && $right == *$left* ]]; then
         echo equal
-    elif [[ $s1 == *$s2* && ! $s2 == *$s1* ]] && ((${#__left[@]} > ${#__right[@]})); then
+    elif [[ $left == *$right* && ! $right == *$left* ]] && ((${#__left[@]} > ${#__right[@]})); then
         echo superlist
-    elif [[ ! $s1 == *$s2* && $s2 == *$s1* ]] && ((${#__left[@]} < ${#__right[@]})); then
+    elif [[ ! $left == *$right* && $right == *$left* ]] && ((${#__left[@]} < ${#__right[@]})); then
         echo sublist
     else
         echo unequal
