@@ -24,36 +24,18 @@ can_attack() {
     same_row || same_column || on_diagonal
 }
 
+same_row() {
+    ((w[0] == b[0]))
+}
+
+same_column() {
+    ((w[1] == b[1]))
+}
+
 on_diagonal() {
     local -i x y
 
     search_ne || search_se || search_sw || search_nw
-}
-
-search_nw() {
-    x=${w[0]} y=${w[1]}
-    while ((x >= 0 && y >= 0)); do
-        if meet; then
-            return
-        else
-            ((x--))
-            ((y--))
-        fi
-    done
-    return 1
-}
-
-search_sw() {
-    x=${w[0]} y=${w[1]}
-    while ((x >= 0 && y < 8)); do
-        if meet; then
-            return
-        else
-            ((x--))
-            ((y++))
-        fi
-    done
-    return 1
 }
 
 search_ne() {
@@ -82,16 +64,34 @@ search_se() {
     return 1
 }
 
+search_sw() {
+    x=${w[0]} y=${w[1]}
+    while ((x >= 0 && y < 8)); do
+        if meet; then
+            return
+        else
+            ((x--))
+            ((y++))
+        fi
+    done
+    return 1
+}
+
+search_nw() {
+    x=${w[0]} y=${w[1]}
+    while ((x >= 0 && y >= 0)); do
+        if meet; then
+            return
+        else
+            ((x--))
+            ((y--))
+        fi
+    done
+    return 1
+}
+
 meet() {
     ((x == b[0] && y == b[1]))
-}
-
-same_row() {
-    ((w[0] == b[0]))
-}
-
-same_column() {
-    ((w[1] == b[1]))
 }
 
 validate() {
