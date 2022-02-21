@@ -12,10 +12,10 @@ main() {
     [[ $# -le 2 && -n $start && -n $end ]] || die "1 or 2 arguments expected"
     ((start >= end)) || die "Start must be greater than End"
 
-    verse_all "$start" "$end"
+    verse "$start" "$end"
 }
 
-verse_all() {
+verse() {
     local -i start=$1 end=$2
     local line1 line2
     for ((i = start; i >= end; i--)); do
