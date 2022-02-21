@@ -65,7 +65,7 @@ load bats-extra
 }
 
 @test "can attack on first diagonal" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash queen_attack.sh -w 2,2 -b 0,4
     assert_success 
     assert_output "true"
