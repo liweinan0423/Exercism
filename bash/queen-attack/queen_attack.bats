@@ -72,21 +72,21 @@ load bats-extra
 }
 
 @test "can attack on second diagonal" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash queen_attack.sh -w 2,2 -b 3,1
     assert_success 
     assert_output "true"
 }
 
 @test "can attack on third diagonal" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash queen_attack.sh -w 2,2 -b 1,1
     assert_success 
     assert_output "true"
 }
 
 @test "can attack on fourth diagonal" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash queen_attack.sh -w 1,7 -b 0,6
     assert_success 
     assert_output "true"

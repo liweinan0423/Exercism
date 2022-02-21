@@ -27,7 +27,7 @@ can_attack() {
 on_diagonal() {
     local -i x y
 
-    x=${w[0]} y=${w[0]}
+    x=${w[0]} y=${w[1]}
     while ((x < 8 && y < 8)); do
         if ((x == b[0] && y == b[1])); then
             return
@@ -37,7 +37,7 @@ on_diagonal() {
         fi
     done
 
-    x=${w[0]} y=${w[0]}
+    x=${w[0]} y=${w[1]}
     while ((x < 8 && y >= 0)); do
         if ((x == b[0] && y == b[1])); then
             return
@@ -47,7 +47,7 @@ on_diagonal() {
         fi
     done
 
-    x=${w[0]} y=${w[0]}
+    x=${w[0]} y=${w[1]}
     while ((x >= 0 && y < 8)); do
         if ((x == b[0] && y == b[1])); then
             return
@@ -57,7 +57,7 @@ on_diagonal() {
         fi
     done
 
-    x=${w[0]} y=${w[0]}
+    x=${w[0]} y=${w[1]}
     while ((x >= 0 && y >= 0)); do
         if ((x == b[0] && y == b[1])); then
             return
@@ -92,7 +92,6 @@ positive_row() {
 }
 
 positive_column() {
-
     ((w[1] >= 0 && b[1] >= 0)) || die "column not positive"
 }
 
