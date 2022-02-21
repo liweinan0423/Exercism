@@ -64,12 +64,21 @@ search_sw() {
 
 search_nw() {
     x=${w[0]} y=${w[1]}
-    while ((x >= 0 && y >= 0)) && ! meet; do
+    while not_on_corner nw && ! meet; do
         advance nw
     done
     meet
 }
+not_on_corner() {
+    local dir=$1
+    case $dir in
+    nw) ((x >= 0 && y >= 0)) ;;
+    sw) ;;
+    se) ;;
+    ne) ;;
+    esac
 
+}
 advance() {
     local dir=$1
     case $dir in
