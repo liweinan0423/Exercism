@@ -28,18 +28,12 @@ on_diagonal() {
     local -i x y
 
     if search_ne; then
-        echo true
         return
     fi
-    x=${w[0]} y=${w[1]}
-    while ((x < 8 && y >= 0)); do
-        if meet; then
-            return
-        else
-            ((x++))
-            ((y--))
-        fi
-    done
+
+    if search_se; then
+        return
+    fi
 
     x=${w[0]} y=${w[1]}
     while ((x >= 0 && y < 8)); do
@@ -72,6 +66,19 @@ search_ne() {
         else
             ((x++))
             ((y++))
+        fi
+    done
+    return 1
+}
+
+search_se() {
+    x=${w[0]} y=${w[1]}
+    while ((x < 8 && y >= 0)); do
+        if meet; then
+            return
+        else
+            ((x++))
+            ((y--))
         fi
     done
     return 1
