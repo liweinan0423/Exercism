@@ -16,7 +16,8 @@ main() {
     for ((i = start; i >= end; i--)); do
         line1="$(bottles $i) of beer on the wall, $(bottles $i) of beer."
         line2="$(action $i), $(leftover $i) of beer on the wall."
-        ((i == 0)) && line1=${line1^}
+        line1=${line1^}
+        line2=${line2^}
         echo "$line1"
         echo "$line2"
         echo
@@ -24,7 +25,7 @@ main() {
 }
 
 action() {
-    (($1 > 0)) && echo "Take $(it "$1") down and pass it around" || echo "Go to the store and buy some more"
+    (($1 > 0)) && echo "take $(it "$1") down and pass it around" || echo "Go to the store and buy some more"
 }
 leftover() {
     local -i num=$(($1 > 0 ? $1 - 1 : 99))
