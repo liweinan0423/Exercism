@@ -36,15 +36,15 @@ it() {
     (($1 == 1)) && echo it || echo one
 }
 bottles() {
-    local title
+    local output
     if (($1 > 1)); then
-        title="$1 bottles"
+        output="$1 bottles"
     elif (($1 == 1)); then
-        title="$1 bottle"
+        output="$1 bottle"
     else
-        title="no more bottles"
+        output="no more bottles"
     fi
-    echo "$title"
+    echo "$output"
 }
 
 main "$@"
