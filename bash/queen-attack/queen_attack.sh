@@ -37,12 +37,12 @@ on_diagonal() {
 
     search_ne || search_se || search_sw || search_nw
 }
-reset_search() {
+start_from_white_queen() {
     x=${w[0]}
     y=${w[1]}
 }
 search_ne() {
-    reset_search
+    start_from_white_queen
     while not_on_corner ne && ! meet; do
         advance ne
     done
@@ -50,7 +50,7 @@ search_ne() {
 }
 
 search_se() {
-    x=${w[0]} y=${w[1]}
+    start_from_white_queen
     while not_on_corner se && ! meet; do
         advance se
     done
@@ -58,7 +58,7 @@ search_se() {
 }
 
 search_sw() {
-    x=${w[0]} y=${w[1]}
+    start_from_white_queen
     while not_on_corner sw && ! meet; do
         advance sw
     done
@@ -66,7 +66,7 @@ search_sw() {
 }
 
 search_nw() {
-    x=${w[0]} y=${w[1]}
+    start_from_white_queen
     while not_on_corner nw && ! meet; do
         advance nw
     done
