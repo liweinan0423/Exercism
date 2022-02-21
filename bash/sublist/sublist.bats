@@ -22,7 +22,7 @@ load bats-extra
 }
 
 @test "non empty list contains empty list" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash sublist.sh "[1, 2, 3]" "[]"
     assert_success
     assert_output "superlist"
