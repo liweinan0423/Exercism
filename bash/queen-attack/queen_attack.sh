@@ -40,15 +40,17 @@ on_diagonal() {
 
 search_ne() {
     x=${w[0]} y=${w[1]}
+    local can_attack=false
     while ((x < 8 && y < 8)); do
         if meet; then
-            return
+            can_attack=true
+            break
         else
             ((x++))
             ((y++))
         fi
     done
-    return 1
+    $can_attack
 }
 
 search_se() {
