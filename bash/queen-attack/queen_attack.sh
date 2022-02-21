@@ -66,8 +66,7 @@ search_sw() {
 search_nw() {
     x=${w[0]} y=${w[1]}
     while ((x >= 0 && y >= 0)) && ! meet; do
-        ((x--))
-        ((y--))
+        advance nw
     done
     meet
 }
