@@ -34,7 +34,16 @@ same_column() {
 on_diagonal() {
     local -i x y
 
-    search_ne || search_se || search_sw || search_nw
+    (($(abs "${w[0]}" "${b[0]}") == $(abs "${w[1]}" "${b[1]}")))
+    # search_ne || search_se || search_sw || search_nw
+}
+
+abs() {
+    if (($1 - $2 > 0)); then
+        echo $(($1 - $2))
+    else
+        echo $(($2 - $1))
+    fi
 }
 
 start_from_white_queen() {
