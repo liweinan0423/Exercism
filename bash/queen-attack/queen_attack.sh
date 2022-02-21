@@ -37,9 +37,12 @@ on_diagonal() {
 
     search_ne || search_se || search_sw || search_nw
 }
-
+reset_search() {
+    x=${w[0]}
+    y=${w[1]}
+}
 search_ne() {
-    x=${w[0]} y=${w[1]}
+    reset_search
     while not_on_corner ne && ! meet; do
         advance ne
     done
