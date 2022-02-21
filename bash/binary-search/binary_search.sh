@@ -17,9 +17,9 @@ bsearch() {
     if ((key == array[midpoint])); then
         echo "$midpoint"
     elif ((key < array[midpoint])); then
-        bsearch2 "$key" "$start" $((midpoint - 1)) "${array[@]}"
+        bsearch "$key" "$start" $((midpoint - 1)) "${array[@]}"
     else
-        bsearch2 "$key" $((midpoint + 1)) "$end" "${array[@]}"
+        bsearch "$key" $((midpoint + 1)) "$end" "${array[@]}"
     fi
 }
 
@@ -51,8 +51,8 @@ main() {
     local key=$1
     shift
     local -a array=("$@")
-    # bsearch "$key" 0 $((${#array[@]} - 1)) "${array[@]}"
-    bsearch_iter "$key" "${array[@]}"
+    bsearch "$key" 0 $((${#array[@]} - 1)) "${array[@]}"
+    # bsearch_iter "$key" "${array[@]}"
 }
 
 main "$@"
