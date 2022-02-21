@@ -39,7 +39,7 @@ on_diagonal() {
 
     x=${w[0]} y=${w[1]}
     while ((x < 8 && y >= 0)); do
-        if ((x == b[0] && y == b[1])); then
+        if meet x y; then
             return
         else
             ((x++))
@@ -49,7 +49,7 @@ on_diagonal() {
 
     x=${w[0]} y=${w[1]}
     while ((x >= 0 && y < 8)); do
-        if ((x == b[0] && y == b[1])); then
+        if meet x y; then
             return
         else
             ((x--))
@@ -59,7 +59,7 @@ on_diagonal() {
 
     x=${w[0]} y=${w[1]}
     while ((x >= 0 && y >= 0)); do
-        if ((x == b[0] && y == b[1])); then
+        if meet x y; then
             return
         else
             ((x--))
