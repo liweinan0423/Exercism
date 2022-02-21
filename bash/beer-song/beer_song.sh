@@ -12,11 +12,14 @@ main() {
     [[ $# -le 2 && -n $start && -n $end ]] || die "1 or 2 arguments expected"
     ((start >= end)) || die "Start must be greater than End"
 
+    verse_all
+}
+
+verse_all() {
     for ((i = start; i >= end; i--)); do
         verse $i
     done
 }
-
 verse() {
     local line1 line2
     line1="$(${i}_bottles) of beer on the wall, $(${i}_bottles) of beer."
