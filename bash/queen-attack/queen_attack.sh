@@ -108,7 +108,7 @@ meet() {
 }
 
 validate() {
-    ((${#w} > 0 && ${#b} > 0)) || usage
+    ((${#w[@]} == 2 && ${#b[@]} == 2)) || usage
     positive_row
     positive_column
     row_on_board
@@ -151,11 +151,11 @@ parse() {
     local -n __ary=$1
 
     local -i x y
-    if [[ $2 =~ (.*),(.*) ]]; then
+    if [[ $2 =~ (.+),(.+) ]]; then
         x=${BASH_REMATCH[1]}
         y=${BASH_REMATCH[2]}
+        __ary=("$x" "$y")
     fi
-    __ary=("$x" "$y")
 }
 
 main "$@"
