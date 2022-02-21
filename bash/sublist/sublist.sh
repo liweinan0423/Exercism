@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
+# shellcheck disable=SC2034
 main() {
-    # shellcheck disable=SC2034
     local -a a b
     parse a "$1"
     parse b "$2"
