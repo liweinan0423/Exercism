@@ -14,8 +14,7 @@ main() {
         *) usage ;;
         esac
     done
-    positive_row && positive_column && row_on_board && column_on_board &&
-        ((w[0] != b[0] && w[1] && b[1])) || die "same position"
+    positive_row && positive_column && row_on_board && column_on_board && different_position
 }
 
 positive_row() {
@@ -33,6 +32,10 @@ row_on_board() {
 
 column_on_board() {
     ((w[1] < 8 && b[1] < 8)) || die "column not on board"
+}
+
+different_position() {
+    ((w[0] != b[0] && w[1] && b[1])) || die "same position"
 }
 
 die() {
