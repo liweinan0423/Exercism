@@ -40,7 +40,7 @@ on_diagonal() {
 
 search_ne() {
     x=${w[0]} y=${w[1]}
-    while ((x < 8 && y < 8)) && ! meet; do
+    while not_on_corner ne && ! meet; do
         advance ne
     done
     meet
@@ -75,7 +75,7 @@ not_on_corner() {
     nw) ((x >= 0 && y >= 0)) ;;
     sw) ((x >= 0 && y < 8)) ;;
     se) ((x < 8 && y >= 0)) ;;
-    ne) ;;
+    ne) ((x < 8 && y < 8)) ;;
     esac
 
 }
