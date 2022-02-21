@@ -3,7 +3,7 @@
 main() {
     local opt OPTIND OPTARG
     local -a w b
-    while getopts w:b: opt; do
+    while getopts 2>/dev/null w:b: opt; do
         case $opt in
         w)
             parse w "$OPTARG"
