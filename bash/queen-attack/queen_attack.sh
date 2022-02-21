@@ -48,7 +48,7 @@ search_ne() {
 
 search_se() {
     x=${w[0]} y=${w[1]}
-    while ((x < 8 && y >= 0)) && ! meet; do
+    while not_on_corner se && ! meet; do
         advance se
     done
     meet
@@ -74,7 +74,7 @@ not_on_corner() {
     case $dir in
     nw) ((x >= 0 && y >= 0)) ;;
     sw) ((x >= 0 && y < 8)) ;;
-    se) ;;
+    se) ((x < 8 && y >= 0)) ;;
     ne) ;;
     esac
 
