@@ -17,7 +17,19 @@ main() {
 
     validate
 
+    can_attack && echo true
+}
 
+can_attack() {
+    same_row || same_column
+}
+
+same_row() {
+    ((w[0] == b[0]))
+}
+
+same_column() {
+    ((w[1] == b[1]))
 }
 
 validate() {
@@ -46,7 +58,7 @@ column_on_board() {
 }
 
 different_position() {
-    ((w[0] != b[0] && w[1] && b[1])) || die "same position"
+    ((w[0] != b[0] && w[1] != b[1])) || die "same position"
 }
 
 die() {
