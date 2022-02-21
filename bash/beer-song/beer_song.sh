@@ -17,19 +17,16 @@ main() {
 
 verse_all() {
     local -i start=$1 end=$2
-    for ((i = start; i >= end; i--)); do
-        verse $i
-    done
-}
-verse() {
     local line1 line2
-    line1="$(${i}_bottles) of beer on the wall, $(${i}_bottles) of beer."
-    line2="$(do_sth), $($((i - 1))_bottles) of beer on the wall."
-    line1=${line1^}
-    line2=${line2^}
-    echo "$line1"
-    echo "$line2"
-    echo
+    for ((i = start; i >= end; i--)); do
+        line1="$(${i}_bottles) of beer on the wall, $(${i}_bottles) of beer."
+        line2="$(do_sth), $($((i - 1))_bottles) of beer on the wall."
+        line1=${line1^}
+        line2=${line2^}
+        echo "$line1"
+        echo "$line2"
+        echo
+    done
 }
 
 command_not_found_handle() {
