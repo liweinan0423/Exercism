@@ -14,11 +14,11 @@ main() {
     for ((i = start; i >= end; i--)); do
         if ((i > 0)); then
             echo "$(bottles $i) of beer on the wall, $(bottles $i) of beer."
-            echo "$(action $i), $(result $i)."
+            echo "$(action $i), $(result $i) of beer on the wall."
             echo
         else
             echo "$(bottles $i cap) of beer on the wall, $(bottles $i) of beer."
-            echo "$(action $i), $(result $i)."
+            echo "$(action $i), $(result $i) of beer on the wall."
         fi
     done
 }
@@ -28,7 +28,7 @@ action() {
 }
 result() {
     local -i num=$(($1 > 0 ? $1 - 1 : 99))
-    echo "$(bottles $num) of beer on the wall"
+    bottles $num
 }
 
 it() {
@@ -43,7 +43,6 @@ bottles() {
     else
         title="no more bottles"
     fi
-
     [[ $2 == "cap" ]] && title=${title^}
     echo "$title"
 }
