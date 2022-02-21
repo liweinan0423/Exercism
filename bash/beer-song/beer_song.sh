@@ -70,21 +70,21 @@ state_machine() {
         case $state in
         2)
             bottles="2 bottles"
-            bottles_left="1 bottle"
             take="take one down"
             then="pass it around"
+            bottles_left="1 bottle"
             ;;
         1)
             bottles="1 bottle"
-            take="Take it down"
             then="pass it around"
             bottles_left="no more bottles"
+            take="Take it down"
             ;;
         0)
             bottles="no more bottles"
-            take="go to the store"
             then="buy some more"
             bottles_left="99 bottles"
+            take="go to the store"
             ;;
         *)
             bottles="$state bottles"
