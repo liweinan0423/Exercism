@@ -146,8 +146,8 @@ usage() {
     exit 1
 }
 
+# shellcheck disable=SC2034
 parse() {
-    # shellcheck disable=SC2034
     local -n __ary=$1
 
     local -i x y
