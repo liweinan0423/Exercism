@@ -14,9 +14,12 @@ main() {
         *) usage ;;
         esac
     done
-    positive_row && positive_column && row_on_board && column_on_board && different_position
+    validate
 }
 
+validate() {
+    positive_row && positive_column && row_on_board && column_on_board && different_position
+}
 positive_row() {
     ((w[0] >= 0 && b[0] >= 0)) || die "row not positive"
 }
