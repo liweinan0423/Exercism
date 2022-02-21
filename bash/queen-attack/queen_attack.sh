@@ -17,7 +17,7 @@ main() {
 
     validate
 
-    can_attack && echo true
+    can_attack && echo true 
 }
 
 can_attack() {
@@ -58,7 +58,7 @@ column_on_board() {
 }
 
 different_position() {
-    ((w[0] != b[0] && w[1] != b[1])) || die "same position"
+    ((w[0] != b[0] || w[1] != b[1])) || die "same position"
 }
 
 die() {

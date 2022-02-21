@@ -51,14 +51,14 @@ load bats-extra
 }
 
 @test "can attack on same row" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash queen_attack.sh -w 2,4 -b 2,6
     assert_success 
     assert_output "true"
 }
 
 @test "can attack on same column" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash queen_attack.sh -w 4,5 -b 2,5
     assert_success 
     assert_output "true"
