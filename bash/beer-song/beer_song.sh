@@ -11,15 +11,15 @@ main() {
 
     [[ $# -le 2 && -n $start && -n $end ]] || die "1 or 2 arguments expected"
     ((start >= end)) || die "Start must be greater than End"
+
+    local line1 line2
     for ((i = start; i >= end; i--)); do
-        if ((i > 0)); then
-            echo "$(bottles $i) of beer on the wall, $(bottles $i) of beer."
-            echo "$(action $i), $(leftover $i) of beer on the wall."
-            echo
-        else
-            echo "$(bottles $i cap) of beer on the wall, $(bottles $i) of beer."
-            echo "$(action $i), $(leftover $i) of beer on the wall."
-        fi
+        line1="$(bottles $i) of beer on the wall, $(bottles $i) of beer."
+        line2="$(action $i), $(leftover $i) of beer on the wall."
+        ((i == 0)) && line1=${line1^}
+        echo "$line1"
+        echo "$line2"
+        echo
     done
 }
 
@@ -43,7 +43,6 @@ bottles() {
     else
         title="no more bottles"
     fi
-    [[ $2 == "cap" ]] && title=${title^}
     echo "$title"
 }
 
