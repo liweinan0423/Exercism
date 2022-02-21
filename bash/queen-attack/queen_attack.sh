@@ -142,6 +142,7 @@ die() {
 
 usage() {
     echo "Usage: ${0##*/} -w <x>,<y> -b <x>,<y>"
+    exit 1
 }
 
 parse() {
