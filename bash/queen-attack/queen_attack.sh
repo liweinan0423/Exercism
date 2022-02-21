@@ -16,12 +16,11 @@ main() {
     done
 
     validate
-
-    can_attack && echo true || echo false
+    can_attack
 }
 
 can_attack() {
-    same_row || same_column || on_diagonal
+    same_row || same_column || on_diagonal && echo true || echo false
 }
 
 same_row() {
