@@ -151,7 +151,7 @@ parse() {
     local -n __ary=$1
 
     local -i x y
-    if [[ $2 =~ (.+),(.+) ]]; then
+    if [[ $2 =~ (-?[0-9]+),(-?[0-9]+) ]]; then
         x=${BASH_REMATCH[1]}
         y=${BASH_REMATCH[2]}
         __ary=("$x" "$y")
