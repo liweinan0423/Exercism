@@ -17,7 +17,7 @@ main() {
             echo "$(action $i), $(result $i)."
             echo
         else
-            echo "No more bottles of beer on the wall, no more bottles of beer."
+            echo "$(bottles $i cap) of beer on the wall, $(bottles $i) of beer."
             echo "$(action $i), $(result $i)."
         fi
     done
@@ -35,13 +35,17 @@ it() {
     (($1 == 1)) && echo it || echo one
 }
 bottles() {
+    local title
     if (($1 > 1)); then
-        echo "$1 bottles"
+        title="$1 bottles"
     elif (($1 == 1)); then
-        echo "$1 bottle"
+        title="$1 bottle"
     else
-        echo "no more bottles"
+        title="no more bottles"
     fi
+
+    [[ $2 == "cap" ]] && title=${title^}
+    echo "$title"
 }
 
 main "$@"
