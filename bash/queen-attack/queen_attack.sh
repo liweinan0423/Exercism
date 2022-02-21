@@ -41,8 +41,7 @@ on_diagonal() {
 search_ne() {
     x=${w[0]} y=${w[1]}
     while ((x < 8 && y < 8)) && ! meet; do
-        ((x++))
-        ((y++))
+        advance ne
     done
     meet
 }
@@ -72,6 +71,28 @@ search_nw() {
         ((y--))
     done
     meet
+}
+
+advance() {
+    local dir=$1
+    case $dir in
+    nw)
+        ((x--))
+        ((y--))
+        ;;
+    sw)
+        ((x--))
+        ((y++))
+        ;;
+    se)
+        ((x++))
+        ((y--))
+        ;;
+    ne)
+        ((x++))
+        ((y++))
+        ;;
+    esac
 }
 
 meet() {
