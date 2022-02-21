@@ -58,8 +58,7 @@ search_se() {
 search_sw() {
     x=${w[0]} y=${w[1]}
     while ((x >= 0 && y < 8)) && ! meet; do
-        ((x--))
-        ((y++))
+        advance sw
     done
     meet
 }
