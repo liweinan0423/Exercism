@@ -44,7 +44,7 @@ load bats-extra
 # Test the ability of one queen to attack another
 
 @test "can not attack" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash queen_attack.sh -w 2,4 -b 6,6
     assert_success 
     assert_output "false"
