@@ -20,14 +20,14 @@ load bats-extra
 }
 
 @test "queen must have positive column" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run  bash queen_attack.sh -w 2,-2 -b 7,7
     assert_failure
     assert_output --partial "column not positive"
 }
 
 @test "queen must have column on board" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run  bash queen_attack.sh -w 4,8 -b 7,7
     assert_failure
     assert_output --partial "column not on board"
