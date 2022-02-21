@@ -29,7 +29,7 @@ on_diagonal() {
 
     x=${w[0]} y=${w[1]}
     while ((x < 8 && y < 8)); do
-        if meet x y "${b[0]}" "${b[1]}"; then
+        if meet x y; then
             return
         else
             ((x++))
@@ -71,8 +71,8 @@ on_diagonal() {
 }
 
 meet() {
-    local -i wx=$1 wy=$2 bx=$3 by=$4
-    ((wx == bx && wy == by))
+    local -i wx=$1 wy=$2
+    ((wx == b[0] && wy == b[1]))
 }
 
 same_row() {
