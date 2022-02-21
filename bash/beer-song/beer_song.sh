@@ -14,8 +14,8 @@ main() {
 
     local line1 line2
     for ((i = start; i >= end; i--)); do
-        line1="$(bottles $i) of beer on the wall, $(bottles $i) of beer."
-        line2="$(action $i), $(leftover $i) of beer on the wall."
+        line1="$(${i}_bottles) of beer on the wall, $(${i}_bottles) of beer."
+        line2="$(do_sth), $($((i - 1))_bottles) of beer on the wall."
         line1=${line1^}
         line2=${line2^}
         echo "$line1"
@@ -24,8 +24,16 @@ main() {
     done
 }
 
-action() {
-    (($1 > 0)) && echo "take $(it "$1") down and pass it around" || echo "Go to the store and buy some more"
+command_not_found_handle() {
+    if [[ $1 =~ (.*)_bottles ]]; then
+        bottles "${BASH_REMATCH[1]}"
+    else
+        die "command not found: $1"
+    fi
+}
+
+do_sth() {
+    ((i > 0)) && echo "take $(it "i") down and pass it around" || echo "Go to the store and buy some more"
 }
 leftover() {
     local -i num=$(($1 > 0 ? $1 - 1 : 99))
@@ -41,8 +49,10 @@ bottles() {
         output="$1 bottles"
     elif (($1 == 1)); then
         output="$1 bottle"
-    else
+    elif (($1 == 0)); then
         output="no more bottles"
+    elif (($1 == -1)); then
+        output="99 bottles"
     fi
     echo "$output"
 }
