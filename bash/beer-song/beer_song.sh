@@ -76,15 +76,15 @@ state_machine() {
             ;;
         1)
             bottles="1 bottle"
+            take="take it down"
             then="pass it around"
             bottles_left="no more bottles"
-            take="take it down"
             ;;
         0)
             bottles="no more bottles"
+            take="go to the store"
             then="buy some more"
             bottles_left="99 bottles"
-            take="go to the store"
             ;;
         *)
             bottles="$state bottles"
