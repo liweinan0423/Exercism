@@ -71,8 +71,7 @@ search_nw() {
 }
 
 not_on_corner() {
-    local dir=$1
-    case $dir in
+    case $1 in
     nw) ((x >= 0 && y >= 0)) ;;
     sw) ((x >= 0 && y < 8)) ;;
     se) ((x < 8 && y >= 0)) ;;
@@ -81,8 +80,7 @@ not_on_corner() {
 
 }
 move_or_stop() {
-    local dir=$1
-    case $dir in
+    case $1 in
     nw)
         ((x--))
         ((y--))
