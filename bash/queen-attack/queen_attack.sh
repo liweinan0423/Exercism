@@ -16,6 +16,8 @@ main() {
     done
 
     validate
+
+
 }
 
 validate() {
@@ -25,6 +27,7 @@ validate() {
     column_on_board
     different_position
 }
+
 positive_row() {
     ((w[0] >= 0 && b[0] >= 0)) || die "row not positive"
 }

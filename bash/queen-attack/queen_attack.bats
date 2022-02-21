@@ -34,7 +34,7 @@ load bats-extra
 }
 
 @test "same position" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run  bash queen_attack.sh -w 7,7 -b 7,7
     assert_failure
     assert_output --partial "same position"
