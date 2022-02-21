@@ -28,6 +28,7 @@ on_diagonal() {
     local -i x y
     search_ne || search_se || search_sw || search_nw
 }
+
 search_nw() {
     x=${w[0]} y=${w[1]}
     while ((x >= 0 && y >= 0)); do
