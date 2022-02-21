@@ -12,7 +12,7 @@ bsearch() {
 
     shift 3
     local -a array=("$@")
-    local -i midpoint=$(((start + end) / 2))
+    local -i midpoint=$((start + (end - start) / 2)) # `(start+end)/2` may overflow!
 
     if ((key == array[midpoint])); then
         echo "$midpoint"
@@ -33,7 +33,7 @@ bsearch_iter() {
     local -i midpoint result
     local found=false
     until ((start > end)) || $found; do
-        midpoint=$(((start + end) / 2))
+        midpoint=$((start + (end - start) / 2)) # `(start+end)/2` may overflow!
         if ((key == array[midpoint])); then
             result=$midpoint
             found=true
