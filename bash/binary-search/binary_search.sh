@@ -51,8 +51,8 @@ main() {
     local key=$1
     shift
     local -a array=("$@")
-    bsearch "$key" 0 $((${#array[@]} - 1)) "${array[@]}"
-    # bsearch_iter "$key" "${array[@]}"
+    # bsearch "$key" 0 $((${#array[@]} - 1)) "${array[@]}"
+    bsearch_iter "$key" "${array[@]}"
 }
 
 main "$@"
