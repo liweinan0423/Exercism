@@ -14,11 +14,11 @@ main() {
     for ((i = start; i >= end; i--)); do
         if ((i > 0)); then
             echo "$(bottles $i) of beer on the wall, $(bottles $i) of beer."
-            echo "$(action $i), $(result $i) of beer on the wall."
+            echo "$(action $i), $(leftover $i) of beer on the wall."
             echo
         else
             echo "$(bottles $i cap) of beer on the wall, $(bottles $i) of beer."
-            echo "$(action $i), $(result $i) of beer on the wall."
+            echo "$(action $i), $(leftover $i) of beer on the wall."
         fi
     done
 }
@@ -26,7 +26,7 @@ main() {
 action() {
     (($1 > 0)) && echo "Take $(it "$1") down and pass it around" || echo "Go to the store and buy some more"
 }
-result() {
+leftover() {
     local -i num=$(($1 > 0 ? $1 - 1 : 99))
     bottles $num
 }
