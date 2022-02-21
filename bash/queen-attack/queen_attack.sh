@@ -40,15 +40,11 @@ on_diagonal() {
 
 search_ne() {
     x=${w[0]} y=${w[1]}
-    while ((x < 8 && y < 8)); do
-        if meet; then
-            return
-        else
-            ((x++))
-            ((y++))
-        fi
+    while ((x < 8 && y < 8)) && ! meet; do
+        ((x++))
+        ((y++))
     done
-    return 1
+    meet
 }
 
 search_se() {
