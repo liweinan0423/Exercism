@@ -12,7 +12,8 @@ main() {
     [[ $# -le 2 && -n $start && -n $end ]] || die "1 or 2 arguments expected"
     ((start >= end)) || die "Start must be greater than End"
 
-    verse "$start" "$end"
+    # verse "$start" "$end"
+    state_machine "$start" "$end"
 }
 
 verse() {
@@ -60,6 +61,33 @@ bottles() {
         output="$1 bottles"
     fi
     echo "$output"
+}
+
+state_machine() {
+    local start=$1 end=$2 state=$start
+
+    until ((state < end)); do
+        case $state in
+        2)
+            echo "2 bottles of beer on the wall, 2 bottles of beer."
+            echo "Take one down and pass it around, 1 bottle of beer on the wall."
+            ;;
+        1)
+            echo "1 bottle of beer on the wall, 1 bottle of beer."
+            echo "Take it down and pass it around, no more bottles of beer on the wall."
+            ;;
+        0)
+            echo "No more bottles of beer on the wall, no more bottles of beer."
+            echo "Go to the store and buy some more, 99 bottles of beer on the wall."
+            ;;
+        *)
+            echo "$state bottles of beer on the wall, $state bottles of beer."
+            echo "Take one down and pass it around, $((state - 1)) bottles of beer on the wall."
+            ;;
+        esac
+        ((state--))
+        echo
+    done
 }
 
 main "$@"
