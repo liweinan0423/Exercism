@@ -66,28 +66,48 @@ bottles() {
 state_machine() {
     local start=$1 end=$2 state=$start
 
-    until ((state < end)); do
+    while ((state >= end)); do
         case $state in
         2)
-            echo "2 bottles of beer on the wall, 2 bottles of beer."
-            echo "Take one down and pass it around, 1 bottle of beer on the wall."
+            bottles="2 bottles"
+            bottles_left="1 bottle"
+            take="take one down"
+            then="pass it around"
+            # echo "2 bottles of beer on the wall, 2 bottles of beer."
+            # echo "Take one down and pass it around, 1 bottle of beer on the wall."
             ;;
         1)
-            echo "1 bottle of beer on the wall, 1 bottle of beer."
-            echo "Take it down and pass it around, no more bottles of beer on the wall."
+            bottles="1 bottle"
+            take="Take it down"
+            then="pass it around"
+            bottles_left="no more bottles"
+            # echo "1 bottle of beer on the wall, 1 bottle of beer."
+            # echo "Take it down and pass it around, no more bottles of beer on the wall."
             ;;
         0)
-            echo "No more bottles of beer on the wall, no more bottles of beer."
-            echo "Go to the store and buy some more, 99 bottles of beer on the wall."
+            bottles="no more bottles"
+            take="go to the store"
+            then="buy some more"
+            bottles_left="99 bottles"
+            # echo "No more bottles of beer on the wall, no more bottles of beer."
+            # echo "Go to the store and buy some more, 99 bottles of beer on the wall."
             ;;
         *)
-            echo "$state bottles of beer on the wall, $state bottles of beer."
-            echo "Take one down and pass it around, $((state - 1)) bottles of beer on the wall."
+            bottles="$state bottles"
+            take="take one down"
+            then="pass it around"
+            bottles_left="$((state - 1)) bottles"
+            # echo "$state bottles of beer on the wall, $state bottles of beer."
+            # echo "Take one down and pass it around, $((state - 1)) bottles of beer on the wall."
             ;;
         esac
-        ((state--))
+
+        echo "${bottles^} of beer on the wall, ${bottles} of beer."
+        echo "${take^} and ${then}, ${bottles_left} of beer on the wall."
         echo
+        state=$((state - 1))
     done
+
 }
 
 main "$@"
