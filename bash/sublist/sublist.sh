@@ -18,11 +18,11 @@ compare() {
     local -n left=$1 right=$2
     local s1=${left[*]} s2=${right[*]}
 
-    if [[ $s1 =~ .*\ ?$s2\ ?.* && $s2 =~ .*\ ?$s1\ ?.* ]]; then
+    if [[ $s1 == *$s2* && $s2 == *$s1* ]]; then
         echo equal
-    elif [[ $s1 =~ .*\ ?$s2\ ?.* && ! $s2 =~ .*\ ?$s1\ ?.* ]] && ((${#left[@]} > ${#right[@]})); then
+    elif [[ $s1 == *$s2* && ! $s2 == *$s1* ]] && ((${#left[@]} > ${#right[@]})); then
         echo superlist
-    elif [[ ! $s1 =~ .*\ ?$s2\ ?.* && $s2 =~ .*\ ?$s1\ ?.* ]] && ((${#left[@]} < ${#right[@]})); then
+    elif [[ ! $s1 == *$s2* && $s2 == *$s1* ]] && ((${#left[@]} < ${#right[@]})); then
         echo sublist
     else
         echo unequal
