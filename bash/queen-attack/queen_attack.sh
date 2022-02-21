@@ -49,41 +49,29 @@ search_ne() {
 
 search_se() {
     x=${w[0]} y=${w[1]}
-    while ((x < 8 && y >= 0)); do
-        if meet; then
-            return
-        else
-            ((x++))
-            ((y--))
-        fi
+    while ((x < 8 && y >= 0)) && ! meet; do
+        ((x++))
+        ((y--))
     done
-    return 1
+    meet
 }
 
 search_sw() {
     x=${w[0]} y=${w[1]}
-    while ((x >= 0 && y < 8)); do
-        if meet; then
-            return
-        else
-            ((x--))
-            ((y++))
-        fi
+    while ((x >= 0 && y < 8)) && ! meet; do
+        ((x--))
+        ((y++))
     done
-    return 1
+    meet
 }
 
 search_nw() {
     x=${w[0]} y=${w[1]}
-    while ((x >= 0 && y >= 0)); do
-        if meet; then
-            return
-        else
-            ((x--))
-            ((y--))
-        fi
+    while ((x >= 0 && y >= 0)) && ! meet; do
+        ((x--))
+        ((y--))
     done
-    return 1
+    meet
 }
 
 meet() {
