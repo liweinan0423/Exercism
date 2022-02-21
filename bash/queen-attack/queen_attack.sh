@@ -26,6 +26,7 @@ can_attack() {
 
 on_diagonal() {
     local -i x y
+
     search_ne || search_se || search_sw || search_nw
 }
 
@@ -41,6 +42,7 @@ search_nw() {
     done
     return 1
 }
+
 search_sw() {
     x=${w[0]} y=${w[1]}
     while ((x >= 0 && y < 8)); do
@@ -53,6 +55,7 @@ search_sw() {
     done
     return 1
 }
+
 search_ne() {
     x=${w[0]} y=${w[1]}
     while ((x < 8 && y < 8)); do
@@ -116,7 +119,7 @@ column_on_board() {
 }
 
 different_position() {
-    ((w[0] != b[0] || w[1] != b[1])) || die "same position"
+    ! same_row || ! same_column || die "same position"
 }
 
 die() {
