@@ -1,0 +1,19 @@
+{
+  "blurb": "Given a natural radicand, return its square root.",
+  "authors": [
+    "glennj"
+  ],
+  "files": {
+    "solution": [
+      "square_root.sh"
+    ],
+    "test": [
+      "square_root.bats"
+    ],
+    "example": [
+      ".meta/example.sh"
+    ]
+  },
+  "source": "wolf99",
+  "source_url": "https://github.com/exercism/problem-specifications/pull/1582"
+}
