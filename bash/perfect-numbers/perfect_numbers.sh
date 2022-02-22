@@ -13,12 +13,12 @@ factors() {
 
 perfect() {
 
-    local -i product=1
+    local -i sum
     for i in $(factors "$1"); do
-        ((product *= i))
+        ((sum += i))
     done
 
-    ((product == $1))
+    ((sum == $1))
 }
 
 main() {

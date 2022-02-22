@@ -13,7 +13,7 @@ load bats-extra
 }
 
 @test "Medium perfect number is classified correctly" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash perfect_numbers.sh 28
     assert_success 
     assert_output "perfect"
