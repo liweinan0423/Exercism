@@ -13,7 +13,11 @@ readonly -A Scores=(
 allergic_to() {
     local score=$1 allergy=$2
 
-    if [[ $(allergies "$1") == *$allergy* ]]; then echo true; else echo false; fi
+    if [[ $(allergies "$1") == *$allergy* ]]; then
+        echo true
+    else
+        echo false
+    fi
 }
 
 allergies() {
