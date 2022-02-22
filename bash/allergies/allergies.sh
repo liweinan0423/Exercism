@@ -13,17 +13,23 @@ readonly -A Scores=(
 allergic_to() {
     local score=$1 allergy=$2
 
+
+    [[ $(allergies "$1") == *$allergy* ]]
+}
+
+allergies() {
+    local score=$1
+
     local bin=$(bc <<<"ibase=10;obase=2;$score")
     local -a allergies
 
     while [[ $bin =~ ^1(0*(.*)) ]]; do
         exp=${#BASH_REMATCH[1]}
-        allergy_score=$((2 ** exp))
-        allergies+=("${Scores[$allergy_score]}")
+        allergies+=("${Scores[$((2 ** exp))]}")
         bin=${BASH_REMATCH[2]}
     done
 
-    [[ ${allergies[*]} == *$allergy* ]]
+    echo "${allergies[*]}"
 }
 
 main() {
