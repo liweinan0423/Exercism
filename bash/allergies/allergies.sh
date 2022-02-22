@@ -30,7 +30,8 @@ allergies() {
 
     while [[ $bin =~ ^1(0*(.*)) ]]; do
         exp=${#BASH_REMATCH[1]}
-        allergies=("${Scores[$((2 ** exp))]}" "${allergies[@]}")
+        alg=${Scores[$((2 ** exp))]}
+        [[ -n $alg ]] && allergies=("$alg" "${allergies[@]}")
         bin=${BASH_REMATCH[2]}
     done
 

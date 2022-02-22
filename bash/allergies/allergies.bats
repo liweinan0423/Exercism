@@ -109,7 +109,7 @@ load bats-extra
 }
 
 @test 'ignore_non_allergen_score_parts' {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip 
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip 
     run bash allergies.sh 509 list
     assert_success
     assert_output "eggs shellfish strawberries tomatoes chocolate pollen cats"
