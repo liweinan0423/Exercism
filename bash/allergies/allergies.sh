@@ -26,7 +26,7 @@ allergies() {
     local -a allergies
 
     for ((i = 0; i < ${#Allergens[@]}; i++)); do
-        if (((score & (2 ** i)) != 0)); then
+        if (((score & (1 << i)) != 0)); then
             allergies+=("${Allergens[i]}")
         fi
     done
