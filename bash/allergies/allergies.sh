@@ -11,7 +11,8 @@ readonly -A Scores=(
 )
 
 allergic_to() {
-    ((${Scores[$2]} == $1))
+    local score=$1 allergy=$2
+    ((${Scores[$allergy]} == score))
 }
 
 main() {
