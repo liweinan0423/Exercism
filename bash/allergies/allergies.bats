@@ -81,7 +81,7 @@ load bats-extra
 }
 
 @test 'allergic_to_eggs_and_peanuts' {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip 
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip 
     run bash allergies.sh 3 list
     assert_success
     assert_output "eggs peanuts"
