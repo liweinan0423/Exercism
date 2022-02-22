@@ -23,7 +23,9 @@ allergic_to() {
 allergies() {
     local score=$1
 
-    local bin=$(bc <<<"ibase=10;obase=2;$score")
+    local bin
+    bin=$(bc <<<"ibase=10;obase=2;$score")
+
     local -a allergies
 
     while [[ $bin =~ ^1(0*(.*)) ]]; do
