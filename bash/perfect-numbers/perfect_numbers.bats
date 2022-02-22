@@ -20,7 +20,7 @@ load bats-extra
 }
 
 @test "Large perfect number is classified correctly" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash perfect_numbers.sh 33550336
     assert_success 
     assert_output "perfect"
