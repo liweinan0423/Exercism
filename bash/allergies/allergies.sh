@@ -1,18 +1,29 @@
 #!/usr/bin/env bash
 readonly -A Scores=(
-    [eggs]=1
-    [peanuts]=2
-    [shellfish]=4
-    [strawberries]=8
-    [tomatoes]=16
-    [chocolate]=32
-    [pollen]=64
-    [cats]=128
+    [1]=eggs
+    [2]=peanuts
+    [4]=shellfish
+    [8]=strawberries
+    [16]=tomatoes
+    [32]=chocolate
+    [64]=pollen
+    [128]=cats
 )
 
 allergic_to() {
     local score=$1 allergy=$2
-    ((${Scores[$allergy]} == score))
+
+    local bin=$(bc <<<"ibase=10;obase=2;$score")
+    local -a allergies
+
+    while [[ $bin =~ ^1(0*(.*)) ]]; do
+        exp=${#BASH_REMATCH[1]}
+        allergy_score=$((2 ** exp))
+        allergies+=("${Scores[$allergy_score]}")
+        bin=${BASH_REMATCH[2]}
+    done
+
+    [[ ${allergies[*]} == *$allergy* ]]
 }
 
 main() {
