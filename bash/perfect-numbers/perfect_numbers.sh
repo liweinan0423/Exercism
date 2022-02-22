@@ -6,7 +6,6 @@ die() {
 }
 
 classify() {
-    # local -a factors
     local -i sum
     for i in $(factors "$1"); do
         ((sum += i))
@@ -19,18 +18,42 @@ classify() {
 }
 
 factors() {
-    local -a factors
-    factors[1]=1
-    for ((i = 2; i < $1; i++)); do
-        if ((factors[i])); then
-            break
-        fi
-        if (($1 % i == 0)); then
-            factors[$i]=1
-            factors[$(($1 / i))]=1
+    if is_prime "$1"; then
+        echo 1
+    else
+        local -a factors
+        for ((i = 1; i < $1; i++)); do
+            if ((factors[i])); then
+                break
+            fi
+            if (($1 % i == 0)); then
+                factors[$i]=1
+                factors[$(($1 / i))]=1
+            fi
+        done
+        unset "factors[$1]"
+        echo "${!factors[@]}"
+    fi
+}
+
+is_prime() {
+
+    local -i n=$1
+    if ((n == 2 || n == 3)); then
+        true
+        return
+    fi
+    if ((n <= 1 || n % 2 == 0 || n % 3 == 0)); then
+        false
+        return 1
+    fi
+    for ((i = 5; i * i <= n; i += 6)); do
+        if ((n % i == 0 || n % (i + 2) == 0)); then
+            false
+            return 1
         fi
     done
-    echo "${!factors[@]}"
+    true
 }
 
 main() {
