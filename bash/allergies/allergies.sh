@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
-readonly -A Scores=(
-    [1]=eggs
-    [2]=peanuts
-    [4]=shellfish
-    [8]=strawberries
-    [16]=tomatoes
-    [32]=chocolate
-    [64]=pollen
-    [128]=cats
+readonly -a Allergens=(
+    eggs
+    peanuts
+    shellfish
+    strawberries
+    tomatoes
+    chocolate
+    pollen
+    cats
 )
 
 allergic_to() {
@@ -23,16 +23,12 @@ allergic_to() {
 allergies() {
     local score=$1
 
-    local bin
-    bin=$(bc <<<"ibase=10;obase=2;$score")
-
     local -a allergies
 
-    while [[ $bin =~ ^1(0*(.*)) ]]; do
-        exp=${#BASH_REMATCH[1]}
-        allergy=${Scores[$((2 ** exp))]}
-        [[ -n $allergy ]] && allergies=("$allergy" "${allergies[@]}")
-        bin=${BASH_REMATCH[2]}
+    for ((i = 0; i < ${#Allergens[@]}; i++)); do
+        if (((score & (1 << i)) != 0)); then
+            allergies+=("${Allergens[i]}")
+        fi
     done
 
     echo "${allergies[*]}"
