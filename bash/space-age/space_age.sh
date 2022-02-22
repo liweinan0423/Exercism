@@ -17,5 +17,6 @@ declare -ri Seconds_per_earth_year=31557600
 planet=$1 age=$2 factor=${Orbital_periods[$planet]}
 
 [[ -n $factor ]] || { echo "not a planet: $planet"; exit 1; }
+[[ -x $(which bc) ]] || { echo "bc is required"; exit 1; }
 
 printf "%.2f" "$(bc <<<"scale=3; $age / $Seconds_per_earth_year / $factor")"
