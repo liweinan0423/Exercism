@@ -29,26 +29,6 @@ factors() {
     echo "${!factors[@]}"
 }
 
-# is_prime() {
-
-#     local -i n=$1
-#     if ((n == 2 || n == 3)); then
-#         true
-#         return
-#     fi
-#     if ((n <= 1 || n % 2 == 0 || n % 3 == 0)); then
-#         false
-#         return 1
-#     fi
-#     for ((i = 5; i * i <= n; i += 6)); do
-#         if ((n % i == 0 || n % (i + 2) == 0)); then
-#             false
-#             return 1
-#         fi
-#     done
-#     true
-# }
-
 main() {
     (($1 > 0)) || die "Classification is only possible for natural numbers."
     classify "$1"
