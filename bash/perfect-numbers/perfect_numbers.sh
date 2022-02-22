@@ -20,9 +20,6 @@ classify() {
 factors() {
     local -a factors
     for ((i = 1; i * i < $1; i++)); do
-        if ((factors[i])); then
-            break
-        fi
         if (($1 % i == 0)); then
             factors[$i]=1
             factors[$(($1 / i))]=1
