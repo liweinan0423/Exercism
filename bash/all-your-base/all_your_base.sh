@@ -5,7 +5,7 @@ binary_to_decimal() {
     local -i result
     while [[ $bin =~ ^0*1(.*)$ ]]; do
         offset=${#BASH_REMATCH[1]}
-        ((result+=(2 ** offset)))
+        ((result += (2 ** offset)))
         bin=${BASH_REMATCH[1]}
     done
 
@@ -18,7 +18,7 @@ decimal_to_binary() {
 
     until ((decimal == 1)); do
         bits=($((decimal % 2)) "${bits[@]}")
-        ((decimal/=2))
+        ((decimal /= 2))
     done
     bits=(1 "${bits[@]}")
     echo "${bits[@]}"
@@ -34,6 +34,7 @@ convert() {
         ;;
     10-2)
         decimal_to_binary "$2"
+        ;;
     esac
 }
 
@@ -42,5 +43,3 @@ main() {
 }
 
 main "$@"
-
-
