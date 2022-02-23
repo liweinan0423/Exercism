@@ -20,7 +20,7 @@ decimal_to_binary() {
         bits=($((decimal % 2)) "${bits[@]}")
         ((decimal /= 2))
     done
-    bits=(1 "${bits[@]}")
+    bits=("$decimal" "${bits[@]}")
     echo "${bits[@]}"
 
 }
