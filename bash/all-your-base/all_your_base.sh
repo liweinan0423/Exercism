@@ -15,12 +15,12 @@ binary_to_decimal() {
 decimal_to_binary() {
     local decimal=${1//\ /}
     local -a bits
-
-    until ((decimal == 1)); do
-        bits=($((decimal % 2)) "${bits[@]}")
-        ((decimal /= 2))
+    local -i quotient=$decimal
+    until ((quotient == 1)); do
+        bits=($((quotient % 2)) "${bits[@]}")
+        ((quotient /= 2))
     done
-    bits=("$decimal" "${bits[@]}")
+    bits=("$quotient" "${bits[@]}")
     echo "${bits[@]}"
 
 }
