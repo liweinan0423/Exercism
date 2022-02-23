@@ -27,7 +27,6 @@ decimal_to_binary() {
     done
     bits=("$quotient" "${bits[@]}")
     echo "${bits[@]}"
-
 }
 
 convert() {
