@@ -32,7 +32,7 @@ load bats-extra
 }
 
 @test 'decimal to binary' {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash all_your_base.sh 10 "4 2" 2
     assert_success
     assert_output "1 0 1 0 1 0"
