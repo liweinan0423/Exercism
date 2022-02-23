@@ -9,7 +9,12 @@ binary_to_decimal() {
         bin=${BASH_REMATCH[1]}
     done
 
-    echo $result
+    local -a digits
+    for ((i = 0; i < ${#result}; i++)); do
+        digits+=("${result:i:1}")
+    done
+
+    echo "${digits[*]}"
 }
 
 decimal_to_binary() {
