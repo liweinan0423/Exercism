@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
-binary_to_decimal() {
-    local bin=${1//\ /}
+to_decimal() {
+    local digits=${1//\ /} base=$2
     local -i result
-    while [[ $bin =~ ^0*1(.*)$ ]]; do
+    while [[ $digits =~ ^0*1(.*)$ ]]; do
         offset=${#BASH_REMATCH[1]}
-        ((result += (2 ** offset)))
-        bin=${BASH_REMATCH[1]}
+        ((result += (base ** offset)))
+        digits=${BASH_REMATCH[1]}
     done
 
     local -a digits
@@ -34,7 +34,7 @@ convert() {
 
     case $ibase-$obase in
     2-10)
-        binary_to_decimal "$2"
+        to_decimal "$2" 2
         ;;
     10-2)
         decimal_to_base "$2" 2
