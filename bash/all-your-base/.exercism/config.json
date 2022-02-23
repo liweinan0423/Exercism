@@ -1,0 +1,23 @@
+{
+  "blurb": "Convert a number, represented as a sequence of digits in one base, to any other base.",
+  "authors": [
+    "glennj"
+  ],
+  "contributors": [
+    "bkhl",
+    "guygastineau",
+    "IsaacG",
+    "kotp"
+  ],
+  "files": {
+    "solution": [
+      "all_your_base.sh"
+    ],
+    "test": [
+      "all_your_base.bats"
+    ],
+    "example": [
+      ".meta/example.sh"
+    ]
+  }
+}
