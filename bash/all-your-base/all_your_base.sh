@@ -3,10 +3,11 @@
 to_decimal() {
     local digits=${1//\ /} base=$2
     local -i result
-    while [[ $digits =~ ^0*1(.*)$ ]]; do
-        offset=${#BASH_REMATCH[1]}
-        ((result += (base ** offset)))
-        digits=${BASH_REMATCH[1]}
+    while [[ -n $digits ]]; do
+        order=$((${#digits} - 1))
+        n=${digits:0:1}
+        ((result += (n * (base ** order))))
+        digits=${digits#?}
     done
 
     local -a digits
@@ -21,7 +22,7 @@ decimal_to_base() {
     local decimal=${1//\ /} base=$2
     local -a digits
     local -i quotient=$decimal
-    until ((quotient == base - 1)); do
+    until ((quotient < base)); do
         digits=($((quotient % base)) "${digits[@]}")
         ((quotient /= base))
     done
@@ -34,7 +35,7 @@ convert() {
 
     case $ibase-$obase in
     3-16)
-        digits=to_decimal "$digits" 3
+        digits=$(to_decimal "$digits" 3)
         decimal_to_base "$digits" 16
         ;;
     2-10)
