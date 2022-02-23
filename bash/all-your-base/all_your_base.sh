@@ -17,16 +17,16 @@ binary_to_decimal() {
     echo "${digits[*]}"
 }
 
-decimal_to_binary() {
-    local decimal=${1//\ /}
-    local -a bits
+decimal_to_base() {
+    local decimal=${1//\ /} base=$2
+    local -a digits
     local -i quotient=$decimal
-    until ((quotient == 1)); do
-        bits=($((quotient % 2)) "${bits[@]}")
-        ((quotient /= 2))
+    until ((quotient == base - 1)); do
+        digits=($((quotient % base)) "${digits[@]}")
+        ((quotient /= base))
     done
-    bits=("$quotient" "${bits[@]}")
-    echo "${bits[@]}"
+    digits=("$quotient" "${digits[@]}")
+    echo "${digits[@]}"
 }
 
 convert() {
@@ -37,7 +37,7 @@ convert() {
         binary_to_decimal "$2"
         ;;
     10-2)
-        decimal_to_binary "$2"
+        decimal_to_base "$2" 2
         ;;
     esac
 }
