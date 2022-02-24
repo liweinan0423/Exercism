@@ -32,7 +32,7 @@ load bats-extra
 }
 
 @test 'invalid character in isbn' {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+  # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash isbn_verifier.sh '3-598-P1581-X'
   assert_success
   assert_output "false"
