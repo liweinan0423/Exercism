@@ -12,8 +12,8 @@ pascal_triangle() {
                 row[j]=$((prev[j - 1] + prev[j]))
             fi
         done
-        spaces $((n - i)) && echo "${row[@]}"
         prev=("${row[@]}")
+        spaces $((n - i)) && echo "${row[@]}"
     done
 }
 
