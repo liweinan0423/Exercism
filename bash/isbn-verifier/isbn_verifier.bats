@@ -88,7 +88,7 @@ load bats-extra
 }
 
 @test 'check digit of X should not be used for 0' {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+  # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash isbn_verifier.sh '3-598-21515-X'
   assert_success
   assert_output "false"
