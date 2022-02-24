@@ -46,7 +46,7 @@ load bats-extra
 }
 
 @test 'hexadecimal to trinary' {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash all_your_base.sh 16 "2 10" 3
     assert_success
     assert_output "1 1 2 0"
