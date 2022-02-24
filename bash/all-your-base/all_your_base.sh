@@ -15,9 +15,8 @@ convert() {
     [[ $digits =~ ^[0-9\ ]*$ ]] || die "digits should only contain positive numbers"
 
     digits=$(to_decimal "$digits" "$ibase") || exit 1
-    digits=$(to_base "$digits" "$obase")
+    to_base "$digits" "$obase"
 
-    echo "$digits"
 }
 
 function to_decimal {
