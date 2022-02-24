@@ -10,7 +10,11 @@ convert() {
     if ((ibase != 10)); then
         digits=$(to_decimal "$digits" "$ibase")
     fi
-    decimal_to_base "$digits" "$obase"
+    if ((obase != 10)); then
+        digits=$(decimal_to_base "$digits" "$obase")
+    fi
+
+    echo "$digits"
 }
 
 to_decimal() {
