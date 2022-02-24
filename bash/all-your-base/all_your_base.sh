@@ -1,16 +1,15 @@
 #!/usr/bin/env bash
 
-
 decimal_to_base() {
     local decimal=${1//\ /} base=$2
-    local -a digits
+    local -a output
     local -i quotient=$decimal
     until ((quotient < base)); do
-        digits=($((quotient % base)) "${digits[@]}")
+        output=($((quotient % base)) "${output[@]}")
         ((quotient /= base))
     done
-    digits=("$quotient" "${digits[@]}")
-    echo "${digits[@]}"
+    output=("$quotient" "${output[@]}")
+    echo "${output[@]}"
 }
 
 convert() {
