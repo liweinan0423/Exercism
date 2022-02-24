@@ -137,7 +137,7 @@ load bats-extra
 }
 
 @test 'output base is negative' {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash all_your_base.sh 2 "1" -7
     assert_failure
     assert_output    # there is _some_ output
