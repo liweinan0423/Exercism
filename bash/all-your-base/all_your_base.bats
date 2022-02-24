@@ -81,7 +81,7 @@ load bats-extra
 }
 
 @test 'leading zeros' {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash all_your_base.sh 7 "0 6 0" 10
     assert_success
     assert_output "4 2"
