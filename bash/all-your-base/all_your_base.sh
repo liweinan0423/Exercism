@@ -38,6 +38,10 @@ convert() {
         digits=$(to_decimal "$digits" 3)
         decimal_to_base "$digits" 16
         ;;
+    16-3)
+        digits=$(to_decimal "$digits" 16)
+        decimal_to_base "$digits" 3
+        ;;
     2-10)
         to_decimal "$digits" 2
         ;;
