@@ -74,7 +74,7 @@ load bats-extra
 }
 
 @test 'too short isbn' {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+  # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash isbn_verifier.sh '00'
   assert_success
   assert_output "false"
