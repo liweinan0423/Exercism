@@ -95,7 +95,7 @@ load bats-extra
 }
 
 @test 'input base is zero' {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash all_your_base.sh 0 "" 10
     assert_failure
     assert_output    # there is _some_ output
