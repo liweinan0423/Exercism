@@ -14,18 +14,16 @@ convert() {
     ((ibase > 1 && obase > 1)) || die "base should be greater than 1"
     [[ $digits =~ ^[0-9\ ]*$ ]] || die "digits should only contain positive numbers"
 
-    if [[ ! $digits =~ ^[0\ ]+$ ]]; then
-        if ((ibase != 10)); then
-            if ! digits=$(to_decimal "$digits" "$ibase"); then
-                exit 1
-            fi
+    if ((ibase != 10)); then
+        if ! digits=$(to_decimal "$digits" "$ibase"); then
+            exit 1
         fi
-        if ((obase != 10)); then
-            digits=$(to_base "$digits" "$obase")
-        fi
-
-        echo "$digits"
     fi
+    if ((obase != 10)); then
+        digits=$(to_base "$digits" "$obase")
+    fi
+
+    echo "$digits"
 }
 
 function to_decimal {
@@ -48,11 +46,10 @@ to_base() {
     local decimal=${1//\ /} base=$2
     local -a output
     local -i quotient=$decimal
-    until ((quotient < base)); do
+    until ((quotient == 0)); do
         output=($((quotient % base)) "${output[@]}")
         ((quotient /= base))
     done
-    output=("$quotient" "${output[@]}")
     echo "${output[@]}"
 }
 
