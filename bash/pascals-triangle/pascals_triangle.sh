@@ -13,14 +13,8 @@ pascal_triangle() {
             fi
         done
         prev=("${row[@]}")
-        spaces $((n - i)) && echo "${row[@]}"
-    done
-}
-
-spaces() {
-    local -i i
-    for ((i = 0; i < $1; i++)); do
-        echo -n " "
+        printf "%*s" $((n - i)) ""
+        echo "${row[@]}"
     done
 }
 
