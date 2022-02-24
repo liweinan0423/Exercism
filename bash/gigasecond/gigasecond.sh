@@ -1,34 +1,5 @@
 #!/usr/bin/env bash
 
-# for ((i = 0; i < year; i++)); do
-#     if leap_year "${i}"; then
-#         ((seconds += 366 * 24 * 60 * 60))
-#     else
-#         ((seconds += 365 * 24 * 60 * 60))
-#     fi
-# done
-
-# for ((i = 1; i < month; i++)); do
-#     case $i in
-#     2)
-#         leap_year "$year" && ((seconds += 29 * 24 * 60 * 60)) || ((seconds += 28 * 24 * 60 * 60))
-#         ;;
-#     1 | 3 | 5 | 7 | 8 | 10 | 12)
-#         ((seconds += 31 * 24 * 60 * 60))
-#         ;;
-#     *)
-#         ((seconds += 30 * 24 * 60 * 60))
-#         ;;
-#     esac
-# done
-
-# ((seconds += (day - 1) * 24 * 60 * 60))
-# ((seconds += hour * 60 * 60))
-# ((seconds += minute * 60))
-# ((seconds += second))
-
-# ((seconds += 1000000000))
-
 gs=1000000000
 oneday=$((24 * 60 * 60))
 
