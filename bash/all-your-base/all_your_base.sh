@@ -1,11 +1,15 @@
 #!/usr/bin/env bash
 
+die() { echo "$1"; exit 1; }
+
 main() {
     convert "$@"
 }
 
 convert() {
     local ibase=$1 digits=$2 obase=$3
+
+    ((ibase > 1)) || die "input base should be greater than 1"
 
     if ((ibase != 10)); then
         digits=$(to_decimal "$digits" "$ibase")

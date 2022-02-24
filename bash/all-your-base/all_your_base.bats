@@ -88,7 +88,7 @@ load bats-extra
 }
 
 @test 'input base is one' {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash all_your_base.sh 1 "0" 10
     assert_failure
     assert_output    # there is _some_ output
