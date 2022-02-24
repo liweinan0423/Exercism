@@ -12,7 +12,7 @@ main() {
 convert() {
     local ibase=$1 digits=$2 obase=$3
 
-    ((ibase > 1)) || die "input base should be greater than 1"
+    ((ibase > 1 && obase > 1)) || die "base should be greater than 1"
     [[ $digits =~ ^[0-9\ ]*$ ]] || die "digits should only contain positive numbers"
 
     if ((ibase != 10)); then
