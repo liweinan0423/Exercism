@@ -67,14 +67,14 @@ load bats-extra
 }
 
 @test 'single zero' {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash all_your_base.sh 10 "0" 2
     assert_success
     assert_output ""
 }
 
 @test 'multiple zeroes' {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash all_your_base.sh 10 "0 0 0" 2
     assert_success
     assert_output ""

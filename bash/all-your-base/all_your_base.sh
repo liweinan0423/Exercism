@@ -11,20 +11,21 @@ main() {
 
 convert() {
     local ibase=$1 digits=$2 obase=$3
-
     ((ibase > 1 && obase > 1)) || die "base should be greater than 1"
     [[ $digits =~ ^[0-9\ ]*$ ]] || die "digits should only contain positive numbers"
 
-    if ((ibase != 10)); then
-        if ! digits=$(to_decimal! "$digits" "$ibase"); then
-            exit 1
+    if [[ ! $digits =~ ^[0\ ]+$ ]]; then
+        if ((ibase != 10)); then
+            if ! digits=$(to_decimal! "$digits" "$ibase"); then
+                exit 1
+            fi
         fi
-    fi
-    if ((obase != 10)); then
-        digits=$(decimal_to_base "$digits" "$obase")
-    fi
+        if ((obase != 10)); then
+            digits=$(to_base "$digits" "$obase")
+        fi
 
-    echo "$digits"
+        echo "$digits"
+    fi
 }
 
 # function name ending with a `!` means it might panic. if we call it in $(...), we need to error handling in the main shell
@@ -44,7 +45,7 @@ function to_decimal! {
     echo "${output[@]}"
 }
 
-decimal_to_base() {
+to_base() {
     local decimal=${1//\ /} base=$2
     local -a output
     local -i quotient=$decimal
