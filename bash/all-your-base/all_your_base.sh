@@ -16,7 +16,7 @@ convert() {
 
     if [[ ! $digits =~ ^[0\ ]+$ ]]; then
         if ((ibase != 10)); then
-            if ! digits=$(to_decimal! "$digits" "$ibase"); then
+            if ! digits=$(to_decimal "$digits" "$ibase"); then
                 exit 1
             fi
         fi
@@ -28,8 +28,7 @@ convert() {
     fi
 }
 
-# function name ending with a `!` means it might panic. if we call it in $(...), we need to error handling in the main shell
-function to_decimal! {
+function to_decimal {
     local -i base=$2 decimal
     local -a digits output
     read -ra digits <<<"$1"
