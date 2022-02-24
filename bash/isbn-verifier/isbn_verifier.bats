@@ -39,7 +39,7 @@ load bats-extra
 }
 
 @test 'X is only valid as a check digit' {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+  # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash isbn_verifier.sh '3-598-2X507-9'
   assert_success
   assert_output "false"
