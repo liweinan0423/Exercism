@@ -116,7 +116,7 @@ load bats-extra
 }
 
 @test 'input is too long but contains a valid isbn' {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+  # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash isbn_verifier.sh '98245726788'
   assert_success
   assert_output "false"
