@@ -25,7 +25,7 @@ load bats-extra
 }
 
 @test 'check digit is a character other than X' {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+  # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash isbn_verifier.sh '3-598-21507-A'
   assert_success
   assert_output "false"
