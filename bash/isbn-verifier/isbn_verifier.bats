@@ -46,7 +46,7 @@ load bats-extra
 }
 
 @test 'valid isbn without separating dashes' {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+  # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash isbn_verifier.sh '3598215088'
   assert_success
   assert_output "true"
