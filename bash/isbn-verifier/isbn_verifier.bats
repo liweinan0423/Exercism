@@ -109,7 +109,7 @@ load bats-extra
 }
 
 @test 'invalid characters are not ignored' {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+  # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash isbn_verifier.sh '3132P34035'
   assert_success
   assert_output "false"
