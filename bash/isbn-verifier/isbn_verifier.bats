@@ -81,7 +81,7 @@ load bats-extra
 }
 
 @test 'isbn without check digit' {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+  # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash isbn_verifier.sh '3-598-21507'
   assert_success
   assert_output "false"
