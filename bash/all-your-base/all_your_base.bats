@@ -60,7 +60,7 @@ load bats-extra
 }
 
 @test 'empty list' {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash all_your_base.sh 2 "" 10
     assert_success
     assert_output ""
