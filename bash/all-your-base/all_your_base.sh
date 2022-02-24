@@ -14,9 +14,7 @@ convert() {
     ((ibase > 1 && obase > 1)) || die "base should be greater than 1"
     [[ $digits =~ ^[0-9\ ]*$ ]] || die "digits should only contain positive numbers"
 
-    if ! digits=$(to_decimal "$digits" "$ibase"); then
-        exit 1
-    fi
+    digits=$(to_decimal "$digits" "$ibase") || exit 1
     digits=$(to_base "$digits" "$obase")
 
     echo "$digits"
