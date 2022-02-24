@@ -14,21 +14,18 @@ convert() {
 }
 
 to_decimal() {
-    local digits=${1//\ /} base=$2
-    local -i result
-    while [[ -n $digits ]]; do
-        order=$((${#digits} - 1))
-        n=${digits:0:1}
-        ((result += (n * (base ** order))))
-        digits=${digits#?}
+    local -i base=$2 decimal
+    local -a digits output
+    read -ra digits <<<"$1"
+    for ((i = 0; i < ${#digits[@]}; i++)); do
+        ((decimal += digits[i] * (base ** (${#digits[@]} - i - 1))))
     done
 
-    local -a output
-    for ((i = 0; i < ${#result}; i++)); do
-        output+=("${result:i:1}")
+    for ((i = 0; i < ${#decimal}; i++)); do
+        output+=("${decimal:i:1}")
     done
 
-    echo "${output[*]}"
+    echo "${output[@]}"
 }
 
 decimal_to_base() {
