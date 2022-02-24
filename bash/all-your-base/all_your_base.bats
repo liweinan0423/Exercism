@@ -53,7 +53,7 @@ load bats-extra
 }
 
 @test '15 bit integer' {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash all_your_base.sh 97 "3 46 60" 73
     assert_success
     assert_output "6 10 45"
