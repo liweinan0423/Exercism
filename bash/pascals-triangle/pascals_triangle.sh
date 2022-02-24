@@ -12,11 +12,15 @@ pascal_triangle() {
                 row[j]=$((prev[j - 1] + prev[j]))
             fi
         done
-        for ((k = 0; k < n - i; k++)); do
-            echo -n " "
-        done
-        echo "${row[@]}"
+        spaces $((n - i)) && echo "${row[@]}"
         prev=("${row[@]}")
+    done
+}
+
+spaces() {
+    local -i i
+    for ((i = 0; i < $1; i++)); do
+        echo -n " "
     done
 }
 
