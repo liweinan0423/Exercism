@@ -1,15 +1,7 @@
 #!/usr/bin/env bash
 
-decimal_to_base() {
-    local decimal=${1//\ /} base=$2
-    local -a output
-    local -i quotient=$decimal
-    until ((quotient < base)); do
-        output=($((quotient % base)) "${output[@]}")
-        ((quotient /= base))
-    done
-    output=("$quotient" "${output[@]}")
-    echo "${output[@]}"
+main() {
+    convert "$@"
 }
 
 convert() {
@@ -39,8 +31,16 @@ to_decimal() {
     echo "${output[*]}"
 }
 
-main() {
-    convert "$@"
+decimal_to_base() {
+    local decimal=${1//\ /} base=$2
+    local -a output
+    local -i quotient=$decimal
+    until ((quotient < base)); do
+        output=($((quotient % base)) "${output[@]}")
+        ((quotient /= base))
+    done
+    output=("$quotient" "${output[@]}")
+    echo "${output[@]}"
 }
 
 main "$@"
