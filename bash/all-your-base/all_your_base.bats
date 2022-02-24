@@ -109,7 +109,7 @@ load bats-extra
 }
 
 @test 'negative digit' {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash all_your_base.sh 2 "1 -1 1 0 1 0" 10
     assert_failure
     assert_output    # there is _some_ output
