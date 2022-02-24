@@ -33,22 +33,10 @@ decimal_to_base() {
 convert() {
     local ibase=$1 digits=$2 obase=$3
 
-    case $ibase-$obase in
-    3-16)
-        digits=$(to_decimal "$digits" 3)
-        decimal_to_base "$digits" 16
-        ;;
-    16-3)
-        digits=$(to_decimal "$digits" 16)
-        decimal_to_base "$digits" 3
-        ;;
-    2-10)
-        to_decimal "$digits" 2
-        ;;
-    10-2)
-        decimal_to_base "$digits" 2
-        ;;
-    esac
+    if ((ibase != 10)); then
+        digits=$(to_decimal "$digits" "$ibase")
+    fi
+    decimal_to_base "$digits" "$obase"
 }
 
 main() {
