@@ -95,7 +95,7 @@ load bats-extra
 }
 
 @test 'empty isbn' {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+  # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash isbn_verifier.sh ''
   assert_success
   assert_output "false"
