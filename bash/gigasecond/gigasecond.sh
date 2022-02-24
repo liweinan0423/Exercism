@@ -63,7 +63,7 @@ main() {
         ((hour -= 24))
     fi
 
-    printf "%s-%02s-%02sT%02s:%02s:%02s\n" "$year" "$month" "$day" "$hour" "$minute" "$second"
+    printf "%d-%02d-%02dT%02d:%02d:%02d\n" "$year" "$month" "$day" "$hour" "$minute" "$second"
 }
 
 main "$@"
