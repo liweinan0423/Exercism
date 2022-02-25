@@ -21,6 +21,12 @@ publicKey() {
     echo $(((g ** private) % p))
 }
 
+secret() {
+    local -i p=$1 public=$2 private=$3
+
+    echo $((public ** private % p))
+}
+
 prime() {
     local -i n=$1 i
     ((n < 2)) && return 1

@@ -49,7 +49,7 @@ between() {
 }
 
 @test "can calculate secret key using other's public key" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     expected="2"
     local -i p=23 public=19 private=6
     run bash diffie_hellman.sh secret $p $public $private
