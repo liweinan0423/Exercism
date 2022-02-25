@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
 main() {
-    "$1" "$2"
+    local cmd=$1
+    shift
+    "$cmd" "$@"
 }
 
 privateKey() {
@@ -11,6 +13,12 @@ privateKey() {
     done
 
     echo $r
+}
+
+publicKey() {
+    local -i p=$1 g=$2 private=$3
+
+    echo $(((g ** private) % p))
 }
 
 prime() {
