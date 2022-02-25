@@ -40,7 +40,7 @@ between() {
 }
 
 @test "can calculate public key when given a different private key" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     expected="19"
     local -i p=23 g=5 private=15
     run bash diffie_hellman.sh publicKey $p $g $private
