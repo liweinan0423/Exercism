@@ -1,0 +1,14 @@
+containers:
+  ubuntu:
+    image: ubuntu
+    volumes:
+      - local: .
+        container: /code
+    working_directory: /code
+
+tasks:
+ shell:
+    description: Start a shell in the development environment
+    run:
+      container: ubuntu
+      command: bash
