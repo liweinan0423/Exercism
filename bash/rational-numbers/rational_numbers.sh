@@ -21,6 +21,8 @@ function + {
 }
 
 rational_number() {
+    local -i numerator=$1 demoninator=$2
+    ((numerator == 0)) && demoninator=1
     echo "$numerator/$demoninator"
 }
 

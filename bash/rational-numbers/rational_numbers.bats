@@ -27,7 +27,7 @@ load bats-extra
 }
 
 @test "Add a rational number to its additive inverse" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash rational_numbers.sh "+" "1/2" "-1/2"
     assert_success
     assert_output "0/1"
