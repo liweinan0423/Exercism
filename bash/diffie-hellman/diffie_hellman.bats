@@ -58,7 +58,7 @@ between() {
 }
 
 @test "key exchange" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     local -i i p=23 g=5
     local -i alicePublic alicePrivate secret1
     local -i bobPublic bobPrivate secret2

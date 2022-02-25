@@ -1,9 +1,20 @@
 #!/usr/bin/env bash
 
+die() {
+    echo "$1"
+    exit 1
+}
+
 main() {
+    # arithmetic is delegated to `bc`
+    [[ -x $(command -v bc) ]] || die "external tool required: bc"
     local cmd=$1
     shift
     "$cmd" "$@"
+}
+
+calculate() {
+    bc <<<"$1"
 }
 
 privateKey() {
@@ -18,13 +29,13 @@ privateKey() {
 
 publicKey() {
     local -i p=$1 g=$2 private=$3
-    echo $(((g ** private) % p))
+    calculate "$g^$private%$p"
 }
 
 secret() {
     local -i p=$1 public=$2 private=$3
 
-    echo $((public ** private % p))
+    calculate "$public^$private%$p"
 }
 
 main "$@"
