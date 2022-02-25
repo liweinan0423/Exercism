@@ -5,10 +5,20 @@
 main() {
     local op=$1
     shift
-    $op "$@"
+    case $op in
+    +)
+        add "$@"
+        ;;
+    -)
+        subtract "$@"
+        ;;
+    "*")
+        multiply "$@"
+        ;;
+    esac
 }
 
-function + {
+function add {
     local a=$1 b=$2
 
     local numerator demoninator
@@ -20,11 +30,22 @@ function + {
     rational_number $numerator $demoninator
 }
 
-function - {
+function subtract {
     local a=$1 b=$2
     local numerator demoninator
 
     numerator=$(($(numerator $a) * $(demoninator $b) - $(numerator $b) * $(demoninator $a)))
+
+    demoninator=$(($(demoninator $a) * $(demoninator $b)))
+
+    rational_number $numerator $demoninator
+}
+
+function multiply {
+    local a=$1 b=$2
+    local numerator demoninator
+
+    numerator=$(($(numerator $a) * $(numerator $b)))
 
     demoninator=$(($(demoninator $a) * $(demoninator $b)))
 
