@@ -6,7 +6,7 @@ main() {
 
 privateKey() {
     local -i p=$1 r=0
-    while ! prime "$r" || ((r >= p)); do
+    until prime "$r" && ((r < p)); do
         r=$((RANDOM % p + 1))
     done
 
