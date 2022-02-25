@@ -51,7 +51,7 @@ load bats-extra
 }
 
 @test "Subtract two negative rational numbers" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash rational_numbers.sh "-" "-1/2" "-2/3"
     assert_success
     assert_output "1/6"
