@@ -18,7 +18,7 @@ privateKey() {
 publicKey() {
     local -i p=$1 g=$2 private=$3
 
-    echo $(((g ** private) % p))
+    echo $((g ** private % p))
 }
 
 secret() {
