@@ -21,47 +21,47 @@ main() {
 function add {
     local a=$1 b=$2
 
-    local numerator demoninator
+    local numerator denominator
 
-    numerator=$(($(numerator $a) * $(demoninator $b) + $(numerator $b) * $(demoninator $a)))
+    numerator=$(($(numerator $a) * $(denominator $b) + $(numerator $b) * $(denominator $a)))
 
-    demoninator=$(($(demoninator $a) * $(demoninator $b)))
+    denominator=$(($(denominator $a) * $(denominator $b)))
 
-    rational_number $numerator $demoninator
+    rational_number $numerator $denominator
 }
 
 function subtract {
     local a=$1 b=$2
-    local numerator demoninator
+    local numerator denominator
 
-    numerator=$(($(numerator $a) * $(demoninator $b) - $(numerator $b) * $(demoninator $a)))
+    numerator=$(($(numerator $a) * $(denominator $b) - $(numerator $b) * $(denominator $a)))
 
-    demoninator=$(($(demoninator $a) * $(demoninator $b)))
+    denominator=$(($(denominator $a) * $(denominator $b)))
 
-    rational_number $numerator $demoninator
+    rational_number $numerator $denominator
 }
 
 function multiply {
     local a=$1 b=$2
-    local numerator demoninator
+    local numerator denominator
 
     numerator=$(($(numerator $a) * $(numerator $b)))
 
-    demoninator=$(($(demoninator $a) * $(demoninator $b)))
+    denominator=$(($(denominator $a) * $(denominator $b)))
 
-    rational_number $numerator $demoninator
+    rational_number $numerator $denominator
 }
 
 rational_number() {
-    local -i numerator=$1 demoninator=$2 gcd
+    local -i numerator=$1 denominator=$2 gcd
     if ((numerator == 0)); then
-        demoninator=1
+        denominator=1
     else
-        gcd=$(gcd $numerator $demoninator)
+        gcd=$(gcd $numerator $denominator)
         ((numerator /= gcd))
         ((denominator /= gcd))
     fi
-    echo "$numerator/$demoninator"
+    echo "$numerator/$denominator"
 }
 
 numerator() {
@@ -70,7 +70,7 @@ numerator() {
     fi
 }
 
-demoninator() {
+denominator() {
     if [[ $1 =~ .*/(.*) ]]; then
         echo "${BASH_REMATCH[1]}"
     fi
