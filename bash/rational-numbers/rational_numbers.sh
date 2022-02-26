@@ -62,7 +62,6 @@ divide() {
     numerator=$(($(numerator $a) * $(denominator $b)))
     denominator=$(($(denominator $a) * $(numerator $b)))
 
-
     rational_number $numerator $denominator
 }
 
@@ -74,6 +73,10 @@ rational_number() {
         gcd=$(gcd $numerator $denominator)
         ((numerator /= gcd))
         ((denominator /= gcd))
+    fi
+    if ((denominator < 0)); then
+        numerator=$((-numerator))
+        denominator=$((-denominator))
     fi
     echo "$numerator/$denominator"
 }
