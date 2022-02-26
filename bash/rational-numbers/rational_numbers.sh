@@ -68,6 +68,33 @@ divide() {
     reduce $numerator/$denominator
 }
 
+abs() {
+    if [[ $1 == */* ]]; then
+        rational::abs $1
+    else
+        real::abs $1
+    fi
+}
+
+pow() {
+    local numerator denominator
+    numerator=$(numerator $1)
+    denominator=$(denominator $1)
+
+    reduce $((numerator ** $2))/$((denominator ** $2))
+}
+
+rpow() {
+    local output
+    output=$(awk "BEGIN {printf \"%.6f\", $1^($2)}")
+
+    if [[ $output =~ (.*)\.0+$ ]]; then
+        echo ${BASH_REMATCH[1]}.0
+    else
+        echo $output
+    fi
+}
+
 reduce() {
     local -i numerator denominator gcd
     numerator=$(numerator $1)
@@ -95,33 +122,6 @@ numerator() {
 denominator() {
     if [[ $1 =~ .*/(.*) ]]; then
         echo "${BASH_REMATCH[1]}"
-    fi
-}
-
-abs() {
-    if [[ $1 == */* ]]; then
-        rational::abs $1
-    else
-        real::abs $1
-    fi
-}
-
-pow() {
-    local numerator denominator
-    numerator=$(numerator $1)
-    denominator=$(denominator $1)
-
-    reduce $((numerator ** $2))/$((denominator ** $2))
-}
-
-rpow() {
-    local output
-    output=$(awk "BEGIN {printf \"%.6f\", $1^($2)}")
-
-    if [[ $output =~ (.*)\.0+$ ]]; then
-        echo ${BASH_REMATCH[1]}.0
-    else
-        echo $output
     fi
 }
 
