@@ -21,6 +21,9 @@ main() {
     abs)
         abs "$@"
         ;;
+    pow)
+        pow "$@"
+        ;;
     esac
 }
 
@@ -102,6 +105,14 @@ abs() {
     else
         real::abs $1
     fi
+}
+
+pow() {
+    local numerator denominator
+    numerator=$(numerator $1)
+    denominator=$(denominator $1)
+
+    rational_number $((numerator ** $2)) $((denominator ** $2))
 }
 
 rational::abs() {

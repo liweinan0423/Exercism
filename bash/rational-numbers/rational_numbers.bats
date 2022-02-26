@@ -181,42 +181,42 @@ load bats-extra
 # Exponentiation of a rational number
 
 @test "Raise a positive rational number to a positive integer power" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash rational_numbers.sh "pow" "1/2" 3
     assert_success
     assert_output "1/8"
 }
 
 @test "Raise a negative rational number to a positive integer power" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash rational_numbers.sh "pow" "-1/2" 3
     assert_success
     assert_output "-1/8"
 }
 
 @test "Raise zero to an integer power" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash rational_numbers.sh "pow" "0/1" 5
     assert_success
     assert_output "0/1"
 }
 
 @test "Raise one to an integer power" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash rational_numbers.sh "pow" "1/1" 4
     assert_success
     assert_output "1/1"
 }
 
 @test "Raise a positive rational number to the power of zero" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash rational_numbers.sh "pow" "1/2" 0
     assert_success
     assert_output "1/1"
 }
 
 @test "Raise a negative rational number to the power of zero" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash rational_numbers.sh "pow" "-1/2" 0
     assert_success
     assert_output "1/1"
