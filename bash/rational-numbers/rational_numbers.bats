@@ -67,21 +67,21 @@ load bats-extra
 # Multiplication
 
 @test "Multiply two positive rational numbers" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash rational_numbers.sh "*" "1/2" "2/3"
     assert_success
     assert_output "1/3"
 }
 
 @test "Multiply a negative rational number by a positive rational number" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash rational_numbers.sh "*" "-1/2" "2/3"
     assert_success
     assert_output "-1/3"
 }
 
 @test "Multiply two negative rational numbers" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash rational_numbers.sh "*" "-1/2" "-2/3"
     assert_success
     assert_output "1/3"
