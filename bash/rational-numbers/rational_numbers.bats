@@ -150,28 +150,28 @@ load bats-extra
 }
 
 @test "Absolute value of a positive rational number with negative numerator and denominator" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash rational_numbers.sh "abs" "-1/-2"
     assert_success
     assert_output  "1/2"
 }
 
 @test "Absolute value of a negative rational number" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash rational_numbers.sh "abs" "-1/2"
     assert_success
     assert_output  "1/2"
 }
 
 @test "Absolute value of a negative rational number with negative denominator" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash rational_numbers.sh "abs" "1/-2"
     assert_success
     assert_output  "1/2"
 }
 
 @test "Absolute value of zero" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash rational_numbers.sh "abs" "0/1"
     assert_success
     assert_output  "0/1"
