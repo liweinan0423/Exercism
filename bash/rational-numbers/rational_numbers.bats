@@ -250,7 +250,7 @@ load bats-extra
 # Reduction to lowest terms
 
 @test "Reduce a positive rational number to lowest terms" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash rational_numbers.sh "reduce" "2/4"
     assert_success
     assert_output  "1/2"

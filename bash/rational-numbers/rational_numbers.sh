@@ -27,6 +27,9 @@ main() {
     rpow)
         rpow "$@"
         ;;
+    reduce)
+        reduce "$@"
+        ;;
     esac
 }
 
@@ -74,8 +77,15 @@ divide() {
     rational_number $numerator $denominator
 }
 
-rational_number() {
-    local -i numerator=$1 denominator=$2 gcd
+reduce() {
+    local -i numerator denominator gcd
+    if (($# == 1)); then
+        numerator=$(numerator $1)
+        denominator=$(denominator $1)
+    else
+        numerator=$1
+        denominator=$2
+    fi
     if ((numerator == 0)); then
         denominator=1
     else
@@ -88,6 +98,10 @@ rational_number() {
         denominator=$((-denominator))
     fi
     echo "$numerator/$denominator"
+}
+
+rational_number() {
+    reduce "$@"
 }
 
 numerator() {
