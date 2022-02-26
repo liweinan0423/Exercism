@@ -88,21 +88,21 @@ load bats-extra
 }
 
 @test "Multiply a rational number by its reciprocal" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash rational_numbers.sh "*" "1/2" "2/1"
     assert_success
     assert_output "1/1"
 }
 
 @test "Multiply a rational number by 1" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash rational_numbers.sh "*" "1/2" "1/1"
     assert_success
     assert_output "1/2"
 }
 
 @test "Multiply a rational number by 0" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash rational_numbers.sh "*" "1/2" "0/1"
     assert_success
     assert_output "0/1"
