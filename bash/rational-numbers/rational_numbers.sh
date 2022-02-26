@@ -79,13 +79,8 @@ divide() {
 
 reduce() {
     local -i numerator denominator gcd
-    if (($# == 1)); then
-        numerator=$(numerator $1)
-        denominator=$(denominator $1)
-    else
-        numerator=$1
-        denominator=$2
-    fi
+    numerator=$(numerator $1)
+    denominator=$(denominator $1)
     if ((numerator == 0)); then
         denominator=1
     else
@@ -98,10 +93,6 @@ reduce() {
         denominator=$((-denominator))
     fi
     echo "$numerator/$denominator"
-}
-
-rational_number() {
-    reduce "$@"
 }
 
 numerator() {
@@ -129,7 +120,7 @@ pow() {
     numerator=$(numerator $1)
     denominator=$(denominator $1)
 
-    rational_number $((numerator ** $2)) $((denominator ** $2))
+    reduce $((numerator ** $2))/$((denominator ** $2))
 }
 
 rpow() {
@@ -148,7 +139,7 @@ rational::abs() {
     numerator=$(numerator $1)
     denominator=$(denominator $1)
 
-    rational_number $(abs $numerator) $(abs $denominator)
+    reduce $(abs $numerator)/$(abs $denominator)
 }
 real::abs() {
     if (($1 >= 0)); then
