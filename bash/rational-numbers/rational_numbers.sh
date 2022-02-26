@@ -53,7 +53,7 @@ function subtract {
 
     denominator=$(($(denominator $a) * $(denominator $b)))
 
-    rational_number $numerator $denominator
+    reduce $numerator/$denominator
 }
 
 function multiply {
@@ -64,7 +64,7 @@ function multiply {
 
     denominator=$(($(denominator $a) * $(denominator $b)))
 
-    rational_number $numerator $denominator
+    reduce $numerator/$denominator
 }
 
 divide() {
@@ -74,7 +74,7 @@ divide() {
     numerator=$(($(numerator $a) * $(denominator $b)))
     denominator=$(($(denominator $a) * $(numerator $b)))
 
-    rational_number $numerator $denominator
+    reduce $numerator/$denominator
 }
 
 reduce() {
