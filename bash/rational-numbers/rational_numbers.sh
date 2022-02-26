@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# shellcheck disable=SC2086
+# shellcheck disable=SC2086,SC2046
 
 main() {
     local op=$1
@@ -17,6 +17,9 @@ main() {
         ;;
     "/")
         divide "$@"
+        ;;
+    abs)
+        abs "$@"
         ;;
     esac
 }
@@ -94,6 +97,21 @@ denominator() {
 }
 
 abs() {
+    if [[ $1 == */* ]]; then
+        rational::abs $1
+    else
+        real::abs $1
+    fi
+}
+
+rational::abs() {
+    local -i numerator denominator
+    numerator=$(numerator $1)
+    denominator=$(denominator $1)
+
+    rational_number $(abs $numerator) $(abs $denominator)
+}
+real::abs() {
     if (($1 >= 0)); then
         echo $1
     else

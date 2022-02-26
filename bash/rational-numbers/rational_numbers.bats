@@ -143,7 +143,7 @@ load bats-extra
 # Absolute value"
 
 @test "Absolute value of a positive rational number" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash rational_numbers.sh "abs" "1/2"
     assert_success
     assert_output  "1/2"
