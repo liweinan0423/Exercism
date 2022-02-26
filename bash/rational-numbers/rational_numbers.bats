@@ -226,14 +226,14 @@ load bats-extra
 # Exponentiation of a real number to a rational number
 
 @test "Raise a real number to a positive rational number" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash rational_numbers.sh "rpow" 8 "4/3"
     assert_success
     assert_output "16.0"
 }
 
 @test "Raise a real number to a negative rational number" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash rational_numbers.sh "rpow" 9 "-1/2"
     assert_success
     assert_output "0.333333"

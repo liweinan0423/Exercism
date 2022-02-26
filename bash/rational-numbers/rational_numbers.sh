@@ -24,6 +24,9 @@ main() {
     pow)
         pow "$@"
         ;;
+    rpow)
+        rpow "$@"
+        ;;
     esac
 }
 
@@ -113,6 +116,17 @@ pow() {
     denominator=$(denominator $1)
 
     rational_number $((numerator ** $2)) $((denominator ** $2))
+}
+
+rpow() {
+    local output
+    output=$(awk "BEGIN {printf \"%.6f\", $1^($2)}")
+
+    if [[ $output =~ (.*)\.0+$ ]]; then
+        echo ${BASH_REMATCH[1]}.0
+    else
+        echo $output
+    fi
 }
 
 rational::abs() {
