@@ -285,14 +285,14 @@ load bats-extra
 }
 
 @test "Reduce an integer to lowest terms" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash rational_numbers.sh "reduce" "-14/7"
     assert_success
     assert_output  "-2/1"
 }
 
 @test "Reduce one to lowest terms" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash rational_numbers.sh "reduce" "13/13"
     assert_success
     assert_output  "1/1"
