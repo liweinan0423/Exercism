@@ -264,21 +264,21 @@ load bats-extra
 }
 
 @test "Reduce a negative rational number to lowest terms" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash rational_numbers.sh "reduce" "-4/6"
     assert_success
     assert_output  "-2/3"
 }
 
 @test "Reduce a rational number with a negative denominator to lowest terms" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash rational_numbers.sh "reduce" "3/-9"
     assert_success
     assert_output  "-1/3"
 }
 
 @test "Reduce zero to lowest terms" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash rational_numbers.sh "reduce" "0/6"
     assert_success
     assert_output  "0/1"
