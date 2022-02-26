@@ -15,6 +15,9 @@ main() {
     "*")
         multiply "$@"
         ;;
+    "/")
+        divide "$@"
+        ;;
     esac
 }
 
@@ -48,6 +51,17 @@ function multiply {
     numerator=$(($(numerator $a) * $(numerator $b)))
 
     denominator=$(($(denominator $a) * $(denominator $b)))
+
+    rational_number $numerator $denominator
+}
+
+divide() {
+    local a=$1 b=$2
+    local numerator denominator
+
+    numerator=$(($(numerator $a) * $(denominator $b)))
+    denominator=$(($(denominator $a) * $(numerator $a)))
+
 
     rational_number $numerator $denominator
 }
