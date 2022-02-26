@@ -257,7 +257,7 @@ load bats-extra
 }
 
 @test "Reduce places the minus sign on the numerator" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash rational_numbers.sh "reduce" "3/-4"
     assert_success
     assert_output  "-3/4"
