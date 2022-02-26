@@ -18,17 +18,8 @@ main() {
     "/")
         divide "$@"
         ;;
-    abs)
-        abs "$@"
-        ;;
-    pow)
-        pow "$@"
-        ;;
-    rpow)
-        rpow "$@"
-        ;;
-    reduce)
-        reduce "$@"
+    *)
+        $op "$@"
         ;;
     esac
 }
