@@ -42,7 +42,7 @@ function add {
 
     denominator=$(($(denominator $a) * $(denominator $b)))
 
-    rational_number $numerator $denominator
+    reduce $numerator/$denominator
 }
 
 function subtract {
