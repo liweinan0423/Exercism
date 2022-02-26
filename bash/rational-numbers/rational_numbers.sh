@@ -60,7 +60,7 @@ divide() {
     local numerator denominator
 
     numerator=$(($(numerator $a) * $(denominator $b)))
-    denominator=$(($(denominator $a) * $(numerator $a)))
+    denominator=$(($(denominator $a) * $(numerator $b)))
 
 
     rational_number $numerator $denominator
