@@ -32,7 +32,7 @@ load bats-extra
 }
 
 @test "smallest double byte" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash variable_length_quantity.sh encode 80
     assert_success
     assert_output "81 00"
