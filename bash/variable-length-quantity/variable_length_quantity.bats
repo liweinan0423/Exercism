@@ -161,7 +161,7 @@ load bats-extra
 }
 
 @test "four bytes" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash variable_length_quantity.sh decode 81 80 80 00
     assert_success
     assert_output "200000"
