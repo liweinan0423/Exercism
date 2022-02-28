@@ -147,14 +147,14 @@ load bats-extra
 }
 
 @test "two bytes" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash variable_length_quantity.sh decode C0 00
     assert_success
     assert_output "2000"
 }
 
 @test "three bytes" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash variable_length_quantity.sh decode FF FF 7F
     assert_success
     assert_output "1FFFFF"

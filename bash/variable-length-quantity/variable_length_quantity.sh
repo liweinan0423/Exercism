@@ -41,11 +41,11 @@ encode_byte() {
 
 decode() {
     local -a group output
-    local -i decimal
+    local -i digit
     for code; do
-        decimal=$((16#$code))
-        group+=("$decimal")
-        if ((decimal | 128 != decimal)); then
+        digit=$((16#$code))
+        group+=("$digit")
+        if (((digit | 128) != digit)); then
             output+=("$(decode_group "${group[@]}")")
             group=()
         fi
@@ -57,15 +57,17 @@ decode() {
 decode_group() {
     local -a output=("$@")
 
+    local -i decimal
     for ((i = 0; i < ${#output[@]}; i++)); do
         if ((i != ${#output[@]} - 1)); then
-            output[i]=$(printf "%02X" $((output[i] ^ 128)))
+            ((decimal = decimal * 128 + (output[i] ^ 128)))
         else
-            output[i]=$(printf "%02X" $((output[i])))
+            ((decimal = decimal * 128 + output[i]))
         fi
     done
 
-    echo "${output[@]}"
+    printf "%02X" $decimal
+
 }
 
 main "$@"
