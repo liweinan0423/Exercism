@@ -20,32 +20,20 @@ encode() {
     echo "${output[@]}"
 }
 
+declare -ri MASK=0x7F #01111111
+
 encode_number() {
-    local decimal=$((0x$1))
-    local -a digits
-    read -ra digits < <(base128 $decimal)
-
-    for ((i = 0; i < ${#digits[@]}; i++)); do
-        if ((i != ${#digits[@]} - 1)); then
-            printf -v digits[i] "%02X" $((digits[i] ^ 128))
-        else
-            printf -v digits[i] "%02X" "${digits[i]}"
-        fi
-    done
-
-    echo "${digits[@]}"
-}
-
-base128() {
-    local -i decimal=$1
-    local -a digits
-    while ((decimal >= 0)); do
-        digits=("$((decimal % 128))" "${digits[@]}")
-        ((decimal /= 128))
+    local -i decimal=$((0x$1))
+    local msb=0
+    local -a bytes
+    while true; do
+        bytes=("$(printf "%02X" $((decimal & MASK | msb)))" "${bytes[@]}")
+        msb=0x80 # 10000000
+        ((decimal >>= 7))
         ((decimal == 0)) && break
     done
 
-    echo "${digits[@]}"
+    echo "${bytes[@]}"
 }
 
 decode() {
