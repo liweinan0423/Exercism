@@ -168,7 +168,7 @@ load bats-extra
 }
 
 @test "maximum 32-bit integer" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash variable_length_quantity.sh decode 8F FF FF FF 7F
     assert_success
     assert_output "FFFFFFFF"
