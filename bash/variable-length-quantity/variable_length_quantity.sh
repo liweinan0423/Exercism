@@ -9,7 +9,7 @@ main() {
 }
 
 encode() {
-    echo 00
+    echo $1
 }
 
 main "$@"
