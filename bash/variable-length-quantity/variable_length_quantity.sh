@@ -38,6 +38,10 @@ encode_number() {
 }
 
 decode() {
+    if (((0x${!#} & MSB) != 0)); then
+        echo >&2 "incomplete byte sequence"
+        exit 1
+    fi
     local -a output
     local -i number=0
     for byte; do
@@ -47,10 +51,6 @@ decode() {
             number=0
         fi
     done
-    if (((0x${!#} & MSB) != 0)); then
-        echo >&2 "incomplete byte sequence"
-        exit 1
-    fi
     echo "${output[@]}"
 }
 
