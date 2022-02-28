@@ -81,35 +81,35 @@ load bats-extra
 }
 
 @test "arbitrary quadruple byte" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash variable_length_quantity.sh encode 8000000
     assert_success
     assert_output "C0 80 80 00"
 }
 
 @test "largest quadruple byte" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash variable_length_quantity.sh encode FFFFFFF
     assert_success
     assert_output "FF FF FF 7F"
 }
 
 @test "smallest quintuple byte" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash variable_length_quantity.sh encode 10000000
     assert_success
     assert_output "81 80 80 80 00"
 }
 
 @test "arbitrary quintuple byte" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash variable_length_quantity.sh encode FF000000
     assert_success
     assert_output "8F F8 80 80 00"
 }
 
 @test "maximum 32-bit integer input" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash variable_length_quantity.sh encode FFFFFFFF
     assert_success
     assert_output "8F FF FF FF 7F"
