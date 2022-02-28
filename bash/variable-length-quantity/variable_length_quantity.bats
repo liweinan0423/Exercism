@@ -185,21 +185,21 @@ load bats-extra
 # Some error conditions
 
 @test "incomplete sequence causes error" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash variable_length_quantity.sh decode FF
     assert_failure
     assert_output --partial "incomplete byte sequence"
 }
 
 @test "incomplete sequence causes error, even if value is zero" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash variable_length_quantity.sh decode 80
     assert_failure
     assert_output --partial "incomplete byte sequence"
 }
 
 @test "invalid subcommand" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash variable_length_quantity.sh hello 80
     assert_failure
     assert_output --partial "unknown subcommand"

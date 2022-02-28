@@ -5,6 +5,10 @@ main() {
     shift
     case $cmd in
     encode | decode) $cmd "$@" ;;
+    *)
+        echo "unknown subcommand: $cmd" >&2
+        exit 1
+        ;;
     esac
 }
 
@@ -51,6 +55,10 @@ decode() {
         fi
     done
 
+    if ((${#group[@]} != 0)); then
+        echo "incomplete byte sequence: $*" >&2
+        exit 1
+    fi
     echo "${output[@]}"
 }
 
