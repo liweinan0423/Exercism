@@ -47,7 +47,7 @@ decode() {
             number=0
         fi
     done
-    if (((0x$byte & MSB) != 0)); then
+    if (((0x${!#} & MSB) != 0)); then
         echo >&2 "incomplete byte sequence"
         exit 1
     fi
