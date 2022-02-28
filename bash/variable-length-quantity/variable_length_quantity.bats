@@ -25,7 +25,7 @@ load bats-extra
 }
 
 @test "largest single byte" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash variable_length_quantity.sh encode 7F
     assert_success
     assert_output "7F"
