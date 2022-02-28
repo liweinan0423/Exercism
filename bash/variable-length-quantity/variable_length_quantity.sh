@@ -21,7 +21,7 @@ encode() {
 }
 
 encode_byte() {
-    local decimal=$((16#$1))
+    local decimal=$((0x$1))
     local -a digits
     read -ra digits < <(base128 $decimal)
 
@@ -52,9 +52,9 @@ decode() {
     local -a group output
     local -i digit
     for code; do
-        digit=$((16#$code))
+        digit=$((0x$code))
         group+=("$digit")
-        if (((digit | 128) != digit)); then
+        if (((digit | 128) != digit)); then # if MSB is 1, (digit | 128) does not change
             output+=("$(decode_group "${group[@]}")")
             group=()
         fi
