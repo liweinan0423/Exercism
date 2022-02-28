@@ -29,7 +29,7 @@ encode_number() {
     local -a bytes
     while true; do
         bytes=("$(printf "%02X" $((decimal & MASK ^ msb)))" "${bytes[@]}")
-        msb=0x80 # 10000000
+        msb=$MSB # 10000000
         ((decimal >>= 7))
         ((decimal == 0)) && break
     done
