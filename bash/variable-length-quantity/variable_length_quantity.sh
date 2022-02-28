@@ -38,7 +38,7 @@ encode_number() {
 }
 
 decode() {
-    if (((0x${!#} & MSB) != 0)); then
+    if (((0x${!#} & MSB) != 0)); then # last positional parameter should have bit #7 clear
         echo >&2 "incomplete byte sequence"
         exit 1
     fi
