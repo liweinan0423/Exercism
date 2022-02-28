@@ -10,12 +10,15 @@ main() {
 
 encode() {
     local decimal=$((16#$1))
-    local -a digits=()
-    ((decimal == 0)) && digits=(0)
-    while ((decimal > 0)); do
-        digits=("$((decimal % 128))" "${digits[@]}")
-        ((decimal /= 128))
-    done
+    local -a digits
+    if ((decimal == 0)); then
+        digits+=(0)
+    else
+        while ((decimal > 0)); do
+            digits=("$((decimal % 128))" "${digits[@]}")
+            ((decimal /= 128))
+        done
+    fi
 
     for ((i = 0; i < ${#digits[@]}; i++)); do
         if ((i != ${#digits[@]} - 1)); then
