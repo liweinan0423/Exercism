@@ -9,6 +9,14 @@ main() {
 }
 
 encode() {
+    local -a output
+    for byte; do
+        output+=("$(encode_byte "$byte")")
+    done
+    echo "${output[@]}"
+}
+
+encode_byte() {
     local decimal=$((16#$1))
     local -a digits
     if ((decimal == 0)); then

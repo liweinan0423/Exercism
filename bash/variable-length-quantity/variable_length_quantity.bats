@@ -116,21 +116,21 @@ load bats-extra
 }
 
 @test "two single-byte values" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash variable_length_quantity.sh encode 40 7F
     assert_success
     assert_output "40 7F"
 }
 
 @test "two multi-byte values" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash variable_length_quantity.sh encode 4000 123456
     assert_success
     assert_output "81 80 00 C8 E8 56"
 }
 
 @test "many multi-byte values" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash variable_length_quantity.sh encode 2000 123456 FFFFFFF 00 3FFF 4000
     assert_success
     assert_output "C0 00 C8 E8 56 FF FF FF 7F 00 FF 7F 81 80 00"
