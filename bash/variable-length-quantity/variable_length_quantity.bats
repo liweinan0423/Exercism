@@ -140,7 +140,7 @@ load bats-extra
 # Decode a series of bytes, producing a series of integers.
 
 @test "one byte" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash variable_length_quantity.sh decode 7F
     assert_success
     assert_output "7F"
