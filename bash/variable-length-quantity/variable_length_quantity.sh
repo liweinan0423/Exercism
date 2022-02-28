@@ -21,6 +21,7 @@ encode() {
 }
 
 declare -ri MASK=0x7F #01111111
+declare -ri MSB=0x80  #10000000
 
 encode_number() {
     local -i decimal=$((0x$1))
@@ -37,38 +38,20 @@ encode_number() {
 }
 
 decode() {
-    local -a group output
-    local -i digit
-    for code; do
-        digit=$((0x$code))
-        group+=("$digit")
-        if (((digit | 128) != digit)); then # if MSB is 1, (digit | 128) does not change
-            output+=("$(decode_group "${group[@]}")")
-            group=()
+    local -a output
+    local -i number=0
+    for byte; do
+        ((number = (number << 7) ^ (0x$byte & MASK)))
+        if (((0x$byte & MSB) == 0)); then
+            output+=("$(printf "%02X" $number)")
+            number=0
         fi
     done
-
-    if ((${#group[@]} != 0)); then
-        echo "incomplete byte sequence: $*" >&2
+    if (((0x$byte & MSB) != 0)); then
+        echo >&2 "incomplete byte sequence"
         exit 1
     fi
     echo "${output[@]}"
-}
-
-decode_group() {
-    local -a output=("$@")
-
-    local -i decimal
-    for ((i = 0; i < ${#output[@]}; i++)); do
-        if ((i != ${#output[@]} - 1)); then
-            ((decimal = decimal * 128 + (output[i] ^ 128)))
-        else
-            ((decimal = decimal * 128 + output[i]))
-        fi
-    done
-
-    printf "%02X" $decimal
-
 }
 
 main "$@"
