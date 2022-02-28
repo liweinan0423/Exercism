@@ -23,14 +23,7 @@ encode() {
 encode_byte() {
     local decimal=$((16#$1))
     local -a digits
-    if ((decimal == 0)); then
-        digits+=(0)
-    else
-        while ((decimal > 0)); do
-            digits=("$((decimal % 128))" "${digits[@]}")
-            ((decimal /= 128))
-        done
-    fi
+    read -ra digits < <(base128 $decimal)
 
     for ((i = 0; i < ${#digits[@]}; i++)); do
         if ((i != ${#digits[@]} - 1)); then
@@ -38,6 +31,18 @@ encode_byte() {
         else
             printf -v digits[i] "%02X" "${digits[i]}"
         fi
+    done
+
+    echo "${digits[@]}"
+}
+
+base128() {
+    local -i decimal=$1
+    local -a digits
+    while ((decimal >= 0)); do
+        digits=("$((decimal % 128))" "${digits[@]}")
+        ((decimal /= 128))
+        ((decimal == 0)) && break
     done
 
     echo "${digits[@]}"
