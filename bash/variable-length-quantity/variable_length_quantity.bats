@@ -39,42 +39,42 @@ load bats-extra
 }
 
 @test "arbitrary double byte" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash variable_length_quantity.sh encode 2000
     assert_success
     assert_output "C0 00"
 }
 
 @test "largest double byte" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash variable_length_quantity.sh encode 3FFF
     assert_success
     assert_output "FF 7F"
 }
 
 @test "smallest triple byte" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash variable_length_quantity.sh encode 4000
     assert_success
     assert_output "81 80 00"
 }
 
 @test "arbitrary triple byte" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash variable_length_quantity.sh encode 100000
     assert_success
     assert_output "C0 80 00"
 }
 
 @test "largest triple byte" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash variable_length_quantity.sh encode 1FFFFF
     assert_success
     assert_output "FF FF 7F"
 }
 
 @test "smallest quadruple byte" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash variable_length_quantity.sh encode 200000
     assert_success
     assert_output "81 80 80 00"
