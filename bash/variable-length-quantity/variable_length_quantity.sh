@@ -14,13 +14,13 @@ main() {
 
 encode() {
     local -a output
-    for byte; do
-        output+=("$(encode_byte "$byte")")
+    for number; do
+        output+=("$(encode_number "$number")")
     done
     echo "${output[@]}"
 }
 
-encode_byte() {
+encode_number() {
     local decimal=$((0x$1))
     local -a digits
     read -ra digits < <(base128 $decimal)
