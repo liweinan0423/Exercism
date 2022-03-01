@@ -15,14 +15,11 @@ declare forward=true
 while ((i > -1)); do
     printf "%*s" $((end - i)) ""
     printf "%s" "${Alphabets[$i]}"
-    if ((i == 0)); then
-        printf "%*s" $((end - i)) ""
-    else
+    if ((i > 0)); then
         printf "%*s" $((2 * i - 1)) ""
         printf "%s" "${Alphabets[$i]}"
-        printf "%*s" $((end - i)) ""
     fi
-    printf "\n"
+    printf "%*s\n" $((end - i)) ""
     ((i == end)) && forward=false
     $forward && ((i += 1))
     $forward || ((i -= 1))
