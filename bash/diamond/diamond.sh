@@ -10,7 +10,7 @@ done
 end=${Indexes[$1]}
 
 declare -i i=0
-declare forward=true
+declare top=true
 
 while ((i > -1)); do
     printf "%*s" $((end - i)) ""
@@ -20,7 +20,7 @@ while ((i > -1)); do
         printf "%s" "${Alphabets[$i]}"
     fi
     printf "%*s\n" $((end - i)) ""
-    ((i == end)) && forward=false
-    $forward && ((i += 1))
-    $forward || ((i -= 1))
+    ((i == end)) && top=false
+    $top && ((i += 1))
+    $top || ((i -= 1))
 done
