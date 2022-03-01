@@ -15,7 +15,7 @@ declare top=true
 while ((i > -1)); do
     printf -v left "%*s%s%*s" $((end - i)) "" "${Alphabets[$i]}" $((i)) ""
     echo -n "$left"
-    for ((j = ${#left} - 2; j >= 0; j--)); do
+    for ((j = ${#left} - 2; j > -1; j--)); do
         printf "%s" "${left:j:1}"
     done
     echo
