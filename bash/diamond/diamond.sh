@@ -22,5 +22,5 @@ while ((i > -1)); do
     printf "%*s\n" $((end - i)) ""
     ((i == end)) && top=false
     $top && ((i += 1))
-    $top || ((i -= 1))
+    ! $top && ((i -= 1))
 done
