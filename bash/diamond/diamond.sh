@@ -13,13 +13,12 @@ declare -i i=0
 declare top=true
 
 while ((i > -1)); do
-    printf "%*s" $((end - i)) ""
-    printf "%s" "${Alphabets[$i]}"
-    if ((i > 0)); then
-        printf "%*s" $((2 * i - 1)) ""
-        printf "%s" "${Alphabets[$i]}"
-    fi
-    printf "%*s\n" $((end - i)) ""
+    printf -v left "%*s%s%*s" $((end - i)) "" "${Alphabets[$i]}" $((i)) ""
+    echo -n "$left"
+    for ((j = ${#left} - 2; j >= 0; j--)); do
+        printf "%s" "${left:j:1}"
+    done
+    echo
     ((i == end)) && top=false
     $top && ((i += 1))
     ! $top && ((i -= 1))
