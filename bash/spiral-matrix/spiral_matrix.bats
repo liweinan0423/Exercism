@@ -12,7 +12,7 @@ load bats-extra
 }
 
 @test "trivial spiral" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash spiral_matrix.sh 1
     expected="1"
     assert_success
