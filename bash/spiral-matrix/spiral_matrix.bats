@@ -28,7 +28,7 @@ load bats-extra
 }
 
 @test "spiral of size 3" {
-    [[ $BATS_RUN_SKIPPED == "true" ]] || skip
+    # [[ $BATS_RUN_SKIPPED == "true" ]] || skip
     run bash spiral_matrix.sh 3
     expected=$'1 2 3\n8 9 4\n7 6 5'
     assert_success
